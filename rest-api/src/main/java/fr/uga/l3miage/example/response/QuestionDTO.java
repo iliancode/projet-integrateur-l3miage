@@ -6,6 +6,8 @@ import lombok.Data;
 
 import java.util.Collection;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Data
 @Builder
@@ -13,6 +15,7 @@ import javax.validation.constraints.NotBlank;
 public class QuestionDTO{
     @NotBlank(message ="La formulation d'une question est obligatoire")
     String label;
-    //ajouter @notNull.list ?
+    @NotNull
+    @Size(min=2, message= "Il dot y avoir au moins 2 reponses pour une question donnée")
     Collection<ReponseDTO> reponses;
 }

@@ -6,6 +6,8 @@ import lombok.Data;
 
 import java.util.Collection;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @Builder
@@ -13,6 +15,8 @@ import javax.validation.constraints.NotBlank;
 public class MiahootDTO{
     @NotBlank(message="Le nom du miahoot est obligatoire")
     String nom;
-    //ajouter notNull.list ?
+
+    @NotNull
+    @Size(min=1, message= "Il dot y avoir au moins une question dans le QCM ")
     Collection<QuestionDTO> questions;
 }
