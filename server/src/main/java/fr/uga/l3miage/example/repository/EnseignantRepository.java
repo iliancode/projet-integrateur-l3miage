@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
-public class EnseignantRepository implements CRUDRepository<Long, Enseignant> {
+public interface EnseignantRepository extends JpaRepository<Enseignant,Long> {
 
     @PersistenceContext
     private EntityManager entityManager;
