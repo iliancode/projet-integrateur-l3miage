@@ -5,4 +5,7 @@ import javax.validation.constraints.*;
 public class ParticipantDTO {
     @NotBlank
     private String pseudo;
+
+    @NotNull
+    private PartieDTO partie;
 }
