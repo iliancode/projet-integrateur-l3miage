@@ -1,5 +1,6 @@
 package fr.uga.l3miage.example.mapper;
 
+import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import org.mapstruct.Mapper;
 

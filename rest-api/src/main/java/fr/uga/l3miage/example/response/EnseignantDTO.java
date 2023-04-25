@@ -1,17 +1,13 @@
 package fr.uga.l3miage.example.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
-import java.util.Collection;
+import java.util.List;
 
 
-@Data
-@Builder
 @Schema(description = "correspond au DTO de l'entité Enseignant")
 public class EnseignantDTO {
     @Email
@@ -23,8 +19,8 @@ public class EnseignantDTO {
     private String pseudo;
 
     @Null
-    private Collection<MiahootDTO> miahoots;
+    private List<MiahootDTO> miahoots;
 
     @Null
-    private Collection<PartieDTO> parties;
+    private List<PartieDTO> parties;
 }

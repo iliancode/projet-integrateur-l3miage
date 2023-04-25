@@ -1,5 +1,6 @@
 package fr.uga.l3miage.example.mapper;
 
+import fr.uga.l3miage.example.models.Partie;
 import fr.uga.l3miage.example.response.PartieDTO;
 import org.mapstruct.Mapper;
 
