@@ -1,36 +1,26 @@
 package fr.uga.l3miage.example.repository;
 
 import fr.uga.l3miage.example.models.Miahoot;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class MiahootRepository implements CRUDRepository<Long, Miahoot>{
+public interface MiahootRepository extends JpaRepository<Miahoot, Long> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
 
-    @Override
-    public Miahoot save(Miahoot miahoot){
-        entityManager.persist(miahoot);
-        return miahoot;
-    }
+    Optional<Miahoot> findById(Long aLong);
 
-    @Override
-    public Miahoot get(Long id) {
-        return entityManager.find(Miahoot.class, id);
-    }
+    int deleteById(final long aLong);
 
-    @Override
-    public void delete(Miahoot miahoot) {
-        entityManager.remove(miahoot);
-    }
 
-    @Override
-    public List<Miahoot> all() {
-        return entityManager.createQuery("SELECT m FROM Miahoot m ORDER BY id", Miahoot.class).getResultList();
-    }
+    List<Miahoot> findAll();
+
+    <S extends Miahoot> S save(S s);
 }
