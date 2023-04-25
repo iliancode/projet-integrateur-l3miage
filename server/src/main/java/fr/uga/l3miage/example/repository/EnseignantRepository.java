@@ -32,6 +32,6 @@ public class EnseignantRepository implements CRUDRepository<Long, Enseignant> {
 
     @Override
     public List<Enseignant> all() {
-        return entityManager.createQuery("SELECT e FROM Enseignant a ORDER BY id", Enseignant.class).getResultList();
+        return entityManager.createQuery("SELECT e FROM Enseignant e ORDER BY id", Enseignant.class).getResultList();
     }
 }
