@@ -1,36 +1,19 @@
 package fr.uga.l3miage.example.repository;
 import fr.uga.l3miage.example.models.Reponse;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class ReponseRepository implements CRUDRepository<Long, Reponse> {
+public interface ReponseRepository extends JpaRepository<Reponse, Long> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    Optional<Reponse> findByLabel(final String label);
+    int deleteByLabel(final String label);
 
-    @Override
-    public Reponse save(Reponse reponse) {
-        entityManager.persist(reponse);
-        return reponse;
-    }
-
-    @Override
-    public Reponse get(Long id) {
-        return entityManager.find(Reponse.class, id);
-    }
-
-    @Override
-    public void delete(Reponse reponse) {
-        entityManager.remove(reponse);
-    }
-
-    @Override
-    public List<Reponse> all() {
-        return entityManager.createQuery("SELECT r FROM Reponse r ORDER BY id", Reponse.class).getResultList();
-
-    }
+    Optional<Reponse> findById(final long id);
+    int deleteById(final long id);
 }

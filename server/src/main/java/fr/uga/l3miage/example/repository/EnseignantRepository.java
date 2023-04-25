@@ -1,37 +1,24 @@
 package fr.uga.l3miage.example.repository;
 
-
-import fr.uga.l3miage.example.models.Enseignant;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import fr.uga.l3miage.example.models.Enseignant;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class EnseignantRepository implements CRUDRepository<Long,Enseignant> {
+public interface EnseignantRepository extends JpaRepository<Enseignant,Long> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
 
-    @Override
-    public Enseignant save(Enseignant enseignant){
-        entityManager.persist(enseignant);
-        return enseignant;
-    }
+    Optional<Enseignant> findByLabel(final String label);
 
-    @Override
-    public Enseignant get(Long id) {
-        return entityManager.find(Enseignant.class, id);
-    }
+    int deleteByLabel(final String label);
 
-    @Override
-    public void delete(Enseignant enseignant) {
-        entityManager.remove(enseignant);
-    }
+    Optional<Enseignant> findById(final long id);
 
-    @Override
-    public List<Enseignant> all() {
-        return entityManager.createQuery("SELECT e FROM Enseignant e ORDER BY id", Enseignant.class).getResultList();
-    }
+    int deleteById(final long id);
+
 }
