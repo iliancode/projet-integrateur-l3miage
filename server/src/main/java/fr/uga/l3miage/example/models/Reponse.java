@@ -13,7 +13,7 @@ public class Reponse {
     private String label;
 
     @Column
-    private boolean esValide;
+    private boolean estValide;
 
     //getters
     public long getId() {
@@ -22,16 +22,16 @@ public class Reponse {
     public String getLabel() {
         return label;
     }
-    public boolean isEsValide() {
-        return esValide;
+    public boolean isEstValide() {
+        return estValide;
     }
 
     //setters
     public void setLabel(String label) {
         this.label = label;
     }
-    public void setEsValide(boolean esValide) {
-        this.esValide = esValide;
+    public void setEstValide(boolean estValide) {
+        this.estValide = estValide;
     }
     public void setId(long id) {
         this.id = id;

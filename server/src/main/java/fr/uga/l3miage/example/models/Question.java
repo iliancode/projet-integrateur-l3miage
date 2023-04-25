@@ -14,7 +14,7 @@ public class Question {
     @Column(name = "label")
     private String label;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany
     private List<Reponse> reponses;
 
 

@@ -3,7 +3,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS )
+@Table(name = "enseignant")
 public class Enseignant {
 
     @Id
