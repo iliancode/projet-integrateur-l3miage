@@ -1,8 +1,11 @@
 package fr.uga.l3miage.example.repository;
 
+import fr.uga.l3miage.example.models.Question;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 public class QuestionRepository implements CRUDRepository<Long, Question> {

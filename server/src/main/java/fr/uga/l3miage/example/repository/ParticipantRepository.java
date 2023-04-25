@@ -1,6 +1,7 @@
 package fr.uga.l3miage.example.repository;
 
 
+import fr.uga.l3miage.example.models.Participant;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,7 +22,7 @@ public class ParticipantRepository implements CRUDRepository<Long, Participant> 
 
     @Override
     public Participant get(Long id) {
-        return entityManager.find(EntityManager.class, id);
+        return entityManager.find(Participant.class, id);
     }
 
     @Override

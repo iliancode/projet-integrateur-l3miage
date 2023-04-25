@@ -1,8 +1,11 @@
 package fr.uga.l3miage.example.repository;
 
+import fr.uga.l3miage.example.models.Partie;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 public class PartieRepository implements CRUDRepository<Long, Partie> {

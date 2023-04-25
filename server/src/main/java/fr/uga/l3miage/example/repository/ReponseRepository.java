@@ -1,10 +1,13 @@
 package fr.uga.l3miage.example.repository;
+import fr.uga.l3miage.example.models.Reponse;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
-public class ReponseRepository implements CRUDRepository<Long,Reponse> {
+public class ReponseRepository implements CRUDRepository<Long, Reponse> {
 
     @PersistenceContext
     private EntityManager entityManager;

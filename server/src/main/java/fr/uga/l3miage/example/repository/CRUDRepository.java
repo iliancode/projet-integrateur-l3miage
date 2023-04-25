@@ -10,11 +10,6 @@ import java.util.List;
  * @param <E>
  */
 public interface CRUDRepository<I,E> {
-    Enseignant save(Enseignant enseignant);
-
-    Enseignant get(Long id);
-
-    void delete(Enseignant enseignant);
 
     E save(E entity);
 

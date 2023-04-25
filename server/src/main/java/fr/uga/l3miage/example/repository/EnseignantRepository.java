@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class EnseignantRepository implements CRUDRepository<Enseignant,Long> {
+public class EnseignantRepository implements CRUDRepository<Long,Enseignant> {
 
     @PersistenceContext
     private EntityManager entityManager;
