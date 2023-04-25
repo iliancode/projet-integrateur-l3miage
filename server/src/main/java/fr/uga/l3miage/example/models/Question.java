@@ -17,42 +17,25 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<Reponse> reponses;
 
-    @ManyToOne
-    private Miahoot miahoot;
 
     // Getters
-
-    public Miahoot getMiahoot() {
-        return miahoot;
-    }
-
     public String getLabel() {
         return label;
     }
-
     public long getId() {
         return id;
     }
-
     public List<Reponse> getReponses() {
         return reponses;
     }
 
     // Setters
-
-
-    public void setMiahoot(Miahoot miahoot) {
-        this.miahoot = miahoot;
-    }
-
     public void setReponses(List<Reponse> reponses) {
         this.reponses = reponses;
     }
-
     public void setLabel(String label) {
         this.label = label;
     }
-
     public void setId(long id) {
         this.id = id;
     }

@@ -15,6 +15,25 @@ public class Reponse {
     @Column
     private boolean esValide;
 
-    @ManyToOne
-    private Question question;
+    //getters
+    public long getId() {
+        return id;
+    }
+    public String getLabel() {
+        return label;
+    }
+    public boolean isEsValide() {
+        return esValide;
+    }
+
+    //setters
+    public void setLabel(String label) {
+        this.label = label;
+    }
+    public void setEsValide(boolean esValide) {
+        this.esValide = esValide;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
 }

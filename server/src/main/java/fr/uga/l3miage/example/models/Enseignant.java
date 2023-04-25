@@ -26,7 +26,6 @@ public class Enseignant {
     private List<Partie> parties;
 
 
-
     //getters
 
     public List<Partie> getParties() {
@@ -60,9 +59,6 @@ public class Enseignant {
         this.parties = parties;
     }
 
-    public void setMiahoots(List<Miahoot> miahoots) {
-        this.miahoots = miahoots;
-    }
 
     public void setMdp(String mdp) {
         this.mdp = mdp;
