@@ -5,9 +5,13 @@ import fr.uga.l3miage.example.mapper.ReponseMapper;
 import fr.uga.l3miage.example.models.Reponse;
 import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.ReponseDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+@Service
+@RequiredArgsConstructor
 public class ReponseService {
 
     private final ReponseComponent reponseComponent;
@@ -16,7 +20,7 @@ public class ReponseService {
     // Recuperer le DTO réponse correspondant a la description
     public ReponseDTO getReponse(final String label) throws Exception {
         try {
-            return reponseMapper.entityToDTO(reponseComponent.getReponse(label))
+            return reponseMapper.entityToDTO(reponseComponent.getReponse(label));
         } catch (Exception ex) {
             throw new Exception("On ne peut pas recuperer le DTO");
         }

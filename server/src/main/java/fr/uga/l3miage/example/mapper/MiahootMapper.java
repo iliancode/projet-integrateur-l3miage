@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.Collection;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface MiahootMapper {
     MiahootDTO entityToDTO(Miahoot miahoot);
 
