@@ -1,8 +1,10 @@
 package fr.uga.l3miage.example.mapper;
 
 import fr.uga.l3miage.example.models.Enseignant;
+import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.Collection;
 
@@ -19,5 +21,5 @@ public interface EnseignantMapper {
 
     @Mapping(target = "testInt", source = ".", qualifiedBy = TestMapperUtils.ToSumTestInt.class)
     @Mapping(target = "fieldMapping", source = "fieldNotMappingAutomatically")
-    Enseignant toEntity(CreateTestRequest request);
+    Enseignant toEntity(CreateEnseignantRequest request);
 }

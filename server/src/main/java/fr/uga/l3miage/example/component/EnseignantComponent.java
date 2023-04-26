@@ -1,6 +1,6 @@
 package fr.uga.l3miage.example.component;
 
-import fr.uga.l3miage.example.mapper.EnseignantMapper;
+//import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EnseignantComponent {
     private final EnseignantRepository enseignantRepository;
-    private final EnseignantMapper enseignantMapper;
+    //private final EnseignantMapper enseignantMapper;
 
     //test de creation d'un enseignant
     public void createEnseignant(final Enseignant enseignant) throws Exception{
@@ -30,5 +30,23 @@ public class EnseignantComponent {
                 }
             }
         }else throw new Exception("Mail non renseigné");
+    }
+
+    public void deleteEnseignantByMail(final String mail) throws Exception {
+        int deleted = enseignantRepository.deleteByMail(mail);
+        if (deleted > 1)
+            throw new Exception("Plusieurs entités ont le même mail alors que c'est impossible niveau métier !!");
+        else if (deleted == 0)
+            throw new Exception("L'entité à supprimer n'a pas été trouvée " +  mail);
+
+    }
+
+    public void deleteEnseignantById(final long id) throws Exception {
+        int deleted = enseignantRepository.deleteById(id);
+        if (deleted > 1)
+            throw new Exception("Plusieurs entités ont le même mail alors que c'est impossible niveau métier !!");
+        else if (deleted == 0)
+            throw new Exception("L'entité à supprimer n'a pas été trouvée " +  id);
+
     }
 }
