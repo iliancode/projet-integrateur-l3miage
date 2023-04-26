@@ -6,6 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class CreateQuestionRequest {
 
     @Schema(description = "description de l'objet question", example = "description question ? ")
-    private String label;
+    private String pseudo;
 
 }

@@ -62,6 +62,7 @@ public class ExampleService {
         TestEntity newTestEntity = testMapper.toEntity(createTestRequest);
         if(newTestEntity.getTestInt()!=0){
             try {
+                System.out.println("CREATE NEW TEST SOUT \n \n ICI ICI IC I");
                 exampleComponent.createTest(newTestEntity);
             } catch (IsNotTestException ex) {
                 throw new IsNotTestRestException(ERROR_DETECTED,createTestRequest,ex);
