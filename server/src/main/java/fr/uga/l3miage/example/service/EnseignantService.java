@@ -50,5 +50,20 @@ public class EnseignantService {
         }
     }
 
+    public Enseignant getEnseignantByMail(final String mail) throws Exception {
+        try {
+            return enseignantMapper.toDto(enseignantComponent.getEnseignantByMail(mail));
+        } catch (Exception ex) {
+            throw new Exception("Impossible de charger l'entité. Raison :" +ex.getMessage());
+        }
+    }
+
+    public Enseignant getEnseignantByPseudo(final String pseudo) throws Exception{
+        try {
+            return enseignantMapper.toDto(enseignantComponent.getEnseignantByPseudo(pseudo));
+        } catch (Exception ex) {
+            throw new Exception("Impossible de charger l'entité. Raison :" +ex.getMessage());
+        }
+    }
 
 }

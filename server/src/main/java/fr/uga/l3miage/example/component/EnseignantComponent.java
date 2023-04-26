@@ -6,6 +6,8 @@ import fr.uga.l3miage.example.repository.EnseignantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class EnseignantComponent {
@@ -48,5 +50,21 @@ public class EnseignantComponent {
         else if (deleted == 0)
             throw new Exception("L'entité à supprimer n'a pas été trouvée " +  id);
 
+    }
+
+    public Optional<Enseignant> getEnseignantByMail(final String mail) throws Exception {
+        try{
+            return enseignantRepository.findByMail(mail);
+        }catch (Exception e){
+            throw new Exception("Aucune entité n'a été trouvée pour le mail :  " + mail);
+        }
+    }
+
+    public Optional<Enseignant> getEnseignantByPseudo(final String pseudo) throws Exception {
+        try{
+            return enseignantRepository.findByPseudo(pseudo);
+        }catch (Exception e){
+            throw new Exception("Aucune entité n'a été trouvée pour le mail :  " + pseudo);
+        }
     }
 }
