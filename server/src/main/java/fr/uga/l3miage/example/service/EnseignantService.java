@@ -3,6 +3,7 @@ package fr.uga.l3miage.example.service;
 import fr.uga.l3miage.example.component.EnseignantComponent;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
+import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class EnseignantService {
 
     public void createEnseignant( final CreateEnseignantRequest createEnseignantRequest){
         Enseignant newEnseignant = enseignantMapper.dtoToEntity(createEnseignantRequest);
-
+ 
     }
 
 }

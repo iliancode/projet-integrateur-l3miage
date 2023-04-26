@@ -15,4 +15,9 @@ public interface EnseignantMapper {
     Enseignant dtoToEntity(EnseignantDTO enseignant);
 
     Collection<Enseignant> dtoToEntity(Iterable<EnseignantDTO> enseignants);
+
+
+    @Mapping(target = "testInt", source = ".", qualifiedBy = TestMapperUtils.ToSumTestInt.class)
+    @Mapping(target = "fieldMapping", source = "fieldNotMappingAutomatically")
+    Enseignant toEntity(CreateTestRequest request);
 }
