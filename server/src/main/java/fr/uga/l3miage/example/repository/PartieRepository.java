@@ -19,7 +19,5 @@ public interface PartieRepository extends JpaRepository<Partie, Long> {
 
     int deleteById(final long id);
 
-    List<Partie> findAll();
-
 
 }
