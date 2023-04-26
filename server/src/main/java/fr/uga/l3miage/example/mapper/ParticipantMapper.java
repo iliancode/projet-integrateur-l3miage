@@ -1,18 +1,23 @@
 package fr.uga.l3miage.example.mapper;
 
 import fr.uga.l3miage.example.models.Participant;
+import fr.uga.l3miage.example.request.CreateParticipantRequest;
 import fr.uga.l3miage.example.response.ParticipantDTO;
 import org.mapstruct.Mapper;
 
-import java.util.Collection;
-
-@Mapper(componentModel = "spring")
+@Mapper
 public interface ParticipantMapper {
-    ParticipantDTO entityToDTO(Participant participant);
+    /**
+     * Cette fonction va faire le mapping d'une entité vers le <b color="yellow">DTO</b> de Participant
+     * @param participant l'entité à mapper en <b color="yellow">DTO</b>
+     * @return le <b color="yellow">DTO</b> d'une entité Participant
+     */
+    ParticipantDTO toDto(Participant participant);
 
-    Collection<ParticipantDTO> entityToDTO(Iterable<Participant> participants);
-
-    Participant dtoToEntity(ParticipantDTO participant);
-
-    Collection<Participant> dtoToEntity(Iterable<ParticipantDTO> participants);
+    /**
+     * Cette fonction fait le mapping entre une requête de création d'une entité participant et l'entité elle même.
+     * @param request de création d'une entité qui va être transformée en Participant
+     * @return le Participant correspondant
+     */
+    Participant toEntity(CreateParticipantRequest request);
 }
