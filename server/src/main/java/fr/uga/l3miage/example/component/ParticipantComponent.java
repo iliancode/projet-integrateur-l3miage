@@ -6,10 +6,12 @@ import fr.uga.l3miage.example.models.Participant;
 import fr.uga.l3miage.example.models.TestEntity;
 import fr.uga.l3miage.example.repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ParticipantComponent {
     private final ParticipantRepository participantRepository;
     private final ParticipantMapper participantMapper;
@@ -20,8 +22,9 @@ public class ParticipantComponent {
      * @throws ParticipantEntityNotFoundException si aucune entité Participant n'est trouvée
      */
     public Participant getParticipant(final Long id) throws ParticipantEntityNotFoundException {
+        log.info("Je suis dans getParticipant, je reçois l'id : " + id + participantRepository.findById(id));
         return participantRepository.findById(id)
-                .orElseThrow(() -> new ParticipantEntityNotFoundException(String.format("Aucune entité Participant n'a été trouvée pour l'id [%l]", id), id));
+                .orElseThrow(() -> new ParticipantEntityNotFoundException(String.format("Aucune entité Participant n'a été trouvée pour l'id [%d]", id), id));
     }
 
     /**
