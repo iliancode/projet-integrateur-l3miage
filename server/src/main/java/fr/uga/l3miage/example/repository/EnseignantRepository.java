@@ -15,7 +15,7 @@ public interface EnseignantRepository extends JpaRepository<Enseignant,Long> {
 
     Optional<Enseignant> findByMail(final String mail);
     Optional<Enseignant> findByPseudo(final String pseudo);
-    int deleteByLabel(final String label);
+    int deleteByMail(final String mail);
 
     Optional<Enseignant> findById(final long id);
 
