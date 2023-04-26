@@ -1,6 +1,7 @@
 package fr.uga.l3miage.example.mapper;
 
 import fr.uga.l3miage.example.models.Reponse;
+import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.ReponseDTO;
 import org.mapstruct.Mapper;
 
@@ -14,5 +15,6 @@ public interface ReponseMapper {
 
     Reponse dtoToEntity(ReponseDTO reponse);
 
+    Reponse toEntity(CreateReponseRequest request);
     Collection<Reponse> dtoToEntity(Iterable<ReponseDTO> reponses);
 }
