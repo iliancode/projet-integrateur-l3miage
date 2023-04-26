@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import java.util.Collection;
 import java.util.Optional;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface EnseignantMapper {
     EnseignantDTO entityToDTO(Enseignant enseignant);
 
