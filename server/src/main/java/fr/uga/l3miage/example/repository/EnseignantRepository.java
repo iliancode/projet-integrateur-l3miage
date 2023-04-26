@@ -13,8 +13,8 @@ import java.util.Optional;
 public interface EnseignantRepository extends JpaRepository<Enseignant,Long> {
 
 
-    Optional<Enseignant> findByLabel(final String label);
-
+    Optional<Enseignant> findByMail(final String mail);
+    Optional<Enseignant> findByPseudo(final String pseudo);
     int deleteByLabel(final String label);
 
     Optional<Enseignant> findById(final long id);
