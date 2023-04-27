@@ -16,7 +16,4 @@ public interface QuestionRepository extends JpaRepository<Long, Question> {
     Optional<Question> findByLabel(final String label);
     int deleteByLabel(final String label);
 
-    Optional<Question> findById(final long id);
-    int deleteById(final long id);
-
 }
