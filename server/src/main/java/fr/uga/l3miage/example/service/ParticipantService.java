@@ -35,9 +35,7 @@ public class ParticipantService {
      * @param createParticipantRequest la requête qui permet de créer une entité participant
      */
     public void createParticipant(final CreateParticipantRequest createParticipantRequest) {
-        System.out.println("WSHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
         Participant newParticipant = participantMapper.toEntity(createParticipantRequest);
-        System.out.println("ICI \n \n \n ============ \n " + newParticipant);
         participantComponent.createParticipant(newParticipant);
     }
 

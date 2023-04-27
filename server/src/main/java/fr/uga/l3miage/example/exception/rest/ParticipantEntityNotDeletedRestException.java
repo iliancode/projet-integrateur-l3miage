@@ -12,7 +12,7 @@ public class ParticipantEntityNotDeletedRestException extends RuntimeException {
         super(message, cause);
     }
 
-    public HttpStatus getHttpStatus() {return HttpStatus.I_AM_A_TEAPOT;}
+    public HttpStatus getHttpStatus() {return HttpStatus.NOT_FOUND;}
 
     public ErrorCode getErrorCode(){return ErrorCode.TEST_ENTITY_NOT_DELETED_ERROR;}
 }

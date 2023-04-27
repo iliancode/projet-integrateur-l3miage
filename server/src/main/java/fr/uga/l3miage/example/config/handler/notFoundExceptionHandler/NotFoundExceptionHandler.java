@@ -1,4 +1,4 @@
-package fr.uga.l3miage.example.config.handler;
+package fr.uga.l3miage.example.config.handler.notFoundExceptionHandler;
 
 import fr.uga.l3miage.example.error.ErrorResponse;
 import fr.uga.l3miage.example.error.TestNotFoundErrorResponse;
