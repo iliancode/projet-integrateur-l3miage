@@ -15,4 +15,6 @@ public class ParticipantEntityNotFoundException extends Exception {
         super(message, cause);
         this.id = id;
     }
+
+
 }

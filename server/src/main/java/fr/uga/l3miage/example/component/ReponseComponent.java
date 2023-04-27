@@ -1,4 +1,5 @@
 package fr.uga.l3miage.example.component;
+import fr.uga.l3miage.example.exception.rest.ReponseEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.*;
 import fr.uga.l3miage.example.mapper.TestMapper;
 import fr.uga.l3miage.example.models.Reponse;
@@ -19,7 +20,10 @@ public class ReponseComponent {
     private final ReponseMapper reponseMapper;
 
     //CREATION D'UNE REPONSE
-    public void createReponse(final Reponse reponse) throws Exception {
+    public void createReponse(final Reponse reponse) /**throws Exception **/ {
+
+        reponseRepository.save(reponse);
+        /**
         // on verifie qu'elle ne soit pas vide
         if(reponse.getLabel() != ""){
             // on verifie que la question n'existe pas déja
@@ -27,22 +31,23 @@ public class ReponseComponent {
                 throw new Exception(String.format("La question %s existe déjà en BD.", reponse.getLabel()));
                 }
             reponseRepository.save(reponse);
-            } else throw new Exception("La nouvelle réponse est vide ");
+            } else throw new Exception("La nouvelle réponse est vide "); **/
 
         }
     //Suppression d'une reponse
-    public void deleteReponse(final String label) throws Exception{
-        int deleted = reponseRepository.deleteByLabel(label);
-        if(deleted > 1)
-            throw new Exception("Comment c'est possible sachant quil ne peut pas avoir 2 reponses avec le meme label");
-        else if(deleted == 0)
-            throw new Exception("La question a supprimé n'existe pas ");
+    public void deleteReponse(final String label) throws ReponseEntityNotFoundException{
+        try{
+            Reponse deleted = getReponse(label);
+            reponseRepository.deleteByLabel(label);
+        }catch(ReponseEntityNotFoundException e){
+            throw new ReponseEntityNotFoundException("Entite reponse non trouve",label);
+        }
     }
 
     //TROUVER UNE REPONSE
-    public Reponse getReponse(final String label) throws Exception{
+    public Reponse getReponse(final String label) throws ReponseEntityNotFoundException{
         return reponseRepository.findByLabel((label))
-                .orElseThrow(()-> new Exception("Aucune réponse n'a été trouve"));
+                .orElseThrow(()-> new ReponseEntityNotFoundRestException(String.format("Aucune entité Reponse n'a été trouvée pour le label [%s]", label), label));
     }
 
 }
