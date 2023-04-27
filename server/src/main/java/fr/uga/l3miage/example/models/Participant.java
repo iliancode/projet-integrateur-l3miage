@@ -1,17 +1,26 @@
 package fr.uga.l3miage.example.models;
-import javax.persistence.*;
-import java.util.List;
 
+import lombok.*;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "participant")
 public class Participant {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
 
     @Column
     private String pseudo;
 
-    @OneToOne
-    private Partie partie;
+    /*@OneToOne
+    private Partie partie;*/
+
+
 }
