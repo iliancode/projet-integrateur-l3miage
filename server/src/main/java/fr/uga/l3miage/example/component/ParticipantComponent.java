@@ -31,7 +31,7 @@ public class ParticipantComponent {
      * @param entity à créer en base de données
      */
     public void createParticipant(final Participant entity) {
-        System.out.println("ICI : participant component");
+        log.info("ICI : participant component : " + entity);
         participantRepository.save(entity);
     }
 

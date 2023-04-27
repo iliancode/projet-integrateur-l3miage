@@ -9,6 +9,8 @@ import lombok.Data;
 @Schema(description = "Correspond à la requête permettant de créer une entité participant")
 public class CreateParticipantRequest {
 
+    @Schema(description = "id de l'objet participant", example = "1")
+    private Long id;
     @Schema(description = "pseudo de l'objet participant", example = "description participant")
     private String pseudo;
 
