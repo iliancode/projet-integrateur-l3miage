@@ -23,7 +23,7 @@ Plusieurs installations sont nécessaires pour les VMs :
     sudo apt install docker-compose
     ```
 
-## En local
+## En local 
 
 Pensez à avoir :
 * Avoir `java 11`
