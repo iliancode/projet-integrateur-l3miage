@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 @Component
 @RequiredArgsConstructor
 public class TestMapperUtils {
-
+    private final TestMapper testMapper;
     /**
      * Définition de la fonction util<br>
      * Les annotations :

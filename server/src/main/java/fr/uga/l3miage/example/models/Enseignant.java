@@ -1,13 +1,19 @@
 package fr.uga.l3miage.example.models;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "enseignant")
+@Getter
+@Setter
 public class Enseignant {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column
@@ -25,54 +31,4 @@ public class Enseignant {
     @OneToMany
     private List<Partie> parties;
 
-
-    //getters
-
-    public List<Partie> getParties() {
-        return parties;
-    }
-
-    public List<Miahoot> getMiahoots() {
-        return miahoots;
-    }
-
-    public String getPseudo() {
-        return pseudo;
-    }
-
-    public String getMdp() {
-        return mdp;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-
-    //Setters
-
-    public void setParties(List<Partie> parties) {
-        this.parties = parties;
-    }
-
-
-    public void setMdp(String mdp) {
-        this.mdp = mdp;
-    }
-
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 }

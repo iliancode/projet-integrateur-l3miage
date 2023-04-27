@@ -1,18 +1,15 @@
 package fr.uga.l3miage.example.mapper;
 
 import fr.uga.l3miage.example.models.Miahoot;
+import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import org.mapstruct.Mapper;
 
-import java.util.Collection;
-
 @Mapper
 public interface MiahootMapper {
-    MiahootDTO entityToDTO(Miahoot miahoot);
 
-    Collection<MiahootDTO> entityToDTO(Iterable<Miahoot> miahoots);
+    Miahoot toEntity(CreateMiahootRequest request);
+    // @Mapping(source = "miahoots",target = "miahootsDTO",qualifiedBy = TestMapperUtils.ToSumTestInt.class)
+    MiahootDTO toDto(Miahoot testEntity);
 
-    Miahoot dtoToEntity(MiahootDTO miahoot);
-
-    Collection<Miahoot> dtoToEntity(Iterable<MiahootDTO> miahoots);
 }

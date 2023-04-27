@@ -4,19 +4,21 @@ package fr.uga.l3miage.example.component;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class EnseignantComponent {
     private final EnseignantRepository enseignantRepository;
     //private final EnseignantMapper enseignantMapper;
 
     //test de creation d'un enseignant
     public void createEnseignant(final Enseignant enseignant) throws Exception{
-        if(enseignant.getMail().isEmpty() == false){
+      /* if(enseignant.getMail().isEmpty() == false){
             if(enseignantRepository.findByMail(enseignant.getMail()).isPresent()){
                 throw new Exception("Mail deja existant dans la base de données");
             }else{
@@ -26,12 +28,13 @@ public class EnseignantComponent {
                 else{
                     if(enseignant.getMdp().isEmpty()){
                         throw new Exception("Le mot de passe ne peut pas etre vide");
-                    }else{
+                    }else{*/
+        log.info("ICI : enseignant component : " + enseignant);
                         enseignantRepository.save(enseignant);
-                    }
+                  /*  }
                 }
             }
-        }else throw new Exception("Mail non renseigné");
+        }else throw new Exception("Mail non renseigné");*/
     }
 
     public void deleteEnseignantByMail(final String mail) throws Exception {
@@ -52,7 +55,7 @@ public class EnseignantComponent {
 
     }
 
-    public Optional<Enseignant> getEnseignantByMail(final String mail) throws Exception {
+    public Enseignant getEnseignantByMail(final String mail) throws Exception {
         try{
             return enseignantRepository.findByMail(mail);
         }catch (Exception e){

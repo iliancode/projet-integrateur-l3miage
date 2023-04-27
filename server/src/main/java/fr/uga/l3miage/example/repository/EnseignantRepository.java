@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface EnseignantRepository extends JpaRepository<Enseignant,Long> {
 
 
-    Optional<Enseignant> findByMail(final String mail);
+    Enseignant findByMail(final String mail);
     Optional<Enseignant> findByPseudo(final String pseudo);
 
     int deleteByMail(final String mail);
