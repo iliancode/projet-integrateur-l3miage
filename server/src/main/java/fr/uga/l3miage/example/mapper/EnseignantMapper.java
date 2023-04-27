@@ -4,11 +4,11 @@ import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.Collection;
+import java.util.Optional;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface EnseignantMapper {
     EnseignantDTO entityToDTO(Enseignant enseignant);
 
@@ -19,7 +19,9 @@ public interface EnseignantMapper {
     Collection<Enseignant> dtoToEntity(Iterable<EnseignantDTO> enseignants);
 
 
-    @Mapping(target = "testInt", source = ".", qualifiedBy = TestMapperUtils.ToSumTestInt.class)
-    @Mapping(target = "fieldMapping", source = "fieldNotMappingAutomatically")
-    Enseignant toEntity(CreateEnseignantRequest request);
+
+     Enseignant toEntity(CreateEnseignantRequest request);
+
+    Enseignant toDto(Optional<Enseignant> testEntity);
+
 }

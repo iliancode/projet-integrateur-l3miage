@@ -16,4 +16,5 @@ public interface EnseignantRepository extends JpaRepository<Enseignant,Long> {
     int deleteByMail(final String mail);
     int deleteById(final long id);
 
+
 }
