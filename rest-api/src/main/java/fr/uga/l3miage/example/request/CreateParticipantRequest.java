@@ -15,5 +15,5 @@ public class CreateParticipantRequest {
     private String pseudo;
 
     /*@Schema(description = "partie de l'objet participant", example = "partie participant")
-    private PartieDTO Partie;*/
+    private PartieDTO Partie;*/ 
 }
