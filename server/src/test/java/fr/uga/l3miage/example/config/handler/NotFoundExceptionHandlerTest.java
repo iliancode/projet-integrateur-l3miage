@@ -1,5 +1,6 @@
 package fr.uga.l3miage.example.config.handler;
 
+import fr.uga.l3miage.example.config.handler.notFoundExceptionHandler.NotFoundExceptionHandler;
 import fr.uga.l3miage.example.error.ErrorResponse;
 import fr.uga.l3miage.example.error.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.exception.rest.TestEntityNotFoundRestException;

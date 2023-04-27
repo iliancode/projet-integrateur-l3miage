@@ -42,7 +42,7 @@ public interface ParticipantEndpoint {
 
     @Operation(description = "Suppression d'une entité participant en bd")
     @ApiResponse(responseCode = "200", description = "si isInError est à false alors l'element est renvoyé et supprimé")
-    @ApiResponse(responseCode = "418", description = "Renvoie une erreur 418 si l'entité n'a pu être supprimée",
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
             content = @Content(schema = @Schema(implementation = ParticipantEntityNotDeletedErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("{id}")
