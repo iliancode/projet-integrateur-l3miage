@@ -24,7 +24,7 @@ Plusieurs installations sont nécessaires pour les VMs :
     ```
 
 ## En local
-
+ 
 Pensez à avoir :
 * Avoir `java 11`
 * Avoir `maven`
