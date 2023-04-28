@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -55,10 +57,12 @@ public class EnseignantComponent {
 
             return enseignantRepository.findByMail(mail)
                     .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " +  mail));
-
-
     }
 
+    //get all enseignants
+    public List<Enseignant> getAllEnseignants() throws Exception {
+        return enseignantRepository.findAll();
+    }
     public void deleteEnseignantByMail(final String mail) throws MultipleEntityHaveSameDescriptionException, TestEntityNotFoundException {
         int deleted = enseignantRepository.deleteByMail(mail);
         log.info("deleted : " + deleted);

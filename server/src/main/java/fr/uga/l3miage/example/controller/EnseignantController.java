@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -24,6 +26,11 @@ public class EnseignantController implements EnseignantEndpoint {
     @Override
     public EnseignantDTO getEntityEnseignantByMail(String mail) throws Exception {
         return enseignantService.getEnseignantByMail(mail);
+    }
+
+    @Override
+    public List<EnseignantDTO> getAllEnseignants() throws Exception {
+        return enseignantService.getAllEnseignants();
     }
 
     @Override

@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("enseignants/")
@@ -31,6 +33,16 @@ public interface EnseignantEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{mail}")
     EnseignantDTO getEntityEnseignantByMail(@PathVariable String mail) throws Exception;
+
+
+    //get all enseignants
+    @Operation(description = "Récupération de toutes les entités enseignant en bd")
+    @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités enseignant",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    List<EnseignantDTO> getAllEnseignants() throws Exception;
+
 
     //delete enseignant by mail
     @Operation(description = "Suppression d'une entité enseignant en bd")

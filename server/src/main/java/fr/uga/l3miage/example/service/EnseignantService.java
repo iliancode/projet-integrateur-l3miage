@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +58,10 @@ public class EnseignantService {
         } catch (Exception ex) {
             throw new Exception("Impossible de charger l'entité. Raison :" +ex.getMessage());
         }
+    }
+
+    public List<EnseignantDTO> getAllEnseignants() throws Exception {
+        return enseignantMapper.toDto(enseignantComponent.getAllEnseignants());
     }
 
 

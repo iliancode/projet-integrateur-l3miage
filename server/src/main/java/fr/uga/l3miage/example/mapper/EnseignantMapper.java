@@ -11,6 +11,8 @@ import lombok.NonNull;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper (uses = { MiahootMapper.class, PartieMapper.class})
 public interface EnseignantMapper {
 
@@ -23,4 +25,6 @@ public interface EnseignantMapper {
 
     void mergeEnseignantEntity(@MappingTarget @NonNull Enseignant ancientEnseignant, EnseignantDTO newEnseignant);
     Miahoot map(MiahootDTO miahootDTO);
+
+    List<EnseignantDTO> toDto(List<Enseignant> testEntities);
 }
