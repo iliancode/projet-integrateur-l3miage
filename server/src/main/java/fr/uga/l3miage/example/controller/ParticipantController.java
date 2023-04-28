@@ -27,5 +27,4 @@ public class ParticipantController implements ParticipantEndpoint {
         participantService.deleteParticipant(id);
     }
 
-
 }

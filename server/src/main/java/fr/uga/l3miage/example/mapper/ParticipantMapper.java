@@ -16,7 +16,7 @@ public interface ParticipantMapper {
 
     /**
      * Cette fonction fait le mapping entre une requête de création d'une entité participant et l'entité elle même.
-     * @param request de création d'une entité qui va être transformée en Participant
+     * @param request de création d'une entité qui va être  transformée en Participant
      * @return le Participant correspondant
      */
     Participant toEntity(CreateParticipantRequest request);

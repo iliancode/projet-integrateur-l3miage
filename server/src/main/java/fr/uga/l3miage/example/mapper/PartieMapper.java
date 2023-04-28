@@ -1,18 +1,18 @@
 package fr.uga.l3miage.example.mapper;
 
 import fr.uga.l3miage.example.models.Partie;
-import fr.uga.l3miage.example.response.PartieDTO;
+import fr.uga.l3miage.example.request.CreatePartieRequest;
 import org.mapstruct.Mapper;
 
-import java.util.Collection;
+import java.util.Optional;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface PartieMapper {
-    PartieDTO entityToDTO(Partie partie);
 
-    Collection<PartieDTO> entityToDTO(Iterable<Partie> parties);
 
-    Partie dtoToEntity(PartieDTO partie);
+    Partie toDto(Optional<Partie> testEntity);
+    Partie toEntity(CreatePartieRequest request);
 
-    Collection<Partie> dtoToEntity(Iterable<PartieDTO> parties);
+
+
 }
