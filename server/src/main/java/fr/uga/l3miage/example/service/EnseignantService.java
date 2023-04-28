@@ -1,13 +1,20 @@
 package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.EnseignantComponent;
+import fr.uga.l3miage.example.component.MiahootComponent;
 import fr.uga.l3miage.example.exception.rest.TestEntityNotDeletedRestException;
+import fr.uga.l3miage.example.exception.technical.DescriptionAlreadyExistException;
+import fr.uga.l3miage.example.exception.technical.IsNotTestException;
 import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
 import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
+import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.models.Enseignant;
+import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
+import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
+import fr.uga.l3miage.example.response.MiahootDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +28,9 @@ public class EnseignantService {
 
     private final EnseignantComponent enseignantComponent;
     private final EnseignantMapper enseignantMapper;
+
+    private final MiahootComponent miahootComponent;
+    private final MiahootMapper miahootMapper;
 
     public void createEnseignant( final CreateEnseignantRequest createEnseignantRequest) throws Exception {
         Enseignant newEnseignant = enseignantMapper.toEntity(createEnseignantRequest);
@@ -77,5 +87,22 @@ public class EnseignantService {
             log.info("OUI OUI CEST BIEN ICI LE PROBLEME LAGUI");
             throw new TestEntityNotDeletedRestException(ex.getMessage());
         }
+    }
+
+    @Transactional
+    public void createMiahootFromEnseignant(final String mail, final MiahootDTO miahootDTO) throws Exception {
+
+        //Miahoot miahoot = miahootMapper.toEntity(miahootDTO);
+
+        /**
+        Enseignant enseignant = enseignantComponent.getEnseignantByMail(mail);
+        EnseignantDTO enseignantDTO = enseignantMapper.toDto(enseignant);
+        enseignantDTO.getMiahoots().add(miahootDTO); **/
+        Miahoot miahoot = miahootMapper.toEntity(miahootDTO);
+
+        enseignantComponent.createMiahootFromEnseignant(mail,miahoot);
+
+
+
     }
 }

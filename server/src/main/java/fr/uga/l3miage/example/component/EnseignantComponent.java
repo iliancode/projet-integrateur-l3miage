@@ -8,11 +8,14 @@ import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescript
 import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
+import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -81,4 +84,16 @@ public class EnseignantComponent {
         enseignantMapper.mergeEnseignantEntity(actuelEnseignant,enseignant);
         enseignantRepository.save(actuelEnseignant);
     }
+
+
+    public void createMiahootFromEnseignant(final String mail, final Miahoot miahoot) throws Exception {
+        try {
+            Enseignant enseignant = enseignantRepository.findByMail(mail)
+                    .orElseThrow(() -> new TestEntityNotFoundException( String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail));
+            enseignant.getMiahoots().add(miahoot);
+        } catch (Exception ex) {
+            throw new Exception("Impossible de créer le Miahoot et de l'ajouter. Raison :" + ex.getMessage());
+        }
+    }
+
 }

@@ -11,7 +11,7 @@ import java.util.Collection;
 public interface MiahootMapper {
 
     MiahootDTO toDto(Miahoot miahoot);
-
     Miahoot toEntity(CreateMiahootRequest request);
+    Miahoot toEntity(MiahootDTO miahootDTO);
 
 }
