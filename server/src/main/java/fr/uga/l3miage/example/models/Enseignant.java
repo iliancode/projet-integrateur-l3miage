@@ -25,10 +25,10 @@ public class Enseignant {
     @Column
     private String pseudo;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Miahoot> miahoots;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Partie> parties;
 
 }

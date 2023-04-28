@@ -1,6 +1,9 @@
 package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.EnseignantComponent;
+import fr.uga.l3miage.example.exception.rest.TestEntityNotDeletedRestException;
+import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
+import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
@@ -35,14 +38,7 @@ public class EnseignantService {
         }else throw new Exception("mail size = 0 ");*/
     }
 
-    @Transactional
-    public void deleteEnseignantByMail(String mail) throws Exception {
-        try {
-            enseignantComponent.deleteEnseignantByMail(mail);
-        } catch ( Exception ex) {
-            throw new Exception(ex.getMessage());
-        }
-    }
+
 
     @Transactional
     public void deleteEnseignantById(long id) throws Exception {
@@ -63,12 +59,23 @@ public class EnseignantService {
         }
     }
 
-    /*public Enseignant getEnseignantByPseudo(final String pseudo) throws Exception{
-        try {
-            return enseignantMapper.toDto(enseignantComponent.getEnseignantByPseudo(pseudo));
-        } catch (Exception ex) {
-            throw new Exception("Impossible de charger l'entité. Raison :" +ex.getMessage());
-        }
-    }*/
 
+    @Transactional
+    public void deleteEnseignantByMail(String mail)  {
+        try {
+            enseignantComponent.deleteEnseignantByMail(mail);
+        } catch (MultipleEntityHaveSameDescriptionException | TestEntityNotFoundException ex) {
+            throw new TestEntityNotDeletedRestException(ex.getMessage());
+        }
+    }
+
+
+    public void updateEnseignant (final String lastMail, final EnseignantDTO enseignant){
+        try{
+            enseignantComponent.updateEnseignantByMail(lastMail, enseignant);
+        }catch (Exception ex){
+            log.info("OUI OUI CEST BIEN ICI LE PROBLEME LAGUI");
+            throw new TestEntityNotDeletedRestException(ex.getMessage());
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package fr.uga.l3miage.example.endpoint;
 
 import fr.uga.l3miage.example.annotations.Error400Custom;
+import fr.uga.l3miage.example.error.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,5 +31,25 @@ public interface EnseignantEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{mail}")
     EnseignantDTO getEntityEnseignantByMail(@PathVariable String mail) throws Exception;
+
+    //delete enseignant by mail
+    @Operation(description = "Suppression d'une entité enseignant en bd")
+    @ApiResponse(responseCode = "200", description = "si isInError est à false alors l'element est renvoyé et supprimé")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("{mail}")
+    void deleteEnseignantEntity(@PathVariable("mail") String mail) throws Exception;
+
+
+    @Operation(description = "Modification d'une entité enseignant en bd")
+    @ApiResponse(responseCode = "202", description = "l'entité a bien été modifiée")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être modifiée",
+            content = @Content(schema = @Schema(implementation = TestNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @Error400Custom
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PatchMapping("{mail}")
+    void updateEnseignantEntity(@PathVariable final String mail, @RequestBody final EnseignantDTO enseignantDTO) throws Exception;
+
 
 }

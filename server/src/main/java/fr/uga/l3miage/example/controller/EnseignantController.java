@@ -26,5 +26,15 @@ public class EnseignantController implements EnseignantEndpoint {
         return enseignantService.getEnseignantByMail(mail);
     }
 
+    @Override
+    public void deleteEnseignantEntity(String mail)  {
+        enseignantService.deleteEnseignantByMail(mail);
+    }
+
+    @Override
+    public void updateEnseignantEntity(String mail, EnseignantDTO enseignantDTO) throws Exception {
+        enseignantService.updateEnseignant(mail, enseignantDTO);
+    }
+
 
 }
