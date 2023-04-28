@@ -22,7 +22,6 @@ public class MiahootComponent {
     }
 
     public void createMiahoot(final Miahoot entity){
-        log.info(" Entité info : " + entity);
         miahootRepository.save(entity);
     }
 
