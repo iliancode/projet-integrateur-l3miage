@@ -1,8 +1,7 @@
-package fr.uga.l3miage.example.config.handler;
+package fr.uga.l3miage.example.config.handler.notFoundExceptionHandler;
 
-import fr.uga.l3miage.example.error.DescriptionAlreadyUseErrorResponse;
-import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
-import fr.uga.l3miage.example.exception.rest.DescriptionAlreadyUseRestException;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.EnseignantNotFoundErrorResponse;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -12,8 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 /**
- * Cette classe correspond au handler d'exception rest. Ici, on catch l'exception {@link DescriptionAlreadyUseRestException}<br>
+ * Cette classe correspond au handler d'exception rest. Ici, on catch l'exception {@link EnseignantEntityNotFoundRestException}<br>
  * Les annotations :
  * <ul>
  *     <li>{@link ConditionalOnWebApplication} permet de dire que cette classe est utilisée si nous sommes sur une application web</li>
@@ -26,28 +26,29 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @ControllerAdvice
 @Slf4j
-public class DescriptionAlreadyUseExceptionHandler {
+public class EnseignantNotFoundExceptionHandler {
 
     /**
-     * Cette classe correspond au handler de l'exception {@link DescriptionAlreadyUseRestException}.<br>
-     * Ici lorsque le code va lever l'exception {@link DescriptionAlreadyUseRestException} alors la fonction <b color="blue">handle()</b> sera appelée.<br>
+     * Cette classe correspond au handler de l'exception {@link EnseignantEntityNotFoundRestException}.<br>
+     * Ici lorsque le code va lever l'exception {@link EnseignantEntityNotFoundRestException} alors la fonction <b color="blue">handle()</b> sera appelée.<br>
      * Les annotations :
      * <ul>
      *     <li>{@link ExceptionHandler} permet de donner tous les types d'exceptions qui vont être catch par ce handler</li>
      * </ul>
+     *
      * @param httpServletRequest correspond à la requête effectuée par le client
-     * @param exception L'exception qui a été levée dans le code server, et qui a été catch par ce handler
-     * @return {@link ResponseEntity}<{@link DescriptionAlreadyUseErrorResponse}></li>
+     * @param exception          L'exception qui a été levée dans le code server, et qui a été catch par ce handler
+     * @return {@link ResponseEntity}<{@link EnseignantNotFoundErrorResponse}></li>
      */
-    @ExceptionHandler(DescriptionAlreadyUseRestException.class)
-    public ResponseEntity<ErrorResponse> handle(HttpServletRequest httpServletRequest, Exception exception){
-        DescriptionAlreadyUseRestException ex = (DescriptionAlreadyUseRestException) exception;
-        final DescriptionAlreadyUseErrorResponse response = DescriptionAlreadyUseErrorResponse.builder()
+    @ExceptionHandler(EnseignantEntityNotFoundRestException.class)
+    public ResponseEntity<EnseignantNotFoundErrorResponse> handle(HttpServletRequest httpServletRequest, Exception exception) {
+        EnseignantEntityNotFoundRestException ex = (EnseignantEntityNotFoundRestException) exception;
+        final EnseignantNotFoundErrorResponse response = EnseignantNotFoundErrorResponse.builder()
                 .uri(httpServletRequest.getRequestURI())
                 .httpStatus(ex.getHttpStatus())
-                .errorCode(ex.getErrorCode())
                 .errorMessage(ex.getMessage())
-                .description(ex.getDescription())
+                .errorCode(ex.getErrorCode())
+                .mail(ex.getMail())
                 .build();
         log.warn(ex.getMessage());
         return ResponseEntity.status(ex.getHttpStatus()).body(response);

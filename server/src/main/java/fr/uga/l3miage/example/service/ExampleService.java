@@ -2,7 +2,9 @@ package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.ExampleComponent;
 import fr.uga.l3miage.example.exception.rest.*;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.TestEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.*;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.TestMapper;
 import fr.uga.l3miage.example.models.TestEntity;
 import fr.uga.l3miage.example.request.CreateTestRequest;

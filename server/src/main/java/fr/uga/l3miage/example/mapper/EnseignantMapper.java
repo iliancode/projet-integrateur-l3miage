@@ -18,7 +18,6 @@ public interface EnseignantMapper {
 
 
     Enseignant toEntity(CreateEnseignantRequest request);
-    // @Mapping(source = "miahoots",target = "miahootsDTO",qualifiedBy = TestMapperUtils.ToSumTestInt.class)
     EnseignantDTO toDto(Enseignant testEntity);
 
     PartieDTO map(Partie partie);

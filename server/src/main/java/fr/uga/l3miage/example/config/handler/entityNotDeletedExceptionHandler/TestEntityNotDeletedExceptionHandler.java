@@ -1,6 +1,6 @@
 package fr.uga.l3miage.example.config.handler.entityNotDeletedExceptionHandler;
 
-import fr.uga.l3miage.example.error.ErrorResponse;
+import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
 import fr.uga.l3miage.example.error.TestEntityNotDeletedErrorResponse;
 import fr.uga.l3miage.example.exception.rest.TestEntityNotDeletedRestException;
 import lombok.RequiredArgsConstructor;

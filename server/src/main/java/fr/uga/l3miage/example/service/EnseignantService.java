@@ -2,8 +2,10 @@ package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.EnseignantComponent;
 import fr.uga.l3miage.example.exception.rest.TestEntityNotDeletedRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
-import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
@@ -23,20 +25,12 @@ public class EnseignantService {
     private final EnseignantComponent enseignantComponent;
     private final EnseignantMapper enseignantMapper;
 
-    public void createEnseignant( final CreateEnseignantRequest createEnseignantRequest) throws Exception {
+    /**
+     * @param createEnseignantRequest la requête qui permet de créer une entité enseignant
+     */
+    public void createEnseignant( final CreateEnseignantRequest createEnseignantRequest) {
         Enseignant newEnseignant = enseignantMapper.toEntity(createEnseignantRequest);
-
-       /* if(newEnseignant.getMail().length() !=0){
-            if(newEnseignant.getPseudo().length() != 0){
-                if(newEnseignant.getMdp().length() >9){
-                    try{*/
-                        enseignantComponent.createEnseignant(newEnseignant);
-                    /*} catch (Exception e) {
-                        throw new Exception("erreur a la creation de l'enseignant");
-                    }
-                }else throw new Exception("mdp size <=9 ");
-            }else throw new Exception("pseudo size = 0 ");
-        }else throw new Exception("mail size = 0 ");*/
+        enseignantComponent.createEnseignant(newEnseignant);
     }
 
 
@@ -50,13 +44,15 @@ public class EnseignantService {
         }
     }
 
-    public EnseignantDTO getEnseignantByMail(final String mail) throws Exception {
+    /**
+     * @param mail de l'entité enseignant recherché
+     * @return le dto enseignant correspondant au mail
+     */
+    public EnseignantDTO getEnseignantByMail(final String mail) {
         try {
-            Enseignant enseignant = enseignantComponent.getEnseignantByMail(mail);
-            EnseignantDTO enseignantDTO = enseignantMapper.toDto(enseignant);
             return enseignantMapper.toDto(enseignantComponent.getEnseignantByMail(mail));
-        } catch (Exception ex) {
-            throw new Exception("Impossible de charger l'entité. Raison :" +ex.getMessage());
+        } catch (EnseignantEntityNotFoundException e) {
+            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]", e.getMessage()),mail,e);
         }
     }
 

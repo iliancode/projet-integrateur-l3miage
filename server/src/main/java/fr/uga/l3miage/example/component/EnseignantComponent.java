@@ -5,7 +5,8 @@ package fr.uga.l3miage.example.component;
 import fr.uga.l3miage.example.exception.technical.DescriptionAlreadyExistException;
 import fr.uga.l3miage.example.exception.technical.IsNotTestException;
 import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
-import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
@@ -23,25 +24,11 @@ public class EnseignantComponent {
     private final EnseignantRepository enseignantRepository;
     private final EnseignantMapper enseignantMapper;
 
-    //test de creation d'un enseignant
-    public void createEnseignant(final Enseignant enseignant) throws Exception{
-      /* if(enseignant.getMail().isEmpty() == false){
-            if(enseignantRepository.findByMail(enseignant.getMail()).isPresent()){
-                throw new Exception("Mail deja existant dans la base de données");
-            }else{
-                if(enseignantRepository.findByPseudo(enseignant.getPseudo()).isPresent()){
-                    throw new Exception("Pseudo deja existant dans la base de données");
-                }
-                else{
-                    if(enseignant.getMdp().isEmpty()){
-                        throw new Exception("Le mot de passe ne peut pas etre vide");
-                    }else{*/
-        log.info("ICI : enseignant component : " + enseignant);
-                        enseignantRepository.save(enseignant);
-                  /*  }
-                }
-            }
-        }else throw new Exception("Mail non renseigné");*/
+    /**
+     * @param enseignant à créer en base de données
+     */
+    public void createEnseignant(final Enseignant enseignant) {
+        enseignantRepository.save(enseignant);
     }
 
     public void deleteEnseignantById(final long id) throws Exception {
@@ -53,10 +40,14 @@ public class EnseignantComponent {
 
     }
 
-    public Enseignant getEnseignantByMail(final String mail) throws Exception {
-
+    /**
+     * @param mail de l'entité Enseingnant à récupérer
+     * @return une {@link Enseignant} correspondant à un mail donné
+     * @throws EnseignantEntityNotFoundException si aucune entité Enseignant n'est trouvée
+     */
+    public Enseignant getEnseignantByMail(final String mail) throws EnseignantEntityNotFoundException {
             return enseignantRepository.findByMail(mail)
-                    .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " +  mail));
+                    .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("L'entité à supprimer n'a pas été trouvée pour le mail [%s]", mail), mail));
     }
 
     //get all enseignants

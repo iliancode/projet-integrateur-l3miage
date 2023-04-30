@@ -2,8 +2,8 @@ package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.ParticipantComponent;
 import fr.uga.l3miage.example.exception.rest.ParticipantEntityNotDeletedRestException;
-import fr.uga.l3miage.example.exception.rest.ParticipantEntityNotFoundRestException;
-import fr.uga.l3miage.example.exception.technical.ParticipantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ParticipantEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ParticipantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.ParticipantMapper;
 import fr.uga.l3miage.example.models.Participant;
 import fr.uga.l3miage.example.request.CreateParticipantRequest;

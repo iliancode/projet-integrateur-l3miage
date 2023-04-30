@@ -1,16 +1,10 @@
 package fr.uga.l3miage.example.component;
-import fr.uga.l3miage.example.exception.rest.ReponseEntityNotFoundRestException;
-import fr.uga.l3miage.example.exception.technical.*;
-import fr.uga.l3miage.example.mapper.TestMapper;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ReponseEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ReponseEntityNotFoundException;
 import fr.uga.l3miage.example.models.Reponse;
-import fr.uga.l3miage.example.models.TestEntity;
 import fr.uga.l3miage.example.repository.ReponseRepository;
-import fr.uga.l3miage.example.repository.TestRepository;
-import fr.uga.l3miage.example.response.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.context.annotation.Bean;
-import fr.uga.l3miage.example.config.HelloWordConfig;
 import fr.uga.l3miage.example.mapper.ReponseMapper;
 
 @Component
@@ -35,7 +29,7 @@ public class ReponseComponent {
 
         }
     //Suppression d'une reponse
-    public void deleteReponse(final String label) throws ReponseEntityNotFoundException{
+    public void deleteReponse(final String label) throws ReponseEntityNotFoundException {
         try{
             Reponse deleted = getReponse(label);
             reponseRepository.deleteByLabel(label);

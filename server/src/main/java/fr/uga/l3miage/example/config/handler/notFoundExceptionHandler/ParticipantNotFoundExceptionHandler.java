@@ -1,8 +1,8 @@
 package fr.uga.l3miage.example.config.handler.notFoundExceptionHandler;
 
-import fr.uga.l3miage.example.error.ErrorResponse;
-import fr.uga.l3miage.example.error.ParticipantNotFoundErrorResponse;
-import fr.uga.l3miage.example.exception.rest.ParticipantEntityNotFoundRestException;
+import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.ParticipantNotFoundErrorResponse;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ParticipantEntityNotFoundRestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;

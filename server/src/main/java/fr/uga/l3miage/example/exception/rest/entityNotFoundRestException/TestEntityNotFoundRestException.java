@@ -1,4 +1,4 @@
-package fr.uga.l3miage.example.exception.rest;
+package fr.uga.l3miage.example.exception.rest.entityNotFoundRestException;
 
 import fr.uga.l3miage.example.error.ErrorCode;
 import lombok.Getter;

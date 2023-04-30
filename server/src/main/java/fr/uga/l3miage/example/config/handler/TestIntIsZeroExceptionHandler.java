@@ -1,6 +1,6 @@
 package fr.uga.l3miage.example.config.handler;
 
-import fr.uga.l3miage.example.error.ErrorResponse;
+import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
 import fr.uga.l3miage.example.error.TestIntIsZeroErrorResponse;
 import fr.uga.l3miage.example.exception.rest.TestIntIsZeroRestException;
 import lombok.RequiredArgsConstructor;

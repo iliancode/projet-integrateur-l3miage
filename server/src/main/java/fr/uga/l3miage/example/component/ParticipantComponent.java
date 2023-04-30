@@ -1,6 +1,6 @@
 package fr.uga.l3miage.example.component;
 
-import fr.uga.l3miage.example.exception.technical.ParticipantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ParticipantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.ParticipantMapper;
 import fr.uga.l3miage.example.models.Participant;
 import fr.uga.l3miage.example.models.TestEntity;
@@ -22,7 +22,6 @@ public class ParticipantComponent {
      * @throws ParticipantEntityNotFoundException si aucune entité Participant n'est trouvée
      */
     public Participant getParticipant(final Long id) throws ParticipantEntityNotFoundException {
-        log.info("Je suis dans getParticipant, je reçois l'id : " + id + participantRepository.findById(id));
         return participantRepository.findById(id)
                 .orElseThrow(() -> new ParticipantEntityNotFoundException(String.format("Aucune entité Participant n'a été trouvée pour l'id [%d]", id), id));
     }
@@ -31,7 +30,6 @@ public class ParticipantComponent {
      * @param entity à créer en base de données
      */
     public void createParticipant(final Participant entity) {
-        log.info("ICI : participant component : " + entity);
         participantRepository.save(entity);
     }
 

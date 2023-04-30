@@ -1,10 +1,9 @@
 package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.ReponseComponent;
-import fr.uga.l3miage.example.exception.rest.ParticipantEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.rest.ReponseEntityNotDeletedRestException;
-import fr.uga.l3miage.example.exception.rest.ReponseEntityNotFoundRestException;
-import fr.uga.l3miage.example.exception.technical.ReponseEntityNotFoundException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ReponseEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ReponseEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.ReponseMapper;
 import fr.uga.l3miage.example.models.Reponse;
 import fr.uga.l3miage.example.request.CreateReponseRequest;

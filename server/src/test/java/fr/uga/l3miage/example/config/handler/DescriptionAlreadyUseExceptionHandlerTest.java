@@ -1,7 +1,7 @@
 package fr.uga.l3miage.example.config.handler;
 
 import fr.uga.l3miage.example.error.DescriptionAlreadyUseErrorResponse;
-import fr.uga.l3miage.example.error.ErrorResponse;
+import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
 import fr.uga.l3miage.example.exception.rest.DescriptionAlreadyUseRestException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;

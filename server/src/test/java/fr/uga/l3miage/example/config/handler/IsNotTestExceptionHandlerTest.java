@@ -1,6 +1,6 @@
 package fr.uga.l3miage.example.config.handler;
 
-import fr.uga.l3miage.example.error.ErrorResponse;
+import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
 import fr.uga.l3miage.example.error.IsNotTestErrorResponse;
 import fr.uga.l3miage.example.exception.rest.IsNotTestRestException;
 import fr.uga.l3miage.example.request.CreateTestRequest;

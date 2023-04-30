@@ -4,7 +4,7 @@ import fr.uga.l3miage.example.annotations.Error400Custom;
 import fr.uga.l3miage.example.error.IsNotTestErrorResponse;
 import fr.uga.l3miage.example.error.TestEntityNotDeletedErrorResponse;
 import fr.uga.l3miage.example.error.TestIntIsZeroErrorResponse;
-import fr.uga.l3miage.example.error.TestNotFoundErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.error.DescriptionAlreadyUseErrorResponse;
 import fr.uga.l3miage.example.request.CreateTestRequest;
 import fr.uga.l3miage.example.response.Test;

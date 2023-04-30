@@ -2,6 +2,7 @@ package fr.uga.l3miage.example.error;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -14,7 +15,7 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 @JsonTypeName(ParticipantEntityNotDeletedErrorResponse.TYPE_NAME)
 @ToString(callSuper = true, exclude = "errorCodeSwaggerDocumentation")
 @EqualsAndHashCode(callSuper = true)
-public class ParticipantEntityNotDeletedErrorResponse extends ErrorResponse{
+public class ParticipantEntityNotDeletedErrorResponse extends ErrorResponse {
 
     protected static final String TYPE_NAME = "PARTICIPANT_ENTITY_NOT_DELETED_ERROR";
 

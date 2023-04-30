@@ -1,7 +1,9 @@
-package fr.uga.l3miage.example.error;
+package fr.uga.l3miage.example.error.errorResponse;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import fr.uga.l3miage.example.error.*;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,17 +39,17 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Data
-public abstract class ErrorResponse {
-    @Schema(description = "endpoint appelé", example = "/exemple/{id}")
+public abstract class EnseignantErrorResponse {
+    @Schema(description = "endpoint appelé", example = "/enseignant/{mail}")
     private final String uri;
-    @Schema(description = "code http de la réponse", example = "409")
+    @Schema(description = "code http de la réponse", example = "404")
     private final HttpStatus httpStatus;
-    @Schema(description = "code de l'erreur", example="TEST_INT_IS_ZERO_ERROR")
+    @Schema(description = "code de l'erreur", example="ENSEIGNANT_IS_NOT_FOUND")
     private final ErrorCode errorCode;
     @Schema(description = "message d'erreur")
     private final String errorMessage;
 
-    protected ErrorResponse(final ErrorCode errorCode){
+    protected EnseignantErrorResponse(final ErrorCode errorCode){
         this(null,null,errorCode,null);
     }
 }
