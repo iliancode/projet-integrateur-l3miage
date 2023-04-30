@@ -2,15 +2,12 @@ package fr.uga.l3miage.example.component;
 
 //import fr.uga.l3miage.example.mapper.EnseignantMapper;
 
-import fr.uga.l3miage.example.exception.technical.DescriptionAlreadyExistException;
-import fr.uga.l3miage.example.exception.technical.IsNotTestException;
-import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
+import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
-import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
-import fr.uga.l3miage.example.response.EnseignantDTO;
+import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -27,17 +24,11 @@ public class EnseignantComponent {
     /**
      * @param enseignant à créer en base de données
      */
-    public void createEnseignant(final Enseignant enseignant) {
+    public void createEnseignant(final Enseignant enseignant) throws MailAlreadyExistException {
+        if(enseignantRepository.findByMail(enseignant.getMail()).isPresent()){
+            throw new MailAlreadyExistException(String.format("Ce mail existe deja dans la base de données"), enseignant.getMail());
+        }
         enseignantRepository.save(enseignant);
-    }
-
-    public void deleteEnseignantById(final long id) throws Exception {
-        int deleted = enseignantRepository.deleteById(id);
-        if (deleted > 1)
-            throw new Exception("Plusieurs entités ont le même mail alors que c'est impossible niveau métier !!");
-        else if (deleted == 0)
-            throw new Exception("L'entité à supprimer n'a pas été trouvée " +  id);
-
     }
 
     /**
@@ -50,30 +41,27 @@ public class EnseignantComponent {
                     .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("L'entité à supprimer n'a pas été trouvée pour le mail [%s]", mail), mail));
     }
 
-    //get all enseignants
-    public List<Enseignant> getAllEnseignants() throws Exception {
+    public List<Enseignant> getAllEnseignants() {
         return enseignantRepository.findAll();
     }
-    public void deleteEnseignantByMail(final String mail) throws MultipleEntityHaveSameDescriptionException, TestEntityNotFoundException {
-        int deleted = enseignantRepository.deleteByMail(mail);
-        log.info("deleted : " + deleted);
-        if (deleted > 1)
-            throw new MultipleEntityHaveSameDescriptionException("Plusieurs entités ont le même mail alors que c'est impossible niveau métier !!");
-        else if (deleted == 0)
-            throw new TestEntityNotFoundException("L'entité à supprimer n'a pas été trouvée " ,  mail);
 
+    public void deleteEnseignantByMail(final String mail) throws EnseignantEntityNotFoundException {
+        int deleted = enseignantRepository.deleteByMail(mail);
+        if (deleted == 0) {
+            throw new EnseignantEntityNotFoundException("L'entité à supprimer n'a pas été trouvée ", mail);
+        }
     }
 
-    public void updateEnseignantByMail(final String lastMail , final EnseignantDTO enseignant) throws TestEntityNotFoundException, IsNotTestException, DescriptionAlreadyExistException{
+    public void updateEnseignantByMail(final String lastMail , final CreateEnseignantRequest request) throws EnseignantEntityNotFoundException, MailAlreadyExistException {
 
-        if(!lastMail.equals(enseignant.getMail()) && enseignantRepository.findByMail(enseignant.getMail()).isPresent()){
-            throw new DescriptionAlreadyExistException(String.format("Ce mail existe deja dans la base de données"), enseignant.getMail());
+        if(!lastMail.equals(request.getMail()) && enseignantRepository.findByMail(request.getMail()).isPresent()){
+            throw new MailAlreadyExistException(String.format("Ce mail existe deja dans la base de données"), request.getMail());
         }
 
         Enseignant actuelEnseignant = enseignantRepository.findByMail(lastMail)
-                .orElseThrow(() -> new TestEntityNotFoundException( String.format("Aucune entité n'a été trouvé pour le mail [%s]", lastMail), lastMail));
+                .orElseThrow(() -> new EnseignantEntityNotFoundException( String.format("Aucune entité n'a été trouvé pour le mail [%s]", lastMail), lastMail));
 
-        enseignantMapper.mergeEnseignantEntity(actuelEnseignant,enseignant);
+        enseignantMapper.mergeEnseignantEntity(actuelEnseignant,request);
         enseignantRepository.save(actuelEnseignant);
     }
 }

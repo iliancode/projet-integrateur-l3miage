@@ -2,8 +2,11 @@ package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.ExampleComponent;
 import fr.uga.l3miage.example.exception.rest.*;
+import fr.uga.l3miage.example.exception.rest.alreadyUseRestException.DescriptionAlreadyUseRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.TestEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.TestEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.*;
+import fr.uga.l3miage.example.exception.technical.alreadyExistException.DescriptionAlreadyExistException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.TestMapper;
 import fr.uga.l3miage.example.models.TestEntity;
@@ -28,7 +31,7 @@ import javax.transaction.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ExampleService {
-    private static final String ERROR_DETECTED = "Une erreur lors de la création de l'entité TestConfigWithProperties à été détecté.";
+    static final String ERROR_DETECTED = "Une erreur lors de la création de l'entité TestConfigWithProperties à été détecté.";
     private final ExampleComponent exampleComponent;
     private final TestMapper testMapper;
 

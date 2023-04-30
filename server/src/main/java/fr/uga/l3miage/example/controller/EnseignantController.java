@@ -29,18 +29,18 @@ public class EnseignantController implements EnseignantEndpoint {
     }
 
     @Override
-    public List<EnseignantDTO> getAllEnseignants() throws Exception {
+    public List<EnseignantDTO> getAllEnseignants() {
         return enseignantService.getAllEnseignants();
     }
 
     @Override
-    public void deleteEnseignantEntity(String mail)  {
+    public void deleteEnseignantEntity(String mail) {
         enseignantService.deleteEnseignantByMail(mail);
     }
 
     @Override
-    public void updateEnseignantEntity(String mail, EnseignantDTO enseignantDTO) throws Exception {
-        enseignantService.updateEnseignant(mail, enseignantDTO);
+    public void updateEnseignantEntity(String mail, CreateEnseignantRequest request) {
+        enseignantService.updateEnseignant(mail, request);
     }
 
 

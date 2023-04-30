@@ -28,6 +28,7 @@ public interface EnseignantEndpoint {
     @PostMapping
     void createEntityEnseignant(@Valid @RequestBody CreateEnseignantRequest request);
 
+
     @Operation(description = "Récupération d'une entité Enseignant par son email")
     @ApiResponse(responseCode = "200", description = "L'entité Enseignant a bien été récupérée.",
     content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_STREAM_JSON_VALUE))
@@ -38,13 +39,12 @@ public interface EnseignantEndpoint {
     EnseignantDTO getEntityEnseignantByMail(@PathVariable("mail") String mail);
 
 
-    //get all enseignants
     @Operation(description = "Récupération de toutes les entités enseignant en bd")
     @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités enseignant",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    List<EnseignantDTO> getAllEnseignants() throws Exception;
+    List<EnseignantDTO> getAllEnseignants();
 
 
     //delete enseignant by mail
@@ -54,7 +54,7 @@ public interface EnseignantEndpoint {
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("{mail}")
-    void deleteEnseignantEntity(@PathVariable("mail") String mail) throws Exception;
+    void deleteEnseignantEntity(@PathVariable("mail") String mail);
 
 
     @Operation(description = "Modification d'une entité enseignant en bd")
@@ -64,7 +64,6 @@ public interface EnseignantEndpoint {
     @Error400Custom
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping("{mail}")
-    void updateEnseignantEntity(@PathVariable final String mail, @RequestBody final EnseignantDTO enseignantDTO) throws Exception;
-
+    void updateEnseignantEntity(@PathVariable final String mail, @Valid @RequestBody final CreateEnseignantRequest request);
 
 }

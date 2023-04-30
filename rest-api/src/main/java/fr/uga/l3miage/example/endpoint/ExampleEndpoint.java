@@ -2,10 +2,10 @@ package fr.uga.l3miage.example.endpoint;
 
 import fr.uga.l3miage.example.annotations.Error400Custom;
 import fr.uga.l3miage.example.error.IsNotTestErrorResponse;
-import fr.uga.l3miage.example.error.TestEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.TestEntityNotDeletedErrorResponse;
 import fr.uga.l3miage.example.error.TestIntIsZeroErrorResponse;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
-import fr.uga.l3miage.example.error.DescriptionAlreadyUseErrorResponse;
+import fr.uga.l3miage.example.error.alreadyUseErrorResponse.DescriptionAlreadyUseErrorResponse;
 import fr.uga.l3miage.example.request.CreateTestRequest;
 import fr.uga.l3miage.example.response.Test;
 import io.swagger.v3.oas.annotations.Operation;

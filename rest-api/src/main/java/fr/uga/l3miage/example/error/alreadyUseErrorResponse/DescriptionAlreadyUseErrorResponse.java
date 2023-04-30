@@ -1,7 +1,8 @@
-package fr.uga.l3miage.example.error;
+package fr.uga.l3miage.example.error.alreadyUseErrorResponse;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import fr.uga.l3miage.example.error.ErrorCode;
 import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

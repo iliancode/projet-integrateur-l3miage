@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @Builder
@@ -20,4 +21,9 @@ public class EnseignantDTO {
 
     @NotBlank
     private String pseudo;
+
+    private List<MiahootDTO> miahoots;
+
+    private List<PartieDTO> parties;
+
 }

@@ -1,6 +1,5 @@
-package fr.uga.l3miage.example.exception.rest;
+package fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException;
 
-import fr.uga.l3miage.example.exception.rest.ParticipantEntityNotDeletedRestException;
 import lombok.Getter;
 import fr.uga.l3miage.example.error.ErrorCode;
 import org.springframework.http.HttpStatus;

@@ -22,7 +22,7 @@ public interface EnseignantMapper {
 
     PartieDTO map(Partie partie);
 
-    void mergeEnseignantEntity(@MappingTarget @NonNull Enseignant ancientEnseignant, EnseignantDTO newEnseignant);
+    void mergeEnseignantEntity(@MappingTarget @NonNull Enseignant ancientEnseignant, CreateEnseignantRequest newEnseignant);
     Miahoot map(MiahootDTO miahootDTO);
 
     List<EnseignantDTO> toDto(List<Enseignant> testEntities);

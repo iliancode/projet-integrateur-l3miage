@@ -1,6 +1,6 @@
 package fr.uga.l3miage.example.annotations;
 
-import fr.uga.l3miage.example.error.DescriptionAlreadyUseErrorResponse;
+import fr.uga.l3miage.example.error.alreadyUseErrorResponse.DescriptionAlreadyUseErrorResponse;
 import fr.uga.l3miage.example.error.IsNotTestErrorResponse;
 import fr.uga.l3miage.example.error.TestIntIsZeroErrorResponse;
 import io.swagger.v3.oas.annotations.media.Content;
