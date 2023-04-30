@@ -23,5 +23,7 @@ public class Miahoot {
     @OneToMany
     private List<Question> questions;
 
-
+    public void addQuestion(Question question){
+        this.questions.add(question);
+    }
 }

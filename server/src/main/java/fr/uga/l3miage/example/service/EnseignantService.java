@@ -5,8 +5,11 @@ import fr.uga.l3miage.example.exception.rest.TestEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
 import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
+import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.Enseignant;
+import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
+import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +25,7 @@ public class EnseignantService {
 
     private final EnseignantComponent enseignantComponent;
     private final EnseignantMapper enseignantMapper;
-
+    private final QuestionMapper questionMapper;
     public void createEnseignant( final CreateEnseignantRequest createEnseignantRequest) throws Exception {
         Enseignant newEnseignant = enseignantMapper.toEntity(createEnseignantRequest);
 
@@ -82,5 +85,13 @@ public class EnseignantService {
             log.info("OUI OUI CEST BIEN ICI LE PROBLEME LAGUI");
             throw new TestEntityNotDeletedRestException(ex.getMessage());
         }
+    }
+
+    public void addQuestionToMiahoot(String mail, Long idMiahoot, CreateQuestionRequest createQuestionRequest) throws Exception {
+        Question newQuestion = questionMapper.toEntity(createQuestionRequest);
+
+        enseignantComponent.createQuestionInMiahoot(mail, idMiahoot, newQuestion);
+
+
     }
 }
