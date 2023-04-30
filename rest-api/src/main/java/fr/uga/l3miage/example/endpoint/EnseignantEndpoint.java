@@ -3,6 +3,8 @@ package fr.uga.l3miage.example.endpoint;
 import fr.uga.l3miage.example.annotations.Error400Custom;
 import fr.uga.l3miage.example.error.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
+import fr.uga.l3miage.example.request.CreateMiahootRequest;
+import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

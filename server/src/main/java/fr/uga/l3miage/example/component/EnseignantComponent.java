@@ -8,6 +8,8 @@ import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescript
 import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
+import fr.uga.l3miage.example.models.Miahoot;
+import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
 import fr.uga.l3miage.example.repository.MiahootRepository;
 import fr.uga.l3miage.example.response.EnseignantDTO;
@@ -58,9 +60,9 @@ public class EnseignantComponent {
 
     public Enseignant getEnseignantByMail(final String mail) throws Exception {
 
-            return enseignantRepository.findByMail(mail)
-                    .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " +  mail));
-
+        return enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " + mail));
+    }
 
     //get all enseignants
     public List<Enseignant> getAllEnseignants() throws Exception {

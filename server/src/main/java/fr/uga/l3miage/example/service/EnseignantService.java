@@ -1,12 +1,19 @@
 package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.EnseignantComponent;
+import fr.uga.l3miage.example.component.MiahootComponent;
 import fr.uga.l3miage.example.exception.rest.TestEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
 import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
+import fr.uga.l3miage.example.mapper.MiahootMapper;
+import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.Enseignant;
+import fr.uga.l3miage.example.models.Miahoot;
+import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
+import fr.uga.l3miage.example.request.CreateMiahootRequest;
+import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
