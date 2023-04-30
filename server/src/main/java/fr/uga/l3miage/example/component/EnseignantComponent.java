@@ -12,13 +12,13 @@ import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
 import fr.uga.l3miage.example.repository.MiahootRepository;
+import fr.uga.l3miage.example.repository.QuestionRepository;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -27,6 +27,8 @@ public class EnseignantComponent {
     private final EnseignantRepository enseignantRepository;
     private final EnseignantMapper enseignantMapper;
     private final MiahootRepository miahootRepository;
+    private final QuestionRepository questionRepository;
+
 
     //test de creation d'un enseignant
     public void createEnseignant(final Enseignant enseignant) throws Exception{
@@ -92,21 +94,27 @@ public class EnseignantComponent {
         enseignantRepository.save(actuelEnseignant);
     }
 
-    public void createQuestionInMiahoot(String mail, Long idMiahoot, Question question) throws Exception {
+    public void createQuestionInMiahoot(final String mail, final Long idMiahoot,  final Question question) throws Exception {
+        log.info("enseignant component atteint");
+
         Enseignant e = enseignantRepository.findByMail(mail)
                 .orElseThrow(() -> new TestEntityNotFoundException( String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail));
 
-        try{
-            Optional<Miahoot> m = miahootRepository.findById(idMiahoot);
-            if(m.isPresent()){
-               m.get().addQuestion(question);
-               miahootRepository.save(m.get());
-            }
-        }catch (Exception ex ){
-            throw new Exception("Miahoot non trouvé");
+        Miahoot m = miahootRepository.findById(idMiahoot)
+                .orElseThrow(() -> new Exception( "Aucune entité n'a été trouvé pour l'id "));
+
+        if(e.containsMiahoot(idMiahoot)){
+
+            questionRepository.save(question);
+
+            e.getMiahoot(idMiahoot).getQuestions().add(question);
+            enseignantRepository.save(e);
+            miahootRepository.save(m);
+
+
+        }else{
+            throw new Exception("L'enseignant n'a pas le droit de modifier ce miahoot");
         }
-
-
 
     }
 

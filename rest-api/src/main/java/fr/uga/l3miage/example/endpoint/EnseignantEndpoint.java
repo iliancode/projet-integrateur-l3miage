@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -83,6 +84,6 @@ public interface EnseignantEndpoint {
     @Error400Custom
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("{mail}/miahoots/{idMiahoot}/questions")
-    void addQuestionToMiahoot(String mail, Long idMiahoot, @RequestBody CreateQuestionRequest createQuestionRequest) throws Exception;
+    void addQuestionToMiahoot(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @RequestBody CreateQuestionRequest createQuestionRequest) throws Exception;
 
 }

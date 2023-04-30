@@ -31,4 +31,23 @@ public class Enseignant {
     @OneToMany(cascade=CascadeType.ALL)
     private List<Partie> parties;
 
+    //search in miahoots if there is a miahoot with the same id
+    public boolean containsMiahoot(long id){
+        for(Miahoot m : miahoots){
+            if(m.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //get the miahoot with the same id
+    public Miahoot getMiahoot(long id){
+        for(Miahoot m : miahoots){
+            if(m.getId() == id){
+                return m;
+            }
+        }
+        return null;
+    }
 }

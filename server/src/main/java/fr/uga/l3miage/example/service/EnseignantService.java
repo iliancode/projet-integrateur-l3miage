@@ -95,11 +95,9 @@ public class EnseignantService {
         }
     }
 
-    public void addQuestionToMiahoot(String mail, Long idMiahoot, CreateQuestionRequest createQuestionRequest) throws Exception {
-        Question newQuestion = questionMapper.toEntity(createQuestionRequest);
-
+    public void addQuestionToMiahoot(final String mail, final Long idMiahoot, final CreateQuestionRequest createQuestionRequest) throws Exception {
+        Question newQuestion = questionMapper.toQuestion(createQuestionRequest);
         enseignantComponent.createQuestionInMiahoot(mail, idMiahoot, newQuestion);
-
 
     }
 
@@ -108,8 +106,5 @@ public class EnseignantService {
 
         Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
         enseignantComponent.createMiahootFromEnseignant(mail, newMiahoot);
-
-
-
     }
 }
