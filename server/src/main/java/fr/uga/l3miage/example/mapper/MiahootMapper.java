@@ -7,7 +7,9 @@ import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
 import org.mapstruct.Mapper;
 
-@Mapper
+import java.util.Collection;
+
+@Mapper(uses = QuestionMapper.class)
 public interface MiahootMapper {
 
     Miahoot toEntity(CreateMiahootRequest request);
@@ -15,4 +17,8 @@ public interface MiahootMapper {
     MiahootDTO toDto(Miahoot testEntity);
 
     QuestionDTO map(Question question);
+
+
+    Miahoot toEntity(MiahootDTO miahootDTO);
+
 }

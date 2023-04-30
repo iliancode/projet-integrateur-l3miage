@@ -5,11 +5,8 @@ import fr.uga.l3miage.example.exception.rest.TestEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
 import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
-import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.Enseignant;
-import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
-import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +23,10 @@ public class EnseignantService {
     private final EnseignantComponent enseignantComponent;
     private final EnseignantMapper enseignantMapper;
     private final QuestionMapper questionMapper;
+
+    private final MiahootComponent miahootComponent;
+    private final MiahootMapper miahootMapper;
+
     public void createEnseignant( final CreateEnseignantRequest createEnseignantRequest) throws Exception {
         Enseignant newEnseignant = enseignantMapper.toEntity(createEnseignantRequest);
 
@@ -91,6 +92,16 @@ public class EnseignantService {
         Question newQuestion = questionMapper.toEntity(createQuestionRequest);
 
         enseignantComponent.createQuestionInMiahoot(mail, idMiahoot, newQuestion);
+
+
+    }
+
+    @Transactional
+    public void createMiahootFromEnseignant(final String mail, final CreateMiahootRequest createMiahootRequest) throws Exception {
+
+        Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
+        enseignantComponent.createMiahootFromEnseignant(mail, newMiahoot);
+
 
 
     }

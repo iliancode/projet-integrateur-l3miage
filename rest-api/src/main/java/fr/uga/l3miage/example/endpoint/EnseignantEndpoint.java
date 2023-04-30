@@ -3,7 +3,6 @@ package fr.uga.l3miage.example.endpoint;
 import fr.uga.l3miage.example.annotations.Error400Custom;
 import fr.uga.l3miage.example.error.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
-import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -44,6 +43,16 @@ public interface EnseignantEndpoint {
     @GetMapping
     List<EnseignantDTO> getAllEnseignants() throws Exception;
 
+
+
+    @Operation(description = "Création d'une entité miahoot et ajout dans la liste des miahoot de l'enseignant")
+    //@ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si le miahoot na pas pu etre creer",
+      //      content = @Content(schema = @Schema(implementation = TestNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ApiResponse(responseCode = "201", description = "L'entité Miahoot a bien été créée et ajoutée à la liste de Miahoots de l'enseignant.")
+    @Error400Custom
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("{mail}/miahoots")
+    public void createEntityMiahootFromEnseignant(@PathVariable String mail, @RequestBody CreateMiahootRequest request) throws Exception;
 
     //delete enseignant by mail
     @Operation(description = "Suppression d'une entité enseignant en bd")

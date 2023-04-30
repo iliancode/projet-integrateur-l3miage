@@ -27,4 +27,7 @@ public interface EnseignantMapper {
     Miahoot map(MiahootDTO miahootDTO);
 
     List<EnseignantDTO> toDto(List<Enseignant> testEntities);
+   // Miahoot map(MiahootDTO miahootDTO);
+
+
 }

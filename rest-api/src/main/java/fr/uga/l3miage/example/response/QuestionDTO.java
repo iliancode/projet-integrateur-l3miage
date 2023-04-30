@@ -9,9 +9,9 @@ import java.util.Collection;
 
 @Schema(description = "correspond au DTO de l'entité Question")
 public class QuestionDTO{
-    @NotBlank(message ="La formulation d'une question est obligatoire")
+    //@NotBlank(message ="La formulation d'une question est obligatoire")
     String label;
-    @NotNull
-    @Size(min=2, message= "Il dot y avoir au moins 2 reponses pour une question donnée")
+    //@NotNull
+    //@Size(min=2, message= "Il dot y avoir au moins 2 reponses pour une question donnée")
     Collection<ReponseDTO> reponses;
 }

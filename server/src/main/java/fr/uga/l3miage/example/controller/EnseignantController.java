@@ -3,7 +3,6 @@ package fr.uga.l3miage.example.controller;
 import fr.uga.l3miage.example.endpoint.EnseignantEndpoint;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
-import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.service.EnseignantService;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +29,8 @@ public class EnseignantController implements EnseignantEndpoint {
     }
 
     @Override
-    public List<EnseignantDTO> getAllEnseignants() throws Exception {
-        return enseignantService.getAllEnseignants();
+    public void createEntityMiahootFromEnseignant(String mail, CreateMiahootRequest request) throws Exception {
+        enseignantService.createMiahootFromEnseignant(mail,request);
     }
 
     @Override

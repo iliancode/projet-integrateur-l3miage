@@ -8,8 +8,6 @@ import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescript
 import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
-import fr.uga.l3miage.example.models.Miahoot;
-import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
 import fr.uga.l3miage.example.repository.MiahootRepository;
 import fr.uga.l3miage.example.response.EnseignantDTO;
@@ -62,12 +60,13 @@ public class EnseignantComponent {
 
             return enseignantRepository.findByMail(mail)
                     .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " +  mail));
-    }
+
 
     //get all enseignants
     public List<Enseignant> getAllEnseignants() throws Exception {
         return enseignantRepository.findAll();
     }
+
     public void deleteEnseignantByMail(final String mail) throws MultipleEntityHaveSameDescriptionException, TestEntityNotFoundException {
         int deleted = enseignantRepository.deleteByMail(mail);
         log.info("deleted : " + deleted);
@@ -108,4 +107,16 @@ public class EnseignantComponent {
 
 
     }
+
+
+    public void createMiahootFromEnseignant(final String mail, final Miahoot miahoot) throws Exception {
+        try {
+            Enseignant enseignant = enseignantRepository.findByMail(mail)
+                    .orElseThrow(() -> new TestEntityNotFoundException( String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail));
+            enseignant.getMiahoots().add(miahoot);
+        } catch (Exception ex) {
+            throw new Exception("Impossible de créer le Miahoot et de l'ajouter. Raison :" + ex.getMessage());
+        }
+    }
+
 }

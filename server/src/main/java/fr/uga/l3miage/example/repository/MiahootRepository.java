@@ -15,7 +15,6 @@ import java.util.Optional;
 public interface MiahootRepository extends JpaRepository<Miahoot, Long> {
 
 
-    Optional<Miahoot> findById(Long aLong);
 
     int deleteById(final long aLong);
 
@@ -23,4 +22,6 @@ public interface MiahootRepository extends JpaRepository<Miahoot, Long> {
     List<Miahoot> findAll();
 
     <S extends Miahoot> S save(S s);
+    Optional<Miahoot> findById(final Long id);
+    void deleteById(final Long id);
 }
