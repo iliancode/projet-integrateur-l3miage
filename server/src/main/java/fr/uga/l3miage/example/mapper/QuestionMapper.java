@@ -1,18 +1,19 @@
 package fr.uga.l3miage.example.mapper;
 
 import fr.uga.l3miage.example.models.Question;
+import fr.uga.l3miage.example.models.Reponse;
+import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.QuestionDTO;
+import fr.uga.l3miage.example.response.ReponseDTO;
 import org.mapstruct.Mapper;
-
-import java.util.Collection;
 
 @Mapper
 public interface QuestionMapper {
-    QuestionDTO entityToDTO(Question question);
 
-    Collection<QuestionDTO> entityToDTO(Iterable<Question> questions);
+    // @Mapping(source = "miahoots",target = "miahootsDTO",qualifiedBy = TestMapperUtils.ToSumTestInt.class)
+    QuestionDTO toDto(Question questionEntity);
 
-    Question dtoToEntity(QuestionDTO question);
+    Question toQuestion(CreateQuestionRequest request);
 
-    Collection<Question> dtoToEntity(Iterable<QuestionDTO> questions);
+    ReponseDTO map(Reponse reponse);
 }

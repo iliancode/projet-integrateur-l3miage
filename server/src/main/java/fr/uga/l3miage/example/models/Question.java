@@ -1,20 +1,26 @@
 package fr.uga.l3miage.example.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
 
 @Entity
 @Table(name = "question")
+@Getter
+@Setter
 public class Question {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "label")
+    @Column
     private String label;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Reponse> reponses;
 
 

@@ -4,7 +4,10 @@ import fr.uga.l3miage.example.annotations.Error400Custom;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.EnseignantNotFoundErrorResponse;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
+import fr.uga.l3miage.example.request.CreateMiahootRequest;
+import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
+import fr.uga.l3miage.example.response.MiahootDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -47,6 +51,16 @@ public interface EnseignantEndpoint {
     List<EnseignantDTO> getAllEnseignants();
 
 
+
+    @Operation(description = "Création d'une entité miahoot et ajout dans la liste des miahoot de l'enseignant")
+    //@ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si le miahoot na pas pu etre creer",
+      //      content = @Content(schema = @Schema(implementation = TestNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ApiResponse(responseCode = "201", description = "L'entité Miahoot a bien été créée et ajoutée à la liste de Miahoots de l'enseignant.")
+    @Error400Custom
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("{mail}/miahoots")
+    public void createEntityMiahootFromEnseignant(@PathVariable String mail, @RequestBody CreateMiahootRequest request) throws Exception;
+
     //delete enseignant by mail
     @Operation(description = "Suppression d'une entité enseignant en bd")
     @ApiResponse(responseCode = "200", description = "si isInError est à false alors l'element est renvoyé et supprimé")
@@ -66,4 +80,20 @@ public interface EnseignantEndpoint {
     @PatchMapping("{mail}")
     void updateEnseignantEntity(@PathVariable final String mail, @Valid @RequestBody final CreateEnseignantRequest request);
 
+    //ajouter une question au mihaoot d'un enseignant
+
+    @Operation(description = "Ajout d'une question à un miahoot d'un enseignant")
+    @ApiResponse(responseCode = "202", description = "la question a bien été ajoutée")
+    @Error400Custom
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("{mail}/miahoots/{idMiahoot}/questions")
+    void addQuestionToMiahoot(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @RequestBody CreateQuestionRequest createQuestionRequest) throws Exception;
+
+    //get all miahoots of enseignant
+    @Operation(description = "Récupération de tous les miahoots d'un enseignant")
+    @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités miahoot",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("{mail}/miahoots")
+    List<MiahootDTO> getAllMiahootsOfEnseignant(@PathVariable("mail") String mail) throws Exception;
 }

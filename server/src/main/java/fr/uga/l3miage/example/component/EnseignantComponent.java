@@ -6,8 +6,13 @@ import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlre
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
+import fr.uga.l3miage.example.models.Miahoot;
+import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
+import fr.uga.l3miage.example.repository.MiahootRepository;
+import fr.uga.l3miage.example.repository.QuestionRepository;
+import fr.uga.l3miage.example.response.EnseignantDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,6 +25,9 @@ import java.util.List;
 public class EnseignantComponent {
     private final EnseignantRepository enseignantRepository;
     private final EnseignantMapper enseignantMapper;
+    private final MiahootRepository miahootRepository;
+    private final QuestionRepository questionRepository;
+
 
     /**
      * @param enseignant à créer en base de données
@@ -31,6 +39,10 @@ public class EnseignantComponent {
         enseignantRepository.save(enseignant);
     }
 
+    public Enseignant getEnseignantByMail(final String mail) throws Exception {
+
+        return enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " + mail));
     /**
      * @param mail de l'entité Enseingnant à récupérer
      * @return une {@link Enseignant} correspondant à un mail donné
@@ -45,7 +57,7 @@ public class EnseignantComponent {
         return enseignantRepository.findAll();
     }
 
-    public void deleteEnseignantByMail(final String mail) throws EnseignantEntityNotFoundException {
+    public void deleteEnseignantByMail(final String mail) throws MultipleEntityHaveSameDescriptionException, TestEntityNotFoundException {
         int deleted = enseignantRepository.deleteByMail(mail);
         if (deleted == 0) {
             throw new EnseignantEntityNotFoundException("L'entité à supprimer n'a pas été trouvée ", mail);
@@ -63,5 +75,47 @@ public class EnseignantComponent {
 
         enseignantMapper.mergeEnseignantEntity(actuelEnseignant,request);
         enseignantRepository.save(actuelEnseignant);
+    }
+
+    public void createQuestionInMiahoot(final String mail, final Long idMiahoot,  final Question question) throws Exception {
+        log.info("enseignant component atteint");
+
+        Enseignant e = enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new TestEntityNotFoundException( String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail));
+
+        Miahoot m = miahootRepository.findById(idMiahoot)
+                .orElseThrow(() -> new Exception( "Aucune entité n'a été trouvé pour l'id "));
+
+        if(e.containsMiahoot(idMiahoot)){
+
+            questionRepository.save(question);
+
+            e.getMiahoot(idMiahoot).getQuestions().add(question);
+            enseignantRepository.save(e);
+            miahootRepository.save(m);
+
+
+        }else{
+            throw new Exception("L'enseignant n'a pas le droit de modifier ce miahoot");
+        }
+
+    }
+
+
+    public void createMiahootFromEnseignant(final String mail, final Miahoot miahoot) throws Exception {
+        try {
+            Enseignant enseignant = enseignantRepository.findByMail(mail)
+                    .orElseThrow(() -> new TestEntityNotFoundException( String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail));
+            enseignant.getMiahoots().add(miahoot);
+        } catch (Exception ex) {
+            throw new Exception("Impossible de créer le Miahoot et de l'ajouter. Raison :" + ex.getMessage());
+        }
+    }
+
+    public List<Miahoot> getAllMiahootsOfEnseignant(String mail) throws Exception {
+        Enseignant e =  enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new Exception( "Aucune entité n'a été trouvé pour le mail "));
+
+        return e.getMiahoots();
     }
 }

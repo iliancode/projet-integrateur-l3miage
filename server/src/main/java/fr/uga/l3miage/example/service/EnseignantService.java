@@ -1,15 +1,20 @@
 package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.EnseignantComponent;
-import fr.uga.l3miage.example.exception.rest.alreadyUseRestException.MailAlreadyUseRestException;
-import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.EnseignantEntityNotDeletedRestException;
-import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
-import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
-import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.rest.TestEntityNotDeletedRestException;
+import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
+import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
+import fr.uga.l3miage.example.mapper.MiahootMapper;
+import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.Enseignant;
+import fr.uga.l3miage.example.models.Miahoot;
+import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
+import fr.uga.l3miage.example.request.CreateMiahootRequest;
+import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
+import fr.uga.l3miage.example.response.MiahootDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +31,10 @@ public class EnseignantService {
 
     private final EnseignantComponent enseignantComponent;
     private final EnseignantMapper enseignantMapper;
+    private final QuestionMapper questionMapper;
+
+    private final MiahootComponent miahootComponent;
+    private final MiahootMapper miahootMapper;
 
     /**
      * @param createEnseignantRequest la requête qui permet de créer une entité enseignant
@@ -39,19 +48,28 @@ public class EnseignantService {
         }
     }
 
-    /**
-     * @param mail de l'entité enseignant recherché
-     * @return le dto enseignant correspondant au mail
-     */
-    public EnseignantDTO getEnseignantByMail(final String mail) {
+
+
+    @Transactional
+    public void deleteEnseignantById(long id) throws Exception {
         try {
+            enseignantComponent.deleteEnseignantById(id);
+        } catch ( Exception ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public EnseignantDTO getEnseignantByMail(final String mail) throws Exception {
+        try {
+            Enseignant enseignant = enseignantComponent.getEnseignantByMail(mail);
+            EnseignantDTO enseignantDTO = enseignantMapper.toDto(enseignant);
             return enseignantMapper.toDto(enseignantComponent.getEnseignantByMail(mail));
         } catch (EnseignantEntityNotFoundException e) {
             throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]", e.getMessage()),mail,e);
         }
     }
 
-    public List<EnseignantDTO> getAllEnseignants() {
+    public List<EnseignantDTO> getAllEnseignants() throws Exception {
         return enseignantMapper.toDto(enseignantComponent.getAllEnseignants());
     }
 
@@ -68,13 +86,29 @@ public class EnseignantService {
     }
 
 
-    public void updateEnseignant (final String lastMail, final CreateEnseignantRequest request) {
+    public void updateEnseignant (final String lastMail, final EnseignantDTO enseignant){
         try{
-            enseignantComponent.updateEnseignantByMail(lastMail, request);
-        }catch (EnseignantEntityNotFoundException ex) {
-            throw new EnseignantEntityNotDeletedRestException(ex.getMessage());
-        } catch (MailAlreadyExistException ex) {
-            throw new MailAlreadyUseRestException(ERROR_DETECTED,request.getMail(),ex);
+            enseignantComponent.updateEnseignantByMail(lastMail, enseignant);
+        }catch (Exception ex){
+            log.info("OUI OUI CEST BIEN ICI LE PROBLEME LAGUI");
+            throw new TestEntityNotDeletedRestException(ex.getMessage());
         }
+    }
+
+    public void addQuestionToMiahoot(final String mail, final Long idMiahoot, final CreateQuestionRequest createQuestionRequest) throws Exception {
+        Question newQuestion = questionMapper.toQuestion(createQuestionRequest);
+        enseignantComponent.createQuestionInMiahoot(mail, idMiahoot, newQuestion);
+
+    }
+
+    @Transactional
+    public void createMiahootFromEnseignant(final String mail, final CreateMiahootRequest createMiahootRequest) throws Exception {
+
+        Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
+        enseignantComponent.createMiahootFromEnseignant(mail, newMiahoot);
+    }
+
+    public List<MiahootDTO> getAllMiahootsOfEnseignant(String mail) throws Exception {
+        return enseignantMapper.toDtoMiahoot(enseignantComponent.getAllMiahootsOfEnseignant(mail));
     }
 }
