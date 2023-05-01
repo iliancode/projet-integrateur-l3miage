@@ -55,4 +55,13 @@ public class MiahootService {
             throw new Exception("Impossible de charger l'entitée ");
         }
     }
+
+    @Transactional
+    public void deleteQuestion(Long idMiahoot, Long idQuestion) throws Exception {
+        try {
+            miahootComponent.deleteQuestion(idMiahoot, idQuestion);
+        } catch (Exception e) {
+            throw new Exception("Impossible de supprimer l'entitée ");
+        }
+    }
 }

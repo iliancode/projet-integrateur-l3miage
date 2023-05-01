@@ -37,4 +37,9 @@ public class MiahootController implements MiahootEndpoint {
         log.info("entre dans controller getQuestion");
         return miahootService.getQuestion(idMiahoot, idQuestion);
     }
+
+    @Override
+    public void deleteQuestion(Long idMiahoot, Long idQuestion) throws Exception {
+        miahootService.deleteQuestion(idMiahoot, idQuestion);
+    }
 }

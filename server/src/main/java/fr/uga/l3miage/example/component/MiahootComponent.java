@@ -5,6 +5,7 @@ import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.repository.MiahootRepository;
+import fr.uga.l3miage.example.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class MiahootComponent {
     private final MiahootRepository miahootRepository;
     private final MiahootMapper miahootMapper;
+    private final QuestionRepository questionRepository;
 
 
     public Miahoot getMiahoot(final Long id) throws ParticipantEntityNotFoundException {
@@ -47,6 +49,17 @@ public class MiahootComponent {
             return m.getQuestion(idQuestion);
         }else {
             throw new Exception("Aucune entité Question n'a été trouvée pour l'id ");
+        }
+    }
+
+    public void deleteQuestion(Long idMiahoot, Long idQuestion) throws Exception {
+        Miahoot m = miahootRepository.findById(idMiahoot)
+                .orElseThrow(()  -> new Exception("Aucune entité Miahoot n'a été trouvée pour l'id "));
+
+        if(m.containsQuestion(idQuestion)){
+            m.deleteQuestion(idQuestion);
+            questionRepository.deleteById(idQuestion);
+            miahootRepository.save(m);
         }
     }
 }

@@ -48,4 +48,12 @@ public class Miahoot {
         }
         return null;
     }
+
+    public void deleteQuestion(Long idQuestion) {
+        for(Question q : this.questions){
+            if(q.getId() == idQuestion){
+                this.questions.remove(q);
+            }
+        }
+    }
 }

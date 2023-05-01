@@ -59,4 +59,12 @@ public interface MiahootEndpoint {
     @GetMapping("{idMiahoot}/questions/{idQuestion}")
     QuestionDTO getQuestion(@PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion) throws Exception;
 
+    //miahoots/{id}/questions/{id} delete
+    //supprimer une question d'un miahoot
+    @Operation(description = "Supprimer une question d'un miahoot avec son id et l'id du miahoot")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si la question n'a pas pu être supprimée",
+            content = @Content(schema = @Schema(implementation = ParticipantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("{idMiahoot}/questions/{idQuestion}")
+    void deleteQuestion(@PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion) throws Exception;
 }
