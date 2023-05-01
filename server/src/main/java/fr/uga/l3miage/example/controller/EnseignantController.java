@@ -61,5 +61,9 @@ public class EnseignantController implements EnseignantEndpoint {
         return enseignantService.getAllMiahootsOfEnseignant(mail);
     }
 
+    @Override
+    public MiahootDTO getMiahootOfEnseignant(final String mail, final Long idMiahoot) throws Exception {
+        return enseignantService.getMiahootOfEnseignant(mail,idMiahoot);
+    }
 
-}
+    }

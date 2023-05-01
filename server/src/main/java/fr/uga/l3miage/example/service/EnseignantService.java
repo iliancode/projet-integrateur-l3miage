@@ -6,8 +6,10 @@ import fr.uga.l3miage.example.exception.rest.alreadyUseRestException.MailAlready
 import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.EnseignantEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.TestEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.TestEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
@@ -112,5 +114,17 @@ public class EnseignantService {
 
     public List<MiahootDTO> getAllMiahootsOfEnseignant(String mail) throws Exception {
         return enseignantMapper.toDtoMiahoot(enseignantComponent.getAllMiahootsOfEnseignant(mail));
+    }
+
+    // recupere le miahoot avec l'id correspondant dans la liste de miahoot de l'enseignant
+    public MiahootDTO getMiahootOfEnseignant(final String mail, final Long idMiahoot) throws Exception {
+            try {
+                Miahoot miahoot = enseignantComponent.getMiahootOfEnseignant(mail, idMiahoot);
+                return miahootMapper.toDto(miahoot);
+            } catch (EnseignantEntityNotFoundException e) {
+                throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), mail, e);
+            } catch (TestEntityNotFoundException e) {
+                throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
+            }
     }
 }

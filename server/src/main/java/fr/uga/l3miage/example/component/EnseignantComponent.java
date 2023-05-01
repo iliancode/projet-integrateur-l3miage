@@ -122,4 +122,10 @@ public class EnseignantComponent {
 
         return e.getMiahoots();
     }
+
+    public Miahoot getMiahootOfEnseignant(String mail, Long idMiahoot) throws Exception {
+        Enseignant e =  enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new Exception( "Aucune entité n'a été trouvé pour le mail "));
+       return  e.getMiahoot(idMiahoot);
+    }
 }
