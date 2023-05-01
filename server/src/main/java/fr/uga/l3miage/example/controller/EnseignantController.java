@@ -66,4 +66,10 @@ public class EnseignantController implements EnseignantEndpoint {
         return enseignantService.getMiahootOfEnseignant(mail,idMiahoot);
     }
 
+    @Override
+    public void deleteMiahootOfEnseignant(String mail, Long idMiahoot) throws Exception {
+        enseignantService.deleteMiahootOfEnseignant(mail,idMiahoot);
     }
+
+
+}

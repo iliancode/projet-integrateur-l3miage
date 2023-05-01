@@ -50,4 +50,8 @@ public class Enseignant {
         }
         return null;
     }
+
+    public void removeMiahoot(Miahoot m) {
+        miahoots.remove(m);
+    }
 }

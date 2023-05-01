@@ -127,4 +127,14 @@ public class EnseignantService {
                 throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
             }
     }
+
+    public void deleteMiahootOfEnseignant(String mail, Long idMiahoot) throws  Exception {
+        try {
+            enseignantComponent.deleteMiahootOfEnseignant(mail, idMiahoot);
+        } catch (EnseignantEntityNotFoundException e) {
+            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), mail, e);
+        } catch (TestEntityNotFoundException e) {
+            throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
+        }
+    }
 }

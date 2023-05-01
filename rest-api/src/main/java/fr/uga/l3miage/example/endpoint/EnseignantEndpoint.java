@@ -98,11 +98,21 @@ public interface EnseignantEndpoint {
     @GetMapping("{mail}/miahoots")
     List<MiahootDTO> getAllMiahootsOfEnseignant(@PathVariable("mail") String mail) throws Exception;
 
-    //get all miahoots of enseignant
+    //get miahoot of enseignant
     @Operation(description = "recupere le miahoot avec l'id correspondant dans la liste de miahoot de l'enseignant")
     @ApiResponse(responseCode = "200", description = "Renvoie une entité miahoot avec l'id correspondant a  celui passé en parametre",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{mail}/miahoots/{idMiahoot}")
     MiahootDTO getMiahootOfEnseignant(@PathVariable("mail") String mail,@PathVariable("idMiahoot") Long idMiahoot) throws Exception;
+
+
+    //delete Miahoot of  enseignant by mail and idMiahoot
+    @Operation(description = "Suppression d'une entité enseignant en bd")
+    @ApiResponse(responseCode = "200", description = "si  l'element est renvoyé et supprimé")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("{mail}/miahoots/{idMiahoot}")
+    void deleteMiahootOfEnseignant(@PathVariable("mail") String mail,@PathVariable("idMiahoot") Long idMiahoot) throws  Exception;
 }

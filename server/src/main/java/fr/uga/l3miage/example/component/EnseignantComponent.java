@@ -128,4 +128,18 @@ public class EnseignantComponent {
                 .orElseThrow(() -> new Exception( "Aucune entité n'a été trouvé pour le mail "));
        return  e.getMiahoot(idMiahoot);
     }
+
+    public void deleteMiahootOfEnseignant(final String mail, final Long idMiahoot) throws Exception {
+        Enseignant e = enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le mail [%s]", mail), mail));
+
+        Miahoot m = miahootRepository.findById(idMiahoot)
+                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le mail [%s]", idMiahoot), "erreur"));
+
+        if (e.containsMiahoot(idMiahoot)) {
+            e.removeMiahoot(m);
+            enseignantRepository.save(e);
+            miahootRepository.delete(m);
+        }
+    }
 }
