@@ -15,7 +15,7 @@ public class MiahootController implements MiahootEndpoint {
 
 
     @Override
-    public MiahootDTO getEntityMiahoot(final Long id) {
+    public MiahootDTO getEntityMiahoot(final Long id) throws Exception {
         return miahootService.getMiahoot(id);
     }
 
@@ -25,7 +25,7 @@ public class MiahootController implements MiahootEndpoint {
     }
 
     @Override
-    public void deleteMiahootEntity(final Long id) {
+    public void deleteMiahootEntity(final Long id) throws Exception {
          miahootService.deleteParticipant(id);
     }
 }

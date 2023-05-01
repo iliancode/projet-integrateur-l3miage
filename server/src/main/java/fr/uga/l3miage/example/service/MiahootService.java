@@ -1,9 +1,6 @@
 package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.MiahootComponent;
-import fr.uga.l3miage.example.exception.rest.ParticipantEntityNotDeletedRestException;
-import fr.uga.l3miage.example.exception.rest.ParticipantEntityNotFoundRestException;
-import fr.uga.l3miage.example.exception.technical.ParticipantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
@@ -20,11 +17,11 @@ public class MiahootService {
     private final MiahootComponent miahootComponent;
     private final MiahootMapper miahootMapper;
 
-    public MiahootDTO getMiahoot(final Long id){
+    public MiahootDTO getMiahoot(final Long id) throws Exception {
         try {
             return miahootMapper.toDto(miahootComponent.getMiahoot(id));
-        }catch(ParticipantEntityNotFoundException ex){
-            throw new ParticipantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",ex.getMessage()),id,ex);
+        }catch(Exception ex){
+            throw new Exception( "Impossible de charger l'entité. Raison" );
         }
     }
 
@@ -34,11 +31,11 @@ public class MiahootService {
     }
 
     @Transactional
-    public void deleteParticipant(Long id) {
+    public void deleteParticipant(Long id) throws Exception {
         try {
             miahootComponent.deleteMiahoot(id);
-        } catch (ParticipantEntityNotFoundException e) {
-            throw new ParticipantEntityNotDeletedRestException(e.getMessage());
+        } catch (Exception e) {
+            throw new Exception("pas pu delete le participant lol");
         }
     }
 }

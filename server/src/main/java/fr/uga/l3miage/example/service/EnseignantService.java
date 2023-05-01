@@ -1,9 +1,13 @@
 package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.EnseignantComponent;
-import fr.uga.l3miage.example.exception.rest.TestEntityNotDeletedRestException;
-import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
-import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
+import fr.uga.l3miage.example.component.MiahootComponent;
+import fr.uga.l3miage.example.exception.rest.alreadyUseRestException.MailAlreadyUseRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.EnseignantEntityNotDeletedRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.TestEntityNotDeletedRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
@@ -21,8 +25,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-
-import static fr.uga.l3miage.example.service.ExampleService.ERROR_DETECTED;
 
 @Service
 @RequiredArgsConstructor

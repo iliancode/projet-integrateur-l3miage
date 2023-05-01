@@ -40,7 +40,7 @@ public interface EnseignantEndpoint {
            content = @Content(schema = @Schema(implementation = EnseignantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{mail}")
-    EnseignantDTO getEntityEnseignantByMail(@PathVariable("mail") String mail);
+    EnseignantDTO getEntityEnseignantByMail(@PathVariable("mail") String mail) throws Exception;
 
 
     @Operation(description = "Récupération de toutes les entités enseignant en bd")
@@ -48,7 +48,7 @@ public interface EnseignantEndpoint {
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    List<EnseignantDTO> getAllEnseignants();
+    List<EnseignantDTO> getAllEnseignants() throws Exception;
 
 
 
@@ -78,9 +78,10 @@ public interface EnseignantEndpoint {
     @Error400Custom
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping("{mail}")
-    void updateEnseignantEntity(@PathVariable final String mail, @Valid @RequestBody final CreateEnseignantRequest request);
+    void updateEnseignantEntity(@PathVariable final String mail, @Valid @RequestBody final EnseignantDTO enseignantDTO);
 
     //ajouter une question au mihaoot d'un enseignant
+
 
     @Operation(description = "Ajout d'une question à un miahoot d'un enseignant")
     @ApiResponse(responseCode = "202", description = "la question a bien été ajoutée")

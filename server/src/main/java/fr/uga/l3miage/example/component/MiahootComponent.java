@@ -1,6 +1,5 @@
 package fr.uga.l3miage.example.component;
 
-import fr.uga.l3miage.example.exception.technical.ParticipantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.repository.MiahootRepository;
@@ -16,21 +15,21 @@ public class MiahootComponent {
     private final MiahootMapper miahootMapper;
 
 
-    public Miahoot getMiahoot(final Long id) throws ParticipantEntityNotFoundException {
+    public Miahoot getMiahoot(final Long id) throws Exception {
         return miahootRepository.findById(id)
-                .orElseThrow(() -> new ParticipantEntityNotFoundException(String.format("Aucune entité Miahoot n'a été trouvée pour l'id [%d]", id), id));
+                .orElseThrow(() -> new Exception("Aucune entité Miahoot n'a été trouvée pour l'id "));
     }
 
     public void createMiahoot(final Miahoot entity){
         miahootRepository.save(entity);
     }
 
-    public void deleteMiahoot(final Long id) throws ParticipantEntityNotFoundException {
+    public void deleteMiahoot(final Long id) throws Exception {
         try {
             Miahoot deleted = getMiahoot(id);
             miahootRepository.deleteById(id);
-        }catch(ParticipantEntityNotFoundException e){
-            throw new ParticipantEntityNotFoundException("L'entité Miahoot à supprimer n'a pas été trouvée", id);
+        }catch(Exception e){
+            throw new Exception("L'entité Miahoot à supprimer n'a pas été trouvée");
         }
     }
 }
