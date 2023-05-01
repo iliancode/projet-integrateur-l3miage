@@ -15,6 +15,7 @@ import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
+import fr.uga.l3miage.example.response.MiahootDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -106,5 +107,9 @@ public class EnseignantService {
 
         Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
         enseignantComponent.createMiahootFromEnseignant(mail, newMiahoot);
+    }
+
+    public List<MiahootDTO> getAllMiahootsOfEnseignant(String mail) throws Exception {
+        return enseignantMapper.toDtoMiahoot(enseignantComponent.getAllMiahootsOfEnseignant(mail));
     }
 }

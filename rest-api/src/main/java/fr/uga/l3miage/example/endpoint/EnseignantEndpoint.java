@@ -6,6 +6,7 @@ import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
+import fr.uga.l3miage.example.response.MiahootDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -86,4 +87,11 @@ public interface EnseignantEndpoint {
     @PostMapping("{mail}/miahoots/{idMiahoot}/questions")
     void addQuestionToMiahoot(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @RequestBody CreateQuestionRequest createQuestionRequest) throws Exception;
 
+    //get all miahoots of enseignant
+    @Operation(description = "Récupération de tous les miahoots d'un enseignant")
+    @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités miahoot",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("{mail}/miahoots")
+    List<MiahootDTO> getAllMiahootsOfEnseignant(@PathVariable("mail") String mail) throws Exception;
 }
