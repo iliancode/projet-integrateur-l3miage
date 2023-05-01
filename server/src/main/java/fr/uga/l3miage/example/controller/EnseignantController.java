@@ -7,6 +7,7 @@ import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
+import fr.uga.l3miage.example.response.QuestionDTO;
 import fr.uga.l3miage.example.service.EnseignantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,6 +55,12 @@ public class EnseignantController implements EnseignantEndpoint {
     @Override
     public void addQuestionToMiahoot(String mail, Long idMiahoot, CreateQuestionRequest createQuestionRequest) throws Exception {
         enseignantService.addQuestionToMiahoot(mail, idMiahoot , createQuestionRequest);
+    }
+
+    //get all question of a miahoot of an enseignant
+    @Override
+    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(String mail, Long idMiahoot) throws Exception {
+        return enseignantService.getAllQuestionsOfMiahootOfEnseignant(mail, idMiahoot);
     }
 
     @Override

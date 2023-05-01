@@ -3,10 +3,12 @@ package fr.uga.l3miage.example.mapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.models.Partie;
+import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.PartieDTO;
+import fr.uga.l3miage.example.response.QuestionDTO;
 import lombok.NonNull;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -31,5 +33,6 @@ public interface EnseignantMapper {
 
     List<MiahootDTO> toDtoMiahoot(List<Miahoot> testEntities);
 
+    List<QuestionDTO> toDtoQuestion(List<Question> testEntities);
 
 }

@@ -7,6 +7,7 @@ import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
+import fr.uga.l3miage.example.response.QuestionDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,7 +15,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -87,6 +87,18 @@ public interface EnseignantEndpoint {
     @PostMapping("{mail}/miahoots/{idMiahoot}/questions")
     void addQuestionToMiahoot(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @RequestBody CreateQuestionRequest createQuestionRequest) throws Exception;
 
+    //get all questions of a miahoot of enseignant
+    @Operation(description = "Récupération de toutes les questions d'un miahoot d'un enseignant")
+    @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités question",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("{mail}/miahoots/{idMiahoot}/questions")
+    List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot) throws Exception;
+
+
+
+
+
     //get all miahoots of enseignant
     @Operation(description = "Récupération de tous les miahoots d'un enseignant")
     @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités miahoot",
@@ -94,4 +106,5 @@ public interface EnseignantEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{mail}/miahoots")
     List<MiahootDTO> getAllMiahootsOfEnseignant(@PathVariable("mail") String mail) throws Exception;
+
 }

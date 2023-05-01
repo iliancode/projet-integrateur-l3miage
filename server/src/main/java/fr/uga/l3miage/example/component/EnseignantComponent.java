@@ -135,4 +135,15 @@ public class EnseignantComponent {
 
         return e.getMiahoots();
     }
+
+    public List<Question> getAllQuestionsOfMiahootOfEnseignant(String mail, Long idMiahoot) throws Exception {
+        Enseignant e =  enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour le mail " ));
+
+        if(e.containsMiahoot(idMiahoot)){
+            return e.getMiahoot(idMiahoot).getQuestions();
+        }else{
+            throw new Exception("L'enseignant n'a pas le droit de modifier ce miahoot");
+        }
+    }
 }
