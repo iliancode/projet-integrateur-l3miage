@@ -26,4 +26,26 @@ public class Miahoot {
     public void addQuestion(Question question){
         this.questions.add(question);
     }
+
+    //contains by id
+
+    public boolean containsQuestion(Long idQuestion){
+        for(Question q : this.questions){
+            if(q.getId() == idQuestion){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //get question by id
+
+    public Question getQuestion(Long idQuestion){
+        for(Question q : this.questions){
+            if(q.getId() == idQuestion){
+                return q;
+            }
+        }
+        return null;
+    }
 }

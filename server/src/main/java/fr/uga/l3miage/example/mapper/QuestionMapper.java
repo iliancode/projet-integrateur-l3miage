@@ -16,4 +16,5 @@ public interface QuestionMapper {
     Question toQuestion(CreateQuestionRequest request);
 
     ReponseDTO map(Reponse reponse);
+
 }

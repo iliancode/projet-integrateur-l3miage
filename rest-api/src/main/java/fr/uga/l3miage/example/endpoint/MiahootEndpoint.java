@@ -5,6 +5,7 @@ import fr.uga.l3miage.example.error.ParticipantEntityNotDeletedErrorResponse;
 import fr.uga.l3miage.example.error.ParticipantNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.MiahootDTO;
+import fr.uga.l3miage.example.response.QuestionDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,5 +46,17 @@ public interface MiahootEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("{id}")
     void deleteMiahootEntity(@PathVariable("id") Long id);
+
+    //miahoots/{id}/questions/{id} get
+    //recuperer une question d'un miahoot
+
+    @Operation(description = "Recuperer une question d'un miahoot avec son id et l'id du miahoot")
+    @ApiResponse(responseCode = "200", description = "Renvoie la question demandée",
+            content = @Content(schema = @Schema(implementation = MiahootDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si la question n'est pas trouvée",
+            content = @Content(schema = @Schema(implementation = ParticipantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("{idMiahoot}/questions/{idQuestion}")
+    QuestionDTO getQuestion(@PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion) throws Exception;
 
 }
