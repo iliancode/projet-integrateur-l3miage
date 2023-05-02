@@ -96,5 +96,10 @@ public class EnseignantController implements EnseignantEndpoint {
         return enseignantService.getReponseOfQuestionOfMiahootOfEnseignant(mail,idMiahoot,idQuestion,idReponse);
     }
 
+    @Override
+    public void deleteReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+        enseignantService.deleteReponseOfQuestionOfMiahootOfEnseignant(mail,idMiahoot,idQuestion,idReponse);
+    }
+
 
 }

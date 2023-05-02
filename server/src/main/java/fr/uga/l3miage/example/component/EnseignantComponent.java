@@ -228,5 +228,25 @@ public class EnseignantComponent {
             throw new Exception("L'enseignant n'a pas le droit de modifier ce miahoot");
         }
     }
+
+    public void deleteReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+        Enseignant e = enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail));
+
+        Miahoot m = miahootRepository.findById(idMiahoot)
+                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idMiahoot), "erreur"));
+
+        if (e.containsMiahoot(idMiahoot)) {
+            if (m.containsQuestion(idQuestion)) {
+                e.getMiahoot(idMiahoot).getQuestion(idQuestion).removeReponse(idReponse);
+                enseignantRepository.save(e);
+                miahootRepository.save(m);
+            } else {
+                throw new Exception("Aucune entité n'a été trouvé pour l'id");
+            }
+        } else {
+            throw new Exception("Aucune entité n'a été trouvé pour l'id");
+        }
+    }
 }
 

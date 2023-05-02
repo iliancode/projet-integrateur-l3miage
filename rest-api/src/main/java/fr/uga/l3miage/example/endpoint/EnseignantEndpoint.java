@@ -158,4 +158,15 @@ public interface EnseignantEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{mail}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses/{idReponse}")
     ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;
+
+
+    //delete on reponse of a question of a miahoot of enseignant by idReponse
+    @Operation(description = "Suppression d'une entité enseignant en bd")
+    @ApiResponse(responseCode = "200", description = "si  l'element est renvoyé et supprimé")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("{mail}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses/{idReponse}")
+    void deleteReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;
+
 }

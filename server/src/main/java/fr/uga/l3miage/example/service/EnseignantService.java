@@ -157,4 +157,12 @@ public class EnseignantService {
     public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
         return reponseMapper.toDto(enseignantComponent.getReponseOfQuestionOfMiahootOfEnseignant(mail, idMiahoot, idQuestion, idReponse));
     }
+
+    public void deleteReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+        try{
+            enseignantComponent.deleteReponseOfQuestionOfMiahootOfEnseignant(mail, idMiahoot, idQuestion, idReponse);
+        }catch (Exception ex){
+            throw new Exception("Erreur lors de la suppression de la reponse");
+        }
+    }
 }

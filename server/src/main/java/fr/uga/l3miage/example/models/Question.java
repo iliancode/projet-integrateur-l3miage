@@ -58,4 +58,13 @@ public class Question {
         }
         return null;
     }
+
+    public void removeReponse(Long idReponse) {
+        for (Reponse reponse : this.reponses) {
+            if (reponse.getId() == idReponse) {
+                this.reponses.remove(reponse);
+                return;
+            }
+        }
+    }
 }
