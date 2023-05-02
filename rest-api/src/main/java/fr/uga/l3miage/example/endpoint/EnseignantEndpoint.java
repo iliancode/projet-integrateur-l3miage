@@ -4,10 +4,7 @@ import fr.uga.l3miage.example.annotations.Error400Custom;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.EnseignantNotFoundErrorResponse;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.*;
-import fr.uga.l3miage.example.response.EnseignantDTO;
-import fr.uga.l3miage.example.response.MiahootDTO;
-import fr.uga.l3miage.example.response.QuestionDTO;
-import fr.uga.l3miage.example.response.ReponseDTO;
+import fr.uga.l3miage.example.response.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -174,4 +171,14 @@ public interface EnseignantEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("{mail}/parties/{idMiahoot}")
     void addPartieToEnseignant(@PathVariable("mail") String mail,@PathVariable("idMiahoot") Long idMiahoot, @RequestBody CreatePartieRequest createPartieRequest) throws Exception;
+
+
+
+    //get a partie of enseignant by its id
+    @Operation(description = "Récupération une partie d'un enseignant")
+    @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités partie",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("{mail}/parties/{codePartie}")
+    PartieDTO getPartieFromEnseignant(@PathVariable("mail") String mail, @PathVariable("codePartie") Long codePartie) throws Exception;
 }

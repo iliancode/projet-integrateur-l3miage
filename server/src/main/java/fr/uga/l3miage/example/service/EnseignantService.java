@@ -11,10 +11,7 @@ import fr.uga.l3miage.example.exception.technical.entityNotFoundException.Enseig
 import fr.uga.l3miage.example.mapper.*;
 import fr.uga.l3miage.example.models.*;
 import fr.uga.l3miage.example.request.*;
-import fr.uga.l3miage.example.response.EnseignantDTO;
-import fr.uga.l3miage.example.response.MiahootDTO;
-import fr.uga.l3miage.example.response.QuestionDTO;
-import fr.uga.l3miage.example.response.ReponseDTO;
+import fr.uga.l3miage.example.response.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -162,5 +159,9 @@ public class EnseignantService {
     public void addPartieToEnseignant(String mail, Long idMiahoot, CreatePartieRequest createPartieRequest) throws Exception {
         Partie newPartie = partieMapper.toPartie(createPartieRequest);
         enseignantComponent.addPartieToEnseignant(mail, idMiahoot, newPartie);
+    }
+
+    public PartieDTO getPartieFromEnseignant(String mail, Long codePartie) throws Exception {
+        return partieMapper.toPartieDto(enseignantComponent.getPartieFromEnseignant(mail, codePartie));
     }
 }

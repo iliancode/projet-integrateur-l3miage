@@ -262,5 +262,16 @@ public class EnseignantComponent {
             throw new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail);
         }
     }
+
+    public Partie getPartieFromEnseignant(String mail, Long codePartie) throws Exception {
+        Enseignant e = enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour le mail "));
+        try{
+            return e.getPartie(codePartie);
+        }catch (Exception ex){
+            throw new Exception("Aucune partie de cet id n'a été trouvé pour dans cet enseinant ");
+        }
+
+    }
 }
 

@@ -58,4 +58,13 @@ public class Enseignant {
     public void addPartie(Partie newPartie) {
         this.parties.add(newPartie);
     }
+
+    public Partie getPartie(Long codePartie) {
+        for(Partie p : parties){
+            if(p.getCodePartie() == codePartie){
+                return p;
+            }
+        }
+        return null;
+    }
 }

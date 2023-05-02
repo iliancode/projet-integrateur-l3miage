@@ -18,7 +18,7 @@ public interface EnseignantMapper {
     Enseignant toEntity(CreateEnseignantRequest request);
     EnseignantDTO toDto(Enseignant testEntity);
 
-    PartieDTO map(Partie partie);
+    //PartieDTO map(Partie partie);
 
     void mergeEnseignantEntity(@MappingTarget @NonNull Enseignant ancientEnseignant, EnseignantDTO newEnseignant);
     //Miahoot map(MiahootDTO miahootDTO);

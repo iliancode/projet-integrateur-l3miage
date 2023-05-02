@@ -3,10 +3,7 @@ package fr.uga.l3miage.example.controller;
 import fr.uga.l3miage.example.endpoint.EnseignantEndpoint;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.request.*;
-import fr.uga.l3miage.example.response.EnseignantDTO;
-import fr.uga.l3miage.example.response.MiahootDTO;
-import fr.uga.l3miage.example.response.QuestionDTO;
-import fr.uga.l3miage.example.response.ReponseDTO;
+import fr.uga.l3miage.example.response.*;
 import fr.uga.l3miage.example.service.EnseignantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -103,6 +100,11 @@ public class EnseignantController implements EnseignantEndpoint {
         log.info("controller atteint");
         enseignantService.addPartieToEnseignant(mail,idMiahoot,createPartieRequest);
 
+    }
+
+    @Override
+    public PartieDTO getPartieFromEnseignant(String mail, Long codePartie) throws Exception {
+        return enseignantService.getPartieFromEnseignant(mail,codePartie);
     }
 
 
