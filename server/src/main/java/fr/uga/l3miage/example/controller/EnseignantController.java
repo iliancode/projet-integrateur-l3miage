@@ -1,6 +1,7 @@
 package fr.uga.l3miage.example.controller;
 
 import fr.uga.l3miage.example.endpoint.EnseignantEndpoint;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
@@ -23,7 +24,7 @@ public class EnseignantController implements EnseignantEndpoint {
 
 
     @Override
-    public void createEntityEnseignant(CreateEnseignantRequest request) {
+    public void createEntityEnseignant(CreateEnseignantRequest request) throws Exception {
         enseignantService.createEnseignant(request);
     }
 
@@ -43,7 +44,7 @@ public class EnseignantController implements EnseignantEndpoint {
     }
 
     @Override
-    public void deleteEnseignantEntity(String mail) {
+    public void deleteEnseignantEntity(String mail) throws EnseignantEntityNotFoundException {
         enseignantService.deleteEnseignantByMail(mail);
     }
 

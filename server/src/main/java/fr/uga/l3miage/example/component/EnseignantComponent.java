@@ -2,10 +2,9 @@ package fr.uga.l3miage.example.component;
 
 //import fr.uga.l3miage.example.mapper.EnseignantMapper;
 
-import fr.uga.l3miage.example.exception.technical.DescriptionAlreadyExistException;
-import fr.uga.l3miage.example.exception.technical.IsNotTestException;
-import fr.uga.l3miage.example.exception.technical.MultipleEntityHaveSameDescriptionException;
-import fr.uga.l3miage.example.exception.technical.TestEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
@@ -78,14 +77,7 @@ public class EnseignantComponent {
         }
     }
 
-    public void deleteEnseignantById(final long id) throws Exception {
-        int deleted = enseignantRepository.deleteById(id);
-        if (deleted > 1)
-            throw new Exception("Plusieurs entités ont le même mail alors que c'est impossible niveau métier !!");
-        else if (deleted == 0)
-            throw new Exception("L'entité à supprimer n'a pas été trouvée " +  id);
 
-    }
 
 
     public void updateEnseignantByMail(final String lastMail , final EnseignantDTO enseignant) throws EnseignantEntityNotFoundException, MailAlreadyExistException {
