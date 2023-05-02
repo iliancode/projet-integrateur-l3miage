@@ -1,10 +1,11 @@
 package fr.uga.l3miage.example.component;
 
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ParticipantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.ParticipantMapper;
 import fr.uga.l3miage.example.models.Participant;
 import fr.uga.l3miage.example.models.Partie;
-import fr.uga.l3miage.example.models.TestEntity;
+import fr.uga.l3miage.example.repository.EnseignantRepository;
 import fr.uga.l3miage.example.repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ParticipantComponent {
     private final ParticipantRepository participantRepository;
     private final ParticipantMapper participantMapper;
+    private final EnseignantRepository enseignantRepository;
 
 
     /**
@@ -47,6 +49,19 @@ public class ParticipantComponent {
     public Participant getParticipantOfPartie(Partie partie, Long id) throws ParticipantEntityNotFoundException {
         return participantRepository.findByPartieAndId(partie, id)
                 .orElseThrow(() -> new ParticipantEntityNotFoundException(String.format("Aucune entité Participant n'a été trouvée pour l'id [%d]", id), id));
+    }
+
+
+    /**
+     * @param mail le mail de l'enseignant
+     * @param partie la partie à laquelle appartient le participant
+     * @throws EnseignantEntityNotFoundException si l'enseignant n'existe pas
+     */
+    public void deleteAllParticipantsFromPartie(String mail, Partie partie) throws EnseignantEntityNotFoundException {
+        enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail));
+        List<Participant> participants = participantRepository.findAllByPartie(partie);
+        participantRepository.deleteAll(participants);
     }
 
 }

@@ -5,6 +5,7 @@ import fr.uga.l3miage.example.exception.technical.entityNotFoundException.Enseig
 import fr.uga.l3miage.example.request.*;
 import fr.uga.l3miage.example.response.*;
 import fr.uga.l3miage.example.service.EnseignantService;
+import fr.uga.l3miage.example.service.ParticipantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import java.util.List;
 public class EnseignantController implements EnseignantEndpoint {
 
     public final EnseignantService enseignantService;
+    public final ParticipantService participantService;
 
 
     @Override
@@ -110,6 +112,14 @@ public class EnseignantController implements EnseignantEndpoint {
     @Override
     public void deletePartieFromEnseignant(String mail, Long codePartie) throws Exception {
         enseignantService.deletePartieFromEnseignant(mail,codePartie);
+    }
+
+
+    // Controller pour les participants
+
+    @Override
+    public void deleteAllParticipantsFromPartie(String mail, Long codePartie) {
+        participantService.deleteAllParticipantsFromPartie(mail,codePartie);
     }
 
 

@@ -3,8 +3,10 @@ package fr.uga.l3miage.example.service;
 import fr.uga.l3miage.example.component.ParticipantComponent;
 import fr.uga.l3miage.example.component.PartieComponent;
 import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.ParticipantEntityNotDeletedRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ParticipantEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.PartieEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ParticipantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.PartieEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.ParticipantMapper;
@@ -68,6 +70,20 @@ public class ParticipantService {
             throw new PartieEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),id,e);
         } catch (ParticipantEntityNotFoundException e) {
             throw new ParticipantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),id,e);
+        }
+    }
+
+
+    /**
+     * @param mail le mail de l'enseignant
+     * @param codePartie le code de la partie
+     */
+    public void deleteAllParticipantsFromPartie(final String mail, final Long codePartie) {
+        try {
+            Partie partie = partieComponent.getPartie(codePartie);
+            participantComponent.deleteAllParticipantsFromPartie(mail, partie);
+        } catch (EnseignantEntityNotFoundException | PartieEntityNotFoundException e) {
+            throw new ParticipantEntityNotFoundRestException(e.getMessage());
         }
     }
 
