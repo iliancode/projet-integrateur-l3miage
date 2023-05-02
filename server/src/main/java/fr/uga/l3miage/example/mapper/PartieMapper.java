@@ -2,6 +2,7 @@ package fr.uga.l3miage.example.mapper;
 
 import fr.uga.l3miage.example.models.Partie;
 import fr.uga.l3miage.example.request.CreatePartieRequest;
+import fr.uga.l3miage.example.response.PartieDTO;
 import org.mapstruct.Mapper;
 
 import java.util.Optional;
@@ -10,9 +11,9 @@ import java.util.Optional;
 public interface PartieMapper {
 
 
-    Partie toDto(Optional<Partie> testEntity);
-    //Partie toEntity(CreatePartieRequest request);
+    PartieDTO toDto(Partie testEntity);
+    Partie toEntity(CreatePartieRequest request);
 
 
-    Partie toPartie(CreatePartieRequest createPartieRequest);
+   // Partie toPartie(CreatePartieRequest createPartieRequest);
 }

@@ -11,9 +11,7 @@ public class CreateParticipantRequest {
 
     @Schema(description = "id de l'objet participant", example = "1")
     private Long id;
+
     @Schema(description = "pseudo de l'objet participant", example = "description participant")
     private String pseudo;
-
-    /*@Schema(description = "partie de l'objet participant", example = "partie participant")
-    private PartieDTO Partie;*/ 
 }

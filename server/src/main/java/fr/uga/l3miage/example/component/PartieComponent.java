@@ -1,5 +1,6 @@
 package fr.uga.l3miage.example.component;
 
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.PartieEntityNotFoundException;
 import fr.uga.l3miage.example.models.Partie;
 import fr.uga.l3miage.example.repository.PartieRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +27,14 @@ public class PartieComponent {
         }
     }
 
-    public Optional<Partie> getPartieById(final long id) throws Exception{
-        try{
-            return partieRepository.findById(id);
-        }catch (Exception e){
-            throw new Exception("Aucune partie n'a été trouvé avec cet id");
-        }
+    /**
+     * @param codePartie de l'entité Partie à récupérer
+     * @return une {@link Partie} correspondant à description donnée
+     * @throws PartieEntityNotFoundException si aucune entité Partie n'est trouvée
+     */
+    public Partie getPartie(final Long codePartie) throws PartieEntityNotFoundException {
+        return partieRepository.findByCodePartie(codePartie)
+                .orElseThrow(() -> new PartieEntityNotFoundException(String.format("Aucune entité Partie n'a été trouvée pour le codePartie [%d]", codePartie), codePartie));
     }
 
     public void deletePartieById(final long id)throws Exception{

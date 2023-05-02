@@ -19,8 +19,8 @@ public class Participant {
     @Column
     private String pseudo;
 
-    /*@OneToOne
-    private Partie partie;*/
+    @OneToOne
+    private Partie partie;
 
 
 }
