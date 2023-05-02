@@ -2,6 +2,8 @@ package fr.uga.l3miage.example.component;
 
 import fr.uga.l3miage.example.config.HelloWordConfig;
 import fr.uga.l3miage.example.exception.technical.*;
+import fr.uga.l3miage.example.exception.technical.alreadyExistException.DescriptionAlreadyExistException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.TestMapper;
 import fr.uga.l3miage.example.models.TestEntity;
 import fr.uga.l3miage.example.repository.TestRepository;

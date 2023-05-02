@@ -17,13 +17,15 @@ public class EnseignantDTO {
     @Email
     @NotBlank
     private String mail;
+
     @NotBlank
     private String mdp;
+
+    @NotBlank
     private String pseudo;
 
-    // @Null
-    List<MiahootDTO> miahoots;
+    private List<MiahootDTO> miahoots;
 
-/*    @Null*/
-    List<PartieDTO> parties;
+    private List<PartieDTO> parties;
+
 }

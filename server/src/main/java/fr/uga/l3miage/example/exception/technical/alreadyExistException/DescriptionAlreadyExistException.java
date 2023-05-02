@@ -1,4 +1,4 @@
-package fr.uga.l3miage.example.exception.technical;
+package fr.uga.l3miage.example.exception.technical.alreadyExistException;
 
 import lombok.Getter;
 

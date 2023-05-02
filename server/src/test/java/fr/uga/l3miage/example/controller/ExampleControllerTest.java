@@ -2,9 +2,12 @@ package fr.uga.l3miage.example.controller;
 
 import fr.uga.l3miage.example.config.HelloWordConfig;
 import fr.uga.l3miage.example.error.*;
-import fr.uga.l3miage.example.exception.rest.DescriptionAlreadyUseRestException;
+import fr.uga.l3miage.example.error.alreadyUseErrorResponse.DescriptionAlreadyUseErrorResponse;
+import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.TestEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
+import fr.uga.l3miage.example.exception.rest.alreadyUseRestException.DescriptionAlreadyUseRestException;
 import fr.uga.l3miage.example.exception.rest.IsNotTestRestException;
-import fr.uga.l3miage.example.exception.rest.TestEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.TestEntityNotFoundRestException;
 import fr.uga.l3miage.example.models.TestEntity;
 import fr.uga.l3miage.example.repository.TestRepository;
 import fr.uga.l3miage.example.request.CreateTestRequest;

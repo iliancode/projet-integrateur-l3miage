@@ -66,29 +66,36 @@ public class EnseignantComponent {
                 .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " + mail));
     }
 
-    //get all enseignants
-    public List<Enseignant> getAllEnseignants() throws Exception {
+
+    public List<Enseignant> getAllEnseignants() {
         return enseignantRepository.findAll();
     }
 
-    public void deleteEnseignantByMail(final String mail) throws MultipleEntityHaveSameDescriptionException, TestEntityNotFoundException {
+    public void deleteEnseignantByMail(final String mail) throws EnseignantEntityNotFoundException {
         int deleted = enseignantRepository.deleteByMail(mail);
-        log.info("deleted : " + deleted);
+        if (deleted == 0) {
+            throw new EnseignantEntityNotFoundException("L'entité à supprimer n'a pas été trouvée ", mail);
+        }
+    }
+
+    public void deleteEnseignantById(final long id) throws Exception {
+        int deleted = enseignantRepository.deleteById(id);
         if (deleted > 1)
-            throw new MultipleEntityHaveSameDescriptionException("Plusieurs entités ont le même mail alors que c'est impossible niveau métier !!");
+            throw new Exception("Plusieurs entités ont le même mail alors que c'est impossible niveau métier !!");
         else if (deleted == 0)
-            throw new TestEntityNotFoundException("L'entité à supprimer n'a pas été trouvée " ,  mail);
+            throw new Exception("L'entité à supprimer n'a pas été trouvée " +  id);
 
     }
 
-    public void updateEnseignantByMail(final String lastMail , final EnseignantDTO enseignant) throws TestEntityNotFoundException, IsNotTestException, DescriptionAlreadyExistException{
+
+    public void updateEnseignantByMail(final String lastMail , final EnseignantDTO enseignant) throws EnseignantEntityNotFoundException, MailAlreadyExistException {
 
         if(!lastMail.equals(enseignant.getMail()) && enseignantRepository.findByMail(enseignant.getMail()).isPresent()){
-            throw new DescriptionAlreadyExistException(String.format("Ce mail existe deja dans la base de données"), enseignant.getMail());
+            throw new MailAlreadyExistException(String.format("Ce mail existe deja dans la base de données"), enseignant.getMail());
         }
 
         Enseignant actuelEnseignant = enseignantRepository.findByMail(lastMail)
-                .orElseThrow(() -> new TestEntityNotFoundException( String.format("Aucune entité n'a été trouvé pour le mail [%s]", lastMail), lastMail));
+                .orElseThrow(() -> new EnseignantEntityNotFoundException( String.format("Aucune entité n'a été trouvé pour le mail [%s]", lastMail), lastMail));
 
         enseignantMapper.mergeEnseignantEntity(actuelEnseignant,enseignant);
         enseignantRepository.save(actuelEnseignant);
@@ -134,6 +141,26 @@ public class EnseignantComponent {
                 .orElseThrow(() -> new Exception( "Aucune entité n'a été trouvé pour le mail "));
 
         return e.getMiahoots();
+    }
+
+    public Miahoot getMiahootOfEnseignant(String mail, Long idMiahoot) throws Exception {
+        Enseignant e =  enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new Exception( "Aucune entité n'a été trouvé pour le mail "));
+       return  e.getMiahoot(idMiahoot);
+    }
+
+    public void deleteMiahootOfEnseignant(final String mail, final Long idMiahoot) throws Exception {
+        Enseignant e = enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le mail [%s]", mail), mail));
+
+        Miahoot m = miahootRepository.findById(idMiahoot)
+                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le mail [%s]", idMiahoot), "erreur"));
+
+        if (e.containsMiahoot(idMiahoot)) {
+            e.removeMiahoot(m);
+            enseignantRepository.save(e);
+            miahootRepository.delete(m);
+        }
     }
 
     public List<Question> getAllQuestionsOfMiahootOfEnseignant(String mail, Long idMiahoot) throws Exception {

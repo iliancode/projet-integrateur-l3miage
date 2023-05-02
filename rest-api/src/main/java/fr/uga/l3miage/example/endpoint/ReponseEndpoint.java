@@ -1,8 +1,8 @@
 package fr.uga.l3miage.example.endpoint;
 
 import fr.uga.l3miage.example.annotations.Error400Custom;
-import fr.uga.l3miage.example.error.ReponseEntityNotDeletedErrorResponse;
-import fr.uga.l3miage.example.error.ReponseNotFoundErrorResponse;
+import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.ReponseEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.ReponseNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.ReponseDTO;
 import io.swagger.v3.oas.annotations.Operation;

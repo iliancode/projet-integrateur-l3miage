@@ -1,7 +1,8 @@
 package fr.uga.l3miage.example.endpoint;
 
 import fr.uga.l3miage.example.annotations.Error400Custom;
-import fr.uga.l3miage.example.error.TestNotFoundErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.EnseignantNotFoundErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("enseignants/")
 public interface EnseignantEndpoint {
+
     @Operation(description = "Création d'une entité Enseignant")
     @ApiResponse(responseCode = "201", description = "L'entité Enseignant a bien été créée.")
     @Error400Custom
@@ -32,11 +35,11 @@ public interface EnseignantEndpoint {
     @Operation(description = "Récupération d'une entité Enseignant par son email")
     @ApiResponse(responseCode = "200", description = "L'entité Enseignant a bien été récupérée.",
     content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_STREAM_JSON_VALUE))
-    //@ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'est pas trouvée",
-      //      content = @Content(schema = @Schema(implementation = ParticipantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'est pas trouvée",
+           content = @Content(schema = @Schema(implementation = EnseignantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{mail}")
-    EnseignantDTO getEntityEnseignantByMail(@PathVariable String mail) throws Exception;
+    EnseignantDTO getEntityEnseignantByMail(@PathVariable("mail") String mail) throws Exception;
 
 
     //get all enseignants
@@ -80,6 +83,7 @@ public interface EnseignantEndpoint {
 
     //ajouter une question au mihaoot d'un enseignant
 
+
     @Operation(description = "Ajout d'une question à un miahoot d'un enseignant")
     @ApiResponse(responseCode = "202", description = "la question a bien été ajoutée")
     @Error400Custom
@@ -107,4 +111,21 @@ public interface EnseignantEndpoint {
     @GetMapping("{mail}/miahoots")
     List<MiahootDTO> getAllMiahootsOfEnseignant(@PathVariable("mail") String mail) throws Exception;
 
+    //get miahoot of enseignant
+    @Operation(description = "recupere le miahoot avec l'id correspondant dans la liste de miahoot de l'enseignant")
+    @ApiResponse(responseCode = "200", description = "Renvoie une entité miahoot avec l'id correspondant a  celui passé en parametre",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("{mail}/miahoots/{idMiahoot}")
+    MiahootDTO getMiahootOfEnseignant(@PathVariable("mail") String mail,@PathVariable("idMiahoot") Long idMiahoot) throws Exception;
+
+
+    //delete Miahoot of  enseignant by mail and idMiahoot
+    @Operation(description = "Suppression d'une entité enseignant en bd")
+    @ApiResponse(responseCode = "200", description = "si  l'element est renvoyé et supprimé")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("{mail}/miahoots/{idMiahoot}")
+    void deleteMiahootOfEnseignant(@PathVariable("mail") String mail,@PathVariable("idMiahoot") Long idMiahoot) throws  Exception;
 }

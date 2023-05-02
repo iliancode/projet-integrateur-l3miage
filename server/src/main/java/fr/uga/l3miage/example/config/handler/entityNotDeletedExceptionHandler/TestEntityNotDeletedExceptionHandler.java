@@ -1,8 +1,8 @@
 package fr.uga.l3miage.example.config.handler.entityNotDeletedExceptionHandler;
 
-import fr.uga.l3miage.example.error.ErrorResponse;
-import fr.uga.l3miage.example.error.TestEntityNotDeletedErrorResponse;
-import fr.uga.l3miage.example.exception.rest.TestEntityNotDeletedRestException;
+import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
+import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.TestEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.TestEntityNotDeletedRestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;

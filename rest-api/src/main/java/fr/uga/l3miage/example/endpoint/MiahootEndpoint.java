@@ -1,8 +1,8 @@
 package fr.uga.l3miage.example.endpoint;
 
 import fr.uga.l3miage.example.annotations.Error400Custom;
-import fr.uga.l3miage.example.error.ParticipantEntityNotDeletedErrorResponse;
-import fr.uga.l3miage.example.error.ParticipantNotFoundErrorResponse;
+import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.ParticipantEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.ParticipantNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -31,7 +31,7 @@ public interface MiahootEndpoint {
             content = @Content(schema = @Schema(implementation = ParticipantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{id}")
-    MiahootDTO getEntityMiahoot(@PathVariable("id") Long id);
+    MiahootDTO getEntityMiahoot(@PathVariable("id") Long id) throws Exception;
 
     @Operation(description = "Création d'une entité Miahoot")
     @ApiResponse(responseCode = "201", description = "L'entité Miahoot a bien été créée.")
@@ -45,7 +45,7 @@ public interface MiahootEndpoint {
             content = @Content(schema = @Schema(implementation = ParticipantEntityNotDeletedErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("{id}")
-    void deleteMiahootEntity(@PathVariable("id") Long id);
+    void deleteMiahootEntity(@PathVariable("id") Long id) throws Exception;
 
     //miahoots/{id}/questions/{id} get
     //recuperer une question d'un miahoot
