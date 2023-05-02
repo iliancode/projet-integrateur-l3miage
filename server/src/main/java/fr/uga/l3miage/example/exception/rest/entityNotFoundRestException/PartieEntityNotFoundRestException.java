@@ -6,16 +6,16 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public class PartieEntityNotFoundRestException extends RuntimeException {
-    private final Long id;
+    private final Long codePartie;
 
-    public PartieEntityNotFoundRestException(String message, Long id) {
+    public PartieEntityNotFoundRestException(String message, Long codePartie) {
         super(message);
-        this.id = id;
+        this.codePartie = codePartie;
     }
 
-    public PartieEntityNotFoundRestException(String message, Long id, Throwable cause) {
+    public PartieEntityNotFoundRestException(String message, Long codePartie, Throwable cause) {
         super(message, cause);
-        this.id = id;
+        this.codePartie = codePartie;
     }
 
     public HttpStatus getHttpStatus() {

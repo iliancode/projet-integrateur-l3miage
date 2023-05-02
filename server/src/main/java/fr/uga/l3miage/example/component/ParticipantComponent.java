@@ -28,8 +28,25 @@ public class ParticipantComponent {
         participantRepository.save(entity);
     }
 
+
+    /**
+     * @param partie la partie à laquelle appartiennent les participants
+     * @return la liste des participants de la partie
+     */
     public List<Participant> getAllParticipantsOfPartie(Partie partie) {
         return participantRepository.findAllByPartie(partie);
+    }
+
+
+    /**
+     * @param partie la partie à laquelle appartient le participant
+     * @param id l'id du participant à récupérer
+     * @return le participant de la partie
+     * @throws ParticipantEntityNotFoundException si le participant n'existe pas
+     */
+    public Participant getParticipantOfPartie(Partie partie, Long id) throws ParticipantEntityNotFoundException {
+        return participantRepository.findByPartieAndId(partie, id)
+                .orElseThrow(() -> new ParticipantEntityNotFoundException(String.format("Aucune entité Participant n'a été trouvée pour l'id [%d]", id), id));
     }
 
 }

@@ -22,9 +22,16 @@ public class PartieController implements PartieEndpoint {
         participantService.createParticipantByPartie(codePartie, request);
     }
 
+
     @Override
     public List<ParticipantDTO> getAllParticipantsByPartie(final Long codePartie) {
         return participantService.getAllParticipantsByPartie(codePartie);
+    }
+
+
+    @Override
+    public ParticipantDTO getParticipantByPartie(final Long codePartie, final Long id) {
+        return participantService.getParticipantByPartie(codePartie, id);
     }
 
 }

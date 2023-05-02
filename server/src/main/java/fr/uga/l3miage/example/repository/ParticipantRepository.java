@@ -24,5 +24,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     void deleteById(final Long id);
 
     List<Participant> findAllByPartie(final Partie partie);
+    Optional<Participant> findByPartieAndId(final Partie partie, final Long id);
 
 }
