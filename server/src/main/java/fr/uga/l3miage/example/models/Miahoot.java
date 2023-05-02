@@ -56,4 +56,8 @@ public class Miahoot {
             }
         }
     }
+
+    public void addPartie(Partie newPartie) {
+
+    }
 }

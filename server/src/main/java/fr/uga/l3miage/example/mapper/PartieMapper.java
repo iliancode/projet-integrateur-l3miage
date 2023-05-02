@@ -11,8 +11,8 @@ public interface PartieMapper {
 
 
     Partie toDto(Optional<Partie> testEntity);
-    Partie toEntity(CreatePartieRequest request);
+    //Partie toEntity(CreatePartieRequest request);
 
 
-
+    Partie toPartie(CreatePartieRequest createPartieRequest);
 }

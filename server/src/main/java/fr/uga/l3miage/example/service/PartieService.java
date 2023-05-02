@@ -18,7 +18,7 @@ public class PartieService {
     private final PartieMapper partieMapper;
 
     public void createPartie(final CreatePartieRequest createPartieRequest) throws Exception{
-        Partie newPartie = partieMapper.toEntity(createPartieRequest);
+        Partie newPartie = partieMapper.toPartie(createPartieRequest);
 
         if(newPartie.getCodePartie()> 0){
             if(!Objects.isNull(newPartie.getMiahoot())){

@@ -54,4 +54,8 @@ public class Enseignant {
     public void removeMiahoot(Miahoot m) {
         miahoots.remove(m);
     }
+
+    public void addPartie(Partie newPartie) {
+        this.parties.add(newPartie);
+    }
 }

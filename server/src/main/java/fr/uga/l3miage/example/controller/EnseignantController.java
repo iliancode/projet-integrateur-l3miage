@@ -2,10 +2,7 @@ package fr.uga.l3miage.example.controller;
 
 import fr.uga.l3miage.example.endpoint.EnseignantEndpoint;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
-import fr.uga.l3miage.example.request.CreateEnseignantRequest;
-import fr.uga.l3miage.example.request.CreateMiahootRequest;
-import fr.uga.l3miage.example.request.CreateQuestionRequest;
-import fr.uga.l3miage.example.request.CreateReponseRequest;
+import fr.uga.l3miage.example.request.*;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -99,6 +96,13 @@ public class EnseignantController implements EnseignantEndpoint {
     @Override
     public void deleteReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
         enseignantService.deleteReponseOfQuestionOfMiahootOfEnseignant(mail,idMiahoot,idQuestion,idReponse);
+    }
+
+    @Override
+    public void addPartieToEnseignant(String mail, Long idMiahoot, CreatePartieRequest createPartieRequest) throws Exception {
+        log.info("controller atteint");
+        enseignantService.addPartieToEnseignant(mail,idMiahoot,createPartieRequest);
+
     }
 
 

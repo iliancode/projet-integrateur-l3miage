@@ -8,18 +8,9 @@ import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.Enseign
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.TestEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
-import fr.uga.l3miage.example.mapper.EnseignantMapper;
-import fr.uga.l3miage.example.mapper.MiahootMapper;
-import fr.uga.l3miage.example.mapper.QuestionMapper;
-import fr.uga.l3miage.example.mapper.ReponseMapper;
-import fr.uga.l3miage.example.models.Enseignant;
-import fr.uga.l3miage.example.models.Miahoot;
-import fr.uga.l3miage.example.models.Question;
-import fr.uga.l3miage.example.models.Reponse;
-import fr.uga.l3miage.example.request.CreateEnseignantRequest;
-import fr.uga.l3miage.example.request.CreateMiahootRequest;
-import fr.uga.l3miage.example.request.CreateQuestionRequest;
-import fr.uga.l3miage.example.request.CreateReponseRequest;
+import fr.uga.l3miage.example.mapper.*;
+import fr.uga.l3miage.example.models.*;
+import fr.uga.l3miage.example.request.*;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -42,6 +33,8 @@ public class EnseignantService {
 
     private final MiahootMapper miahootMapper;
     private final ReponseMapper reponseMapper;
+
+    private final PartieMapper partieMapper;
 
     /**
      * @param createEnseignantRequest la requête qui permet de créer une entité enseignant
@@ -164,5 +157,10 @@ public class EnseignantService {
         }catch (Exception ex){
             throw new Exception("Erreur lors de la suppression de la reponse");
         }
+    }
+
+    public void addPartieToEnseignant(String mail, Long idMiahoot, CreatePartieRequest createPartieRequest) throws Exception {
+        Partie newPartie = partieMapper.toPartie(createPartieRequest);
+        enseignantComponent.addPartieToEnseignant(mail, idMiahoot, newPartie);
     }
 }

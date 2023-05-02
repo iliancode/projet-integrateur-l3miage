@@ -11,7 +11,7 @@ import org.mapstruct.Named;
 
 import java.util.List;
 
-@Mapper (uses = { MiahootMapper.class, PartieMapper.class, QuestionMapper.class, ReponseMapper.class})
+@Mapper (uses = { MiahootMapper.class, PartieMapper.class, QuestionMapper.class, ReponseMapper.class, PartieMapper.class})
 public interface EnseignantMapper {
 
 

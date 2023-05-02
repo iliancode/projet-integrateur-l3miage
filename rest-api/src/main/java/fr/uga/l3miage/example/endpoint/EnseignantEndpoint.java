@@ -3,10 +3,7 @@ package fr.uga.l3miage.example.endpoint;
 import fr.uga.l3miage.example.annotations.Error400Custom;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.EnseignantNotFoundErrorResponse;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
-import fr.uga.l3miage.example.request.CreateEnseignantRequest;
-import fr.uga.l3miage.example.request.CreateMiahootRequest;
-import fr.uga.l3miage.example.request.CreateQuestionRequest;
-import fr.uga.l3miage.example.request.CreateReponseRequest;
+import fr.uga.l3miage.example.request.*;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -169,4 +166,12 @@ public interface EnseignantEndpoint {
     @DeleteMapping("{mail}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses/{idReponse}")
     void deleteReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;
 
+
+    //post une partie dans un enseignant et choisir un miahoot a injecter dans la partie par son id
+    @Operation(description = "Ajout d'une partie à un enseignant")
+    @ApiResponse(responseCode = "202", description = "la partie a bien été ajoutée")
+    @Error400Custom
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("{mail}/parties/{idMiahoot}")
+    void addPartieToEnseignant(@PathVariable("mail") String mail,@PathVariable("idMiahoot") Long idMiahoot, @RequestBody CreatePartieRequest createPartieRequest) throws Exception;
 }

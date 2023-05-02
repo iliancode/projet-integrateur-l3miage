@@ -6,14 +6,8 @@ import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlre
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
-import fr.uga.l3miage.example.models.Enseignant;
-import fr.uga.l3miage.example.models.Miahoot;
-import fr.uga.l3miage.example.models.Question;
-import fr.uga.l3miage.example.models.Reponse;
-import fr.uga.l3miage.example.repository.EnseignantRepository;
-import fr.uga.l3miage.example.repository.MiahootRepository;
-import fr.uga.l3miage.example.repository.QuestionRepository;
-import fr.uga.l3miage.example.repository.ReponseRepository;
+import fr.uga.l3miage.example.models.*;
+import fr.uga.l3miage.example.repository.*;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +24,8 @@ public class EnseignantComponent {
     private final MiahootRepository miahootRepository;
     private final QuestionRepository questionRepository;
     private final ReponseRepository reponseRepository;
+
+    private final PartieRepository partieRepository;
 
 
     //test de creation d'un enseignant
@@ -246,6 +242,24 @@ public class EnseignantComponent {
             }
         } else {
             throw new Exception("Aucune entité n'a été trouvé pour l'id");
+        }
+    }
+
+    public void addPartieToEnseignant(final String mail, final Long idMiahoot, final Partie newPartie) throws Exception {
+        Enseignant e = enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour le mail "));
+
+        Miahoot m = miahootRepository.findById(idMiahoot)
+                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id "));
+        log.info("component atteint");
+
+        if (e.containsMiahoot(idMiahoot)) {
+            newPartie.setMiahoot(m);
+            e.addPartie(newPartie);
+            partieRepository.save(newPartie);
+            enseignantRepository.save(e);
+        } else {
+            throw new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail);
         }
     }
 }
