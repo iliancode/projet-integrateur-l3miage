@@ -2,6 +2,7 @@ package fr.uga.l3miage.example.repository;
 
 
 import fr.uga.l3miage.example.models.Participant;
+import fr.uga.l3miage.example.models.Partie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,9 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     Optional<Participant> findByPseudo(final String pseudo);
     int deleteByPseudo(final String pseudo);
 
-    Optional<Participant> findById(final long id);
-    int deleteById(final long id);
+    Optional<Participant> findById(final Long id);
+    void deleteById(final Long id);
+
+    List<Participant> findAllByPartie(final Partie partie);
 
 }

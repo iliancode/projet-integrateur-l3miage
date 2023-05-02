@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,18 @@ public class ParticipantService {
             Partie partie = partieComponent.getPartie(codePartie);
             Participant participant = participantMapper.toEntity(createParticipantRequest);
             participantComponent.createParticipantByPartie(partie, participant);
+        } catch (PartieEntityNotFoundException e) {
+            throw new ParticipantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),codePartie,e);
+        }
+    }
+
+    /**
+     * @return la liste des dto participant d'une partie
+     */
+    public List<ParticipantDTO> getAllParticipantsByPartie(final Long codePartie) {
+        try {
+            Partie partie = partieComponent.getPartie(codePartie);
+            return participantMapper.toListDto(participantComponent.getAllParticipantsOfPartie(partie));
         } catch (PartieEntityNotFoundException e) {
             throw new ParticipantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),codePartie,e);
         }

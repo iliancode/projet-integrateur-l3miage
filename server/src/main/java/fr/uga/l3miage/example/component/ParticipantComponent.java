@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -24,6 +26,10 @@ public class ParticipantComponent {
     public void createParticipantByPartie(final Partie partie, final Participant entity) {
         entity.setPartie(partie);
         participantRepository.save(entity);
+    }
+
+    public List<Participant> getAllParticipantsOfPartie(Partie partie) {
+        return participantRepository.findAllByPartie(partie);
     }
 
 }

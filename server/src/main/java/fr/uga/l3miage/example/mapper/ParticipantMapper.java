@@ -5,6 +5,8 @@ import fr.uga.l3miage.example.request.CreateParticipantRequest;
 import fr.uga.l3miage.example.response.ParticipantDTO;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ParticipantMapper {
     /**
@@ -20,4 +22,6 @@ public interface ParticipantMapper {
      * @return le Participant correspondant
      */
     Participant toEntity(CreateParticipantRequest request);
+
+    List<ParticipantDTO> toListDto(List<Participant> participants);
 }

@@ -2,6 +2,7 @@ package fr.uga.l3miage.example.endpoint;
 
 
 import fr.uga.l3miage.example.annotations.Error400Custom;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.PartieNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateParticipantRequest;
 import fr.uga.l3miage.example.response.ParticipantDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,4 +30,12 @@ public interface PartieEndpoint {
     @PostMapping("{codePartie}/participants")
     void createParticipantOfPartie(@PathVariable("codePartie") Long codePartie, @Valid @RequestBody CreateParticipantRequest request);
 
+    @Operation(description = "Récupérer la liste de DTO des entités participants de la partie qui a pour codePartie celui passé en paramètre")
+    @ApiResponse(responseCode = "200", description = "Renvoie la liste de DTO des entités participants de la partie demandée",
+            content = @Content(schema = @Schema(implementation = ParticipantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité partie demandée n'est pas trouvée",
+            content = @Content(schema = @Schema(implementation = PartieNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("{codePartie}/participants")
+    List<ParticipantDTO> getAllParticipantsByPartie(@PathVariable("codePartie") Long codePartie);
 }
