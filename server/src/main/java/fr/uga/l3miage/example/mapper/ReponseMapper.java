@@ -5,8 +5,6 @@ import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.ReponseDTO;
 import org.mapstruct.Mapper;
 
-import java.util.Collection;
-
 @Mapper
 public interface ReponseMapper {
 
@@ -23,4 +21,6 @@ public interface ReponseMapper {
      * @return le Reponse correspondant
      */
     Reponse toEntity(CreateReponseRequest request);
+    Reponse toReponse(CreateReponseRequest request);
+
 }

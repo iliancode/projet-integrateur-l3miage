@@ -9,7 +9,7 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper (uses = { MiahootMapper.class, PartieMapper.class})
+@Mapper (uses = { MiahootMapper.class, PartieMapper.class, QuestionMapper.class, ReponseMapper.class})
 public interface EnseignantMapper {
 
 

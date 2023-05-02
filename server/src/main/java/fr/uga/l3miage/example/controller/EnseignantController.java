@@ -5,6 +5,7 @@ import fr.uga.l3miage.example.exception.technical.entityNotFoundException.Enseig
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
+import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -77,6 +78,11 @@ public class EnseignantController implements EnseignantEndpoint {
     @Override
     public void deleteMiahootOfEnseignant(String mail, Long idMiahoot) throws Exception {
         enseignantService.deleteMiahootOfEnseignant(mail,idMiahoot);
+    }
+
+    @Override
+    public void addReponseToQuestionOfMiahoot(String mail, Long idMiahoot, Long idQuestion, CreateReponseRequest createReponseRequest) throws Exception {
+        enseignantService.addReponseToQuestionOfMiahoot(mail,idMiahoot,idQuestion,createReponseRequest);
     }
 
 

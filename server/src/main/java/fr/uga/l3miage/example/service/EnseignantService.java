@@ -11,12 +11,15 @@ import fr.uga.l3miage.example.exception.technical.entityNotFoundException.Enseig
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
+import fr.uga.l3miage.example.mapper.ReponseMapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.models.Question;
+import fr.uga.l3miage.example.models.Reponse;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
+import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -37,6 +40,7 @@ public class EnseignantService {
     private final QuestionMapper questionMapper;
 
     private final MiahootMapper miahootMapper;
+    private final ReponseMapper reponseMapper;
 
     /**
      * @param createEnseignantRequest la requête qui permet de créer une entité enseignant
@@ -138,5 +142,10 @@ public class EnseignantService {
         } catch (TestEntityNotFoundRestException e) {
             throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
         }
+    }
+
+    public void addReponseToQuestionOfMiahoot(final String mail, final Long idMiahoot, final Long idQuestion, final CreateReponseRequest createReponseRequest) throws Exception {
+        Reponse newReponse = reponseMapper.toReponse(createReponseRequest);
+        enseignantComponent.addReponseToQuestionOfMiahoot(mail, idMiahoot, idQuestion, newReponse);
     }
 }

@@ -6,6 +6,7 @@ import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorRespo
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
+import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -16,7 +17,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -128,4 +128,16 @@ public interface EnseignantEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("{mail}/miahoots/{idMiahoot}")
     void deleteMiahootOfEnseignant(@PathVariable("mail") String mail,@PathVariable("idMiahoot") Long idMiahoot) throws  Exception;
+
+
+
+    //creation d'une reponse dans un miahoot d'un enseignant
+    //enseignant/{mail}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses post
+
+    @Operation(description = "Ajout d'une reponse à une question d'un miahoot d'un enseignant")
+    @ApiResponse(responseCode = "202", description = "la reponse a bien été ajoutée")
+    @Error400Custom
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("{mail}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses")
+    void addReponseToQuestionOfMiahoot(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @RequestBody CreateReponseRequest createReponseRequest) throws Exception;
 }

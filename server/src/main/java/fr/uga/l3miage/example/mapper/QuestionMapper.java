@@ -15,6 +15,7 @@ public interface QuestionMapper {
     // @Mapping(source = "miahoots",target = "miahootsDTO",qualifiedBy = TestMapperUtils.ToSumTestInt.class)
     QuestionDTO toDto(Question questionEntity);
 
+    QuestionDTO toDtoQuestion(Question questionEntity);
     Question toQuestion(CreateQuestionRequest request);
 
     ReponseDTO map(Reponse reponse);
