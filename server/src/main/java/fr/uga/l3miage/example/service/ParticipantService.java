@@ -1,11 +1,14 @@
 package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.ParticipantComponent;
+import fr.uga.l3miage.example.component.PartieComponent;
 import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.ParticipantEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ParticipantEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ParticipantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.PartieEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.ParticipantMapper;
 import fr.uga.l3miage.example.models.Participant;
+import fr.uga.l3miage.example.models.Partie;
 import fr.uga.l3miage.example.request.CreateParticipantRequest;
 import fr.uga.l3miage.example.response.ParticipantDTO;
 import lombok.RequiredArgsConstructor;
@@ -18,36 +21,19 @@ import javax.transaction.Transactional;
 public class ParticipantService {
     private final ParticipantComponent participantComponent;
     private final ParticipantMapper participantMapper;
+    private final PartieComponent partieComponent;
+
 
     /**
-     * @param id de l'entité participant recherchée
-     * @return le dto participant correspondant à l'id
+     * @param createParticipantRequest la requête qui permet de créer une entité participant dans une Partie
      */
-    public ParticipantDTO getParticipant(final Long id) {
+    public void createParticipantByPartie(final Long codePartie, final CreateParticipantRequest createParticipantRequest) {
         try {
-            return participantMapper.toDto(participantComponent.getParticipant(id));
-        } catch (ParticipantEntityNotFoundException e) {
-            throw new ParticipantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),id,e);
-        }
-    }
-
-    /**
-     * @param createParticipantRequest la requête qui permet de créer une entité participant
-     */
-    public void createParticipant(final CreateParticipantRequest createParticipantRequest) {
-        Participant newParticipant = participantMapper.toEntity(createParticipantRequest);
-        participantComponent.createParticipant(newParticipant);
-    }
-
-    /**
-     * @param id de l'entité Participant à supprimer
-     */
-    @Transactional
-    public void deleteParticipant(Long id) {
-        try {
-            participantComponent.deleteParticipant(id);
-        } catch (ParticipantEntityNotFoundException e) {
-            throw new ParticipantEntityNotDeletedRestException(e.getMessage());
+            Partie partie = partieComponent.getPartie(codePartie);
+            Participant participant = participantMapper.toEntity(createParticipantRequest);
+            participantComponent.createParticipantByPartie(partie, participant);
+        } catch (PartieEntityNotFoundException e) {
+            throw new ParticipantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),codePartie,e);
         }
     }
 

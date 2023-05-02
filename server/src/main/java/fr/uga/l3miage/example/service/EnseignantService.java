@@ -157,7 +157,7 @@ public class EnseignantService {
     }
 
     public void addPartieToEnseignant(String mail, Long idMiahoot, CreatePartieRequest createPartieRequest) throws Exception {
-        Partie newPartie = partieMapper.toPartie(createPartieRequest);
+        Partie newPartie = partieMapper.toEntity(createPartieRequest);
         enseignantComponent.addPartieToEnseignant(mail, idMiahoot, newPartie);
     }
 

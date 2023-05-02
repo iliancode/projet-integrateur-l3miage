@@ -11,10 +11,9 @@ import java.util.Optional;
 public interface PartieMapper {
 
 
-    Partie toDto(Optional<Partie> testEntity);
-    //Partie toEntity(CreatePartieRequest request);
+    PartieDTO toDto(Partie testEntity);
+    Partie toEntity(CreatePartieRequest request);
 
 
-    Partie toPartie(CreatePartieRequest createPartieRequest);
-    PartieDTO toPartieDto(Partie partie);
+   // Partie toPartie(CreatePartieRequest createPartieRequest);
 }

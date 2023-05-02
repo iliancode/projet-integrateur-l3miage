@@ -12,4 +12,6 @@ import javax.validation.constraints.NotBlank;
 public class ParticipantDTO {
     @NotBlank
     private String pseudo;
+
+    private PartieDTO partie;
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface PartieRepository extends JpaRepository<Partie, Long> {
 
 
-    Optional<Partie> findById(Long aLong);
+    Optional<Partie> findByCodePartie(Long codePartie);
 
     <S extends Partie> S save(S s);
 
