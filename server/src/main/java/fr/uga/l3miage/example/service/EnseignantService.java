@@ -162,7 +162,7 @@ public class EnseignantService {
     }
 
     public PartieDTO getPartieFromEnseignant(String mail, Long codePartie) throws Exception {
-        return partieMapper.toPartieDto(enseignantComponent.getPartieFromEnseignant(mail, codePartie));
+        return partieMapper.toDto(enseignantComponent.getPartieFromEnseignant(mail, codePartie));
     }
 
     @Transactional
