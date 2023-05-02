@@ -23,6 +23,7 @@ import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
+import fr.uga.l3miage.example.response.ReponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -147,5 +148,13 @@ public class EnseignantService {
     public void addReponseToQuestionOfMiahoot(final String mail, final Long idMiahoot, final Long idQuestion, final CreateReponseRequest createReponseRequest) throws Exception {
         Reponse newReponse = reponseMapper.toReponse(createReponseRequest);
         enseignantComponent.addReponseToQuestionOfMiahoot(mail, idMiahoot, idQuestion, newReponse);
+    }
+
+    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion) throws Exception {
+        return enseignantMapper.toDtoReponse(enseignantComponent.getAllReponsesOfQuestionOfMiahootOfEnseignant(mail, idMiahoot, idQuestion));
+    }
+
+    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+        return reponseMapper.toDto(enseignantComponent.getReponseOfQuestionOfMiahootOfEnseignant(mail, idMiahoot, idQuestion, idReponse));
     }
 }

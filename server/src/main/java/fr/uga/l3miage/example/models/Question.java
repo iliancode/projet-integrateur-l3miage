@@ -49,4 +49,13 @@ public class Question {
     public void addReponse(Reponse reponse) {
         this.reponses.add(reponse);
     }
+
+    public Reponse getReponse(long id) {
+        for (Reponse reponse : this.reponses) {
+            if (reponse.getId() == id) {
+                return reponse;
+            }
+        }
+        return null;
+    }
 }

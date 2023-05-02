@@ -10,6 +10,7 @@ import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
+import fr.uga.l3miage.example.response.ReponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -140,4 +141,21 @@ public interface EnseignantEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("{mail}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses")
     void addReponseToQuestionOfMiahoot(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @RequestBody CreateReponseRequest createReponseRequest) throws Exception;
+
+
+    //get all reponses of a question of a miahoot of enseignant
+    @Operation(description = "Récupération de toutes les reponses d'une question d'un miahoot d'un enseignant")
+    @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités reponse",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("{mail}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses")
+    List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion) throws Exception;
+
+    //get one reponse of a question of a miahoot of enseignant by idReponse
+    @Operation(description = "recupere la reponse avec l'id correspondant dans la liste de reponse de la question du miahoot de l'enseignant")
+    @ApiResponse(responseCode = "200", description = "Renvoie une entité reponse avec l'id correspondant a  celui passé en parametre",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("{mail}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses/{idReponse}")
+    ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("mail") String mail, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;
 }

@@ -9,6 +9,7 @@ import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
+import fr.uga.l3miage.example.response.ReponseDTO;
 import fr.uga.l3miage.example.service.EnseignantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -83,6 +84,16 @@ public class EnseignantController implements EnseignantEndpoint {
     @Override
     public void addReponseToQuestionOfMiahoot(String mail, Long idMiahoot, Long idQuestion, CreateReponseRequest createReponseRequest) throws Exception {
         enseignantService.addReponseToQuestionOfMiahoot(mail,idMiahoot,idQuestion,createReponseRequest);
+    }
+
+    @Override
+    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion) throws Exception {
+        return enseignantService.getAllReponsesOfQuestionOfMiahootOfEnseignant(mail,idMiahoot,idQuestion);
+    }
+
+    @Override
+    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+        return enseignantService.getReponseOfQuestionOfMiahootOfEnseignant(mail,idMiahoot,idQuestion,idReponse);
     }
 
 
