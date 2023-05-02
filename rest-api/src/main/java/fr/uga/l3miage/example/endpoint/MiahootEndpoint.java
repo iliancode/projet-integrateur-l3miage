@@ -67,4 +67,16 @@ public interface MiahootEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("{idMiahoot}/questions/{idQuestion}")
     void deleteQuestion(@PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion) throws Exception;
+
+    //miahoots/{id}/questions/{id} put
+    @Operation(description = "Modifier une question d'un miahoot avec son id et l'id du miahoot")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si la question n'a pas pu être modifiée",
+            content = @Content(schema = @Schema(implementation = ParticipantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ApiResponse(responseCode = "202", description = "Renvoie la question modifiée",
+            content = @Content(schema = @Schema(implementation = MiahootDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @Error400Custom
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PatchMapping("{idMiahoot}/questions/{idQuestion}")
+    void updateQuestion(@PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @Valid @RequestBody QuestionDTO questionDTO) throws Exception;
+
 }

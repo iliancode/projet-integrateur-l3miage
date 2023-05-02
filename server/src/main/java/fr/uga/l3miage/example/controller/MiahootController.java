@@ -42,4 +42,9 @@ public class MiahootController implements MiahootEndpoint {
     public void deleteQuestion(Long idMiahoot, Long idQuestion) throws Exception {
         miahootService.deleteQuestion(idMiahoot, idQuestion);
     }
+
+    @Override
+    public void updateQuestion(Long idMiahoot, Long idQuestion, QuestionDTO questionDTO) throws Exception {
+        miahootService.updateQuestion(idMiahoot, idQuestion, questionDTO);
+    }
 }

@@ -1,10 +1,12 @@
 package fr.uga.l3miage.example.component;
 
 import fr.uga.l3miage.example.mapper.MiahootMapper;
+import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.repository.MiahootRepository;
 import fr.uga.l3miage.example.repository.QuestionRepository;
+import fr.uga.l3miage.example.response.QuestionDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,7 @@ public class MiahootComponent {
     private final MiahootRepository miahootRepository;
     private final MiahootMapper miahootMapper;
     private final QuestionRepository questionRepository;
-
+    private final QuestionMapper questionMapper;
 
     public Miahoot getMiahoot(final Long id) throws Exception {
         return miahootRepository.findById(id)
@@ -59,6 +61,15 @@ public class MiahootComponent {
             m.deleteQuestion(idQuestion);
             questionRepository.deleteById(idQuestion);
             miahootRepository.save(m);
+        }
+    }
+
+    public void updateQuestion(Long idMiahoot, Long idQuestion, QuestionDTO questionDTO) {
+        Miahoot m = miahootRepository.findById(idMiahoot).get();
+        if(m.containsQuestion(idQuestion)){
+            Question q = m.getQuestion(idQuestion);
+            questionMapper.mergeQuestionEntity(q, questionDTO);
+            questionRepository.save(q);
         }
     }
 }

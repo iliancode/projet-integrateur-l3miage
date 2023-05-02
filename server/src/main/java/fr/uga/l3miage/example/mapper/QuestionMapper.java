@@ -5,7 +5,9 @@ import fr.uga.l3miage.example.models.Reponse;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.QuestionDTO;
 import fr.uga.l3miage.example.response.ReponseDTO;
+import lombok.NonNull;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 @Mapper
 public interface QuestionMapper {
@@ -16,5 +18,7 @@ public interface QuestionMapper {
     Question toQuestion(CreateQuestionRequest request);
 
     ReponseDTO map(Reponse reponse);
+
+    void mergeQuestionEntity(@MappingTarget @NonNull Question ancienQuestion, QuestionDTO newQuestion);
 
 }

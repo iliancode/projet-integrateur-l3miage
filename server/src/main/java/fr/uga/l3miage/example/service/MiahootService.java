@@ -61,4 +61,13 @@ public class MiahootService {
             throw new Exception("Impossible de supprimer l'entitée ");
         }
     }
+
+    public void updateQuestion(Long idMiahoot, Long idQuestion, QuestionDTO questionDTO) throws Exception {
+        try {
+            miahootComponent.updateQuestion(idMiahoot, idQuestion, questionDTO);
+
+        }catch (Exception e) {
+            throw new Exception("Impossible de mettre à jour l'entitée ");
+        }
+    }
 }
