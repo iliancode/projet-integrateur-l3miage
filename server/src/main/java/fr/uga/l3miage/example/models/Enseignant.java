@@ -67,4 +67,13 @@ public class Enseignant {
         }
         return null;
     }
+
+    public void removePartie(Long codePartie) {
+        for(Partie p : parties){
+            if(p.getCodePartie() == codePartie){
+                parties.remove(p);
+                return;
+            }
+        }
+    }
 }

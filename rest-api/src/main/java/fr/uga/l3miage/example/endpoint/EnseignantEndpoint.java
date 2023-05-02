@@ -181,4 +181,13 @@ public interface EnseignantEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{mail}/parties/{codePartie}")
     PartieDTO getPartieFromEnseignant(@PathVariable("mail") String mail, @PathVariable("codePartie") Long codePartie) throws Exception;
+
+    //delete a partie of enseignant by its id
+    @Operation(description = "Suppression d'une partie d'un enseignant")
+    @ApiResponse(responseCode = "200", description = "si  l'element est renvoyé et supprimé")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("{mail}/parties/{codePartie}")
+    void deletePartieFromEnseignant(@PathVariable("mail") String mail, @PathVariable("codePartie") Long codePartie) throws Exception;
 }

@@ -107,5 +107,10 @@ public class EnseignantController implements EnseignantEndpoint {
         return enseignantService.getPartieFromEnseignant(mail,codePartie);
     }
 
+    @Override
+    public void deletePartieFromEnseignant(String mail, Long codePartie) throws Exception {
+        enseignantService.deletePartieFromEnseignant(mail,codePartie);
+    }
+
 
 }

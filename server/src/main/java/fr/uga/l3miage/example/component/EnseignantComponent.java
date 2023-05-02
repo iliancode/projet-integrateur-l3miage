@@ -273,5 +273,12 @@ public class EnseignantComponent {
         }
 
     }
+
+    public void deletePartieFromEnseignant(String mail, Long codePartie) throws Exception {
+        Enseignant e = enseignantRepository.findByMail(mail)
+                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour le mail [%s]"));
+        e.removePartie(codePartie);
+        enseignantRepository.save(e);
+    }
 }
 

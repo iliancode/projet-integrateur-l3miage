@@ -164,4 +164,13 @@ public class EnseignantService {
     public PartieDTO getPartieFromEnseignant(String mail, Long codePartie) throws Exception {
         return partieMapper.toPartieDto(enseignantComponent.getPartieFromEnseignant(mail, codePartie));
     }
+
+    @Transactional
+    public void deletePartieFromEnseignant(String mail, Long codePartie) throws Exception {
+        try{
+            enseignantComponent.deletePartieFromEnseignant(mail, codePartie);
+        }catch (Exception ex){
+            throw new Exception("Erreur lors de la suppression de la partie");
+        }
+    }
 }
