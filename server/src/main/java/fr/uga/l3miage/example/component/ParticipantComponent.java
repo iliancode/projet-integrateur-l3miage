@@ -72,7 +72,7 @@ public class ParticipantComponent {
         }
 
         if (!isPartieofEnseignant) {
-            throw new IsNotPartieOfEnseignantException(String.format("L'enseignant [%s] n'a pas la partie [%s]", mail, partie.getCodePartie()), mail, partie.getCodePartie());
+            throw new IsNotPartieOfEnseignantException(String.format("La partie [%s] n'appartient pas à l'enseignant [%s]", mail, partie.getCodePartie()), mail, partie.getCodePartie());
         }
 
         List<Participant> participants = participantRepository.findAllByPartie(partie);

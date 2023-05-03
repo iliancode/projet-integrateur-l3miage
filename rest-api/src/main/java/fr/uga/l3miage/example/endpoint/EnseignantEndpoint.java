@@ -191,14 +191,4 @@ public interface EnseignantEndpoint {
     @DeleteMapping("{mail}/parties/{codePartie}")
     void deletePartieFromEnseignant(@PathVariable("mail") String mail, @PathVariable("codePartie") Long codePartie) throws Exception;
 
-
-    // EndPoints pour les participants
-
-    @Operation(description = "Suppression de tous les participants d'une partie d'un enseignant")
-    @ApiResponse(responseCode = "200", description = "si  les elements sont renvoyés et supprimés")
-    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si les entités n'ont pas pu être supprimées",
-            content = @Content(schema = @Schema(implementation = ParticipantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
-    @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("{mail}/parties/{codePartie}/participants")
-    void deleteAllParticipantsFromPartie(@PathVariable("mail") String mail, @PathVariable("codePartie") Long codePartie);
 }

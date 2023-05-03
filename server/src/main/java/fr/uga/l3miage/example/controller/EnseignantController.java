@@ -114,13 +114,4 @@ public class EnseignantController implements EnseignantEndpoint {
         enseignantService.deletePartieFromEnseignant(mail,codePartie);
     }
 
-
-    // Controller pour les participants
-
-    @Override
-    public void deleteAllParticipantsFromPartie(String mail, Long codePartie) {
-        participantService.deleteAllParticipantsFromPartie(mail,codePartie);
-    }
-
-
 }

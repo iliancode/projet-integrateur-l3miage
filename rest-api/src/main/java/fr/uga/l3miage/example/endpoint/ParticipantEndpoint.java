@@ -1,6 +1,5 @@
 package fr.uga.l3miage.example.endpoint;
 
-
 import fr.uga.l3miage.example.annotations.Error400Custom;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.ParticipantNotFoundErrorResponse;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.PartieNotFoundErrorResponse;
@@ -18,17 +17,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Tag(name = "Partie tag")
+@Tag(name = "Endpoints des Participants")
 @CrossOrigin
 @RestController
-@RequestMapping("api/parties/")
-public interface PartieEndpoint {
+@RequestMapping("api/")
+public interface ParticipantEndpoint {
 
     @Operation(description = "Création d'une entité Participant dans la Partie du codePartie passé en paramètre")
     @ApiResponse(responseCode = "201", description = "L'entité Participant de la Partie avec le codePartie demandé a bien été créée.")
     @Error400Custom
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("{codePartie}/participants")
+    @PostMapping("parties/{codePartie}/participants")
     void createParticipantOfPartie(@PathVariable("codePartie") Long codePartie, @Valid @RequestBody CreateParticipantRequest request);
 
 
@@ -38,8 +37,8 @@ public interface PartieEndpoint {
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité partie demandée n'est pas trouvée",
             content = @Content(schema = @Schema(implementation = PartieNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("{codePartie}/participants")
-    List<ParticipantDTO> getAllParticipantsByPartie(@PathVariable("codePartie") Long codePartie);
+    @GetMapping("parties/{codePartie}/participants")
+    List<ParticipantDTO> getAllParticipantsOfPartie(@PathVariable("codePartie") Long codePartie);
 
 
     @Operation(description = "Récupérer le DTO de l'entité participant qui a pour id celui passé en paramètre dans la partie avec codePartie demandé en paramètre")
@@ -50,6 +49,15 @@ public interface PartieEndpoint {
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité participant n'est pas trouvée",
             content = @Content(schema = @Schema(implementation = ParticipantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("{codePartie}/participants/{id}")
-    ParticipantDTO getParticipantByPartie(@PathVariable("codePartie") Long codePartie, @PathVariable("id") Long id);
+    @GetMapping("parties/{codePartie}/participants/{id}")
+    ParticipantDTO getParticipantOfPartie(@PathVariable("codePartie") Long codePartie, @PathVariable("id") Long id);
+
+
+    @Operation(description = "Suppression de tous les participants d'une partie d'un enseignant")
+    @ApiResponse(responseCode = "200", description = "si  les elements sont renvoyés et supprimés")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si les entités n'ont pas pu être supprimées",
+            content = @Content(schema = @Schema(implementation = ParticipantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("enseignants/{mail}/parties/{codePartie}/participants")
+    void deleteAllParticipantsOfPartie(@PathVariable("mail") String mail, @PathVariable("codePartie") Long codePartie);
 }

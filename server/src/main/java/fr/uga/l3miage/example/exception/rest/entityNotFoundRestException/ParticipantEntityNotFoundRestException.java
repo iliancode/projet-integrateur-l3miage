@@ -8,11 +8,6 @@ import org.springframework.http.HttpStatus;
 public class ParticipantEntityNotFoundRestException extends RuntimeException {
     private final Long id;
 
-    public ParticipantEntityNotFoundRestException(String message) {
-        super(message);
-        this.id = null;
-    }
-
     public ParticipantEntityNotFoundRestException(String message, Long id) {
         super(message);
         this.id = id;
