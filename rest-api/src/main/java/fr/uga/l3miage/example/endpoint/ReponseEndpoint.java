@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @Tag(name = "Reponse tag")
 @CrossOrigin
 @RestController
-@RequestMapping("reponses/")
+@RequestMapping("api/reponses/")
 public interface ReponseEndpoint{
 
     //recupererer le DTO de l'entité reponse

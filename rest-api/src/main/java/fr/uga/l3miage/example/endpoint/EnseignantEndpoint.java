@@ -17,7 +17,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("enseignants/")
+@RequestMapping("api/enseignants/")
 public interface EnseignantEndpoint {
 
     @Operation(description = "Création d'une entité Enseignant")

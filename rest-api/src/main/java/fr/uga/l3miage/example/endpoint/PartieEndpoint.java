@@ -21,7 +21,7 @@ import java.util.List;
 @Tag(name = "Partie tag")
 @CrossOrigin
 @RestController
-@RequestMapping("parties/")
+@RequestMapping("api/parties/")
 public interface PartieEndpoint {
 
     @Operation(description = "Création d'une entité Participant dans la Partie du codePartie passé en paramètre")
