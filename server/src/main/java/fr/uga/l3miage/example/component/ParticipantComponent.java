@@ -2,7 +2,9 @@ package fr.uga.l3miage.example.component;
 
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ParticipantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.isNotEntityOf.IsNotPartieOfEnseignantException;
 import fr.uga.l3miage.example.mapper.ParticipantMapper;
+import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Participant;
 import fr.uga.l3miage.example.models.Partie;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
@@ -57,9 +59,22 @@ public class ParticipantComponent {
      * @param partie la partie à laquelle appartient le participant
      * @throws EnseignantEntityNotFoundException si l'enseignant n'existe pas
      */
-    public void deleteAllParticipantsFromPartie(String mail, Partie partie) throws EnseignantEntityNotFoundException {
-        enseignantRepository.findByMail(mail)
+    public void deleteAllParticipantsFromPartie(String mail, Partie partie) throws EnseignantEntityNotFoundException, IsNotPartieOfEnseignantException {
+        boolean isPartieofEnseignant = false;
+
+        Enseignant enseignant = enseignantRepository.findByMail(mail)
                 .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail));
+
+        for (Partie p : enseignant.getParties()) {
+            if (partie.getCodePartie() == p.getCodePartie()) {
+                isPartieofEnseignant = true;
+            }
+        }
+
+        if (!isPartieofEnseignant) {
+            throw new IsNotPartieOfEnseignantException(String.format("L'enseignant [%s] n'a pas la partie [%s]", mail, partie.getCodePartie()), mail, partie.getCodePartie());
+        }
+
         List<Participant> participants = participantRepository.findAllByPartie(partie);
         participantRepository.deleteAll(participants);
     }

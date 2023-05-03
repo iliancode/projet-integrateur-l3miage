@@ -9,6 +9,7 @@ import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.PartieE
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ParticipantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.PartieEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.isNotEntityOf.IsNotPartieOfEnseignantException;
 import fr.uga.l3miage.example.mapper.ParticipantMapper;
 import fr.uga.l3miage.example.models.Participant;
 import fr.uga.l3miage.example.models.Partie;
@@ -82,7 +83,7 @@ public class ParticipantService {
         try {
             Partie partie = partieComponent.getPartie(codePartie);
             participantComponent.deleteAllParticipantsFromPartie(mail, partie);
-        } catch (EnseignantEntityNotFoundException | PartieEntityNotFoundException e) {
+        } catch (EnseignantEntityNotFoundException | PartieEntityNotFoundException | IsNotPartieOfEnseignantException e) {
             throw new ParticipantEntityNotFoundRestException(e.getMessage());
         }
     }
