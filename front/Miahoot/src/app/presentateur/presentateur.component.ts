@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {DataService} from "../service/data.service";
 
 @Component({
   selector: 'app-presentateur',
@@ -6,6 +7,15 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./presentateur.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PresentateurComponent {
+export class PresentateurComponent implements OnInit{
+
+  constructor(private ds : DataService) {}
+
+  ngOnInit() : void {
+    this.ds.getEnseignant("adil@gmail.com")
+      .then(enseignant => console.log(enseignant))
+      .catch(erreur =>console.log("pas d'enseignant trouve avec cet email"));
+  }
+
 
 }
