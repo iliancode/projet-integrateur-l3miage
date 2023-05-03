@@ -1,0 +1,35 @@
+<p>connexion works!</p>
+
+
+
+
+
+<mat-card class="leftCard">
+  <mat-card-header>
+    <mat-card-title> LOG IN </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput  placeholder="Ex. pat@example.com">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput >
+      </mat-form-field>
+    </form>
+    <p>Don’t have an account? <a href="/connexion">Sign up</a> </p>
+
+  </mat-card-content>
+</mat-card>

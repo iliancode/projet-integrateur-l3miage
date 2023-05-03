@@ -1,0 +1,32 @@
+<p>concepteur works!</p>
+
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+
+<!-- Background & animion & navbar & title -->
+  <div class="container-fluid">
+<!-- Background animtion-->
+    <div class="background">
+       <div class="cube"></div>
+       <div class="cube"></div>
+       <div class="cube"></div>
+       <div class="cube"></div>
+      <div class="cube"></div>
+    </div>
+<!-- header -->
+   <header>
+
+    <!-- title & content -->
+    <section class="header-content">
+      <h1>Welcome</h1>
+      <p> which operation you want to make ? <br></p>
+      <!-- il faudra faire un ngFor pour chaque miahoot existant pour l'enseignant connecté
+       et il faudra recuperer le nom des miahoot pour les afficher à la place de miahoot name-->
+      <button mat-button [matMenuTriggerFor]="menu"  id="Miahoot-1">Miahoot name</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="deleteMiahoot('Miahoot-1')"> Supprimer </button>
+        <button mat-menu-item> Modifier </button>
+      </mat-menu>
+      <a href="/creation"><button mat-raised-button id="addMiahoot" > + </button></a>
+    </section>
+  </header>
+</div>

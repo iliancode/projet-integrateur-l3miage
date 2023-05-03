@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "projet-integrateur-d6e79": {
+      "hosting": {
+        "Miahoot": [
+          "projet-integrateur-d6e79"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "projet-integrateur-d6e79"
+  }
+}

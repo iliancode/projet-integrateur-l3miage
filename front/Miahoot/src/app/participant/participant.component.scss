@@ -1,0 +1,37 @@
+body{
+  background-color: #4e54c8;
+  text-align: center;
+}
+input{
+  border-radius: 5px;
+  height: 50px;
+  width: 200px;
+}
+h1{
+  font-size: 35px;
+}
+.entrerCodePartie{
+margin: auto;
+  height: 50%;
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+.accesMiahoot{
+  display: flex;
+  text-align: right;
+  margin: auto;
+  height: 50%;
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+button{
+  height: 55px;
+  width: 200px;
+}
+

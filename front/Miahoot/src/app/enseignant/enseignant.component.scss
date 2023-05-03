@@ -1,0 +1,510 @@
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    font-family: 'Exo', sans-serif;
+}
+
+
+.context {
+    width: 100%;
+    position: absolute;
+    top:50vh;
+    
+}
+
+.context h1{
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+}
+
+
+.area{
+    background: #4e54c8;  
+    background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  
+    width: 100%;
+    height:100vh;
+    
+   
+}
+
+.circles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    
+}
+
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px)
+
+        rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+
+.example-button-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .example-button-row {
+    margin-right: 20px; /* adjust the value as needed */
+  }
+ 
+  
+// Animate the size, inside
+.fill:hover,
+.fill:focus {
+  box-shadow: inset 0 0 0 2em var(--hover);
+}
+
+// Animate the size, outside
+.pulse:hover, 
+.pulse:focus {
+  animation: pulse 1s;
+  box-shadow: 0 0 0 2em transparent;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 var(--hover); }
+}
+
+// Stack multiple shadows, one from the left, the other from the right
+.close:hover,
+.close:focus {
+  box-shadow: 
+    inset -3.5em 0 0 0 var(--hover),
+    inset 3.5em 0 0 0 var(--hover);  
+}
+
+// Size can also be negative; see how it's smaller than the element
+.raise:hover,
+.raise:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.25em);
+}
+
+// Animating from the bottom
+.up:hover,
+.up:focus {
+  box-shadow: inset 0 -3.25em 0 0 var(--hover);
+}
+
+// And from the left
+.slide:hover,
+.slide:focus {
+  box-shadow: inset 6.5em 0 0 0 var(--hover);
+}
+
+// Multiple shadows, one on the outside, another on the inside
+.offset {  
+  box-shadow: 
+    0.3em 0.3em 0 0 var(--color),
+    inset 0.3em 0.3em 0 0 var(--color);
+  
+  &:hover,
+  &:focus {
+    box-shadow: 
+      0 0 0 0 var(--hover),
+      inset 6em 3.5em 0 0 var(--hover);
+  }
+}
+
+//=== Set button colors
+// If you wonder why use Sass vars or CSS custom properties...
+  // Make a map with the class names and matching colors
+$colors: (
+  fill: #a972cb,
+  pulse: #ef6eae, 
+  close: #ff7f82, 
+  raise: #ffa260, 
+  up: #e4cb58, 
+  slide: #8fc866, 
+  offset: #19bc8b
+);
+
+// Sass variables compile to a static string; CSS variables are dynamic and inherited
+  // Loop through the map and set CSS custom properties using Sass variables
+@each $button, $color in $colors {
+  .#{$button} {
+    --color: #{$color};
+    --hover: #{adjust-hue($color, 45deg)};
+  }
+}
+
+// Now every button will have different colors as set above. We get to use the same structure, only changing the custom properties.
+button {  
+  color: var(--color);
+  transition: 0.25s;
+  
+  &:hover,
+  &:focus { 
+    border-color: var(--hover);
+    color: #fff;
+  }
+}
+
+//=== Pen styling, ignore
+body {
+  color: #fff;
+  background: hsl(227, 10%, 10%);
+  font: 300 1em 'Fira Sans', sans-serif;
+  
+  // Center everything ever
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+}
+
+// Basic button styles
+button {
+  background: none;
+  border: 2px solid;
+  font: inherit;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 1em 2em;
+}
+
+h1 { font-weight: 400; }
+
+code { 
+  color: #e4cb58;
+  font: inherit;
+}
+
+
+
+//NEW BUTTON
+
+* {
+    padding: 0;
+    margin: 0;
+  }
+  
+  body {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+      url(https://images.pexels.com/photos/2166927/pexels-photo-2166927.jpeg?cs=srgb&dl=animal-aquarium-aquatic-2166927.jpg&fm=jpg)
+        no-repeat center center/cover;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  a {
+    font-size: 1.5rem;
+    padding: 1rem 3rem;
+    color: #f4f4f4;
+    text-transform: uppercase;
+  }
+  
+  .btn {
+    text-decoration: none;
+    border: 1px solid rgb(146, 148, 248);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn:hover {
+    box-shadow: 1px 1px 25px 10px rgba(146, 148, 248, 0.4);
+  }
+  
+  .btn:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(146, 148, 248, 0.4),
+      transparent
+    );
+    transition: all 650ms;
+  }
+  
+  .btn:hover:before {
+    left: 100%;
+  }
+
+
+  //BUTTTON
+
+  html {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*,*:before,*:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+body {
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    width: 100%;
+}
+
+b {
+  position: relative;
+  display: block;
+  font-family: helvetica neue, helvetica, sans-serif;
+  line-height: 1.15em;
+  margin-top: -1.15em;
+  top: 2.3em;
+  font-size: 0.67em;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  opacity: 0.75;
+  text-align: center;
+}
+
+b span {
+  font-size: 0.785em;
+  font-weight: 400;
+  opacity: 0.4;
+}
+
+#intro {
+  width: 200px;
+  margin: 100px auto 0;
+}
+
+.button {
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+    margin-top: 40px;
+}
+
+.button .bottom {
+    position: absolute;
+    left: 7px;
+    top: 7px;
+    width: 100%;
+    height: 100%;
+    background-color: #2acdc1;
+    display: block;
+    -webkit-transition: all .15s ease-out;
+    -moz-transition: all .15s ease-out;
+    -o-transition: all .15s ease-out;
+    transition: all .15s ease-out;
+}
+
+.button .top {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 24px 34px 22px 34px;
+    border: 2px solid #04049d;
+}
+
+.button-dark .top {
+    border: 2px solid #fff;
+}
+
+.button .top .label {
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #04049d;
+    font-size: 12px;
+    line-height: 110%;
+    letter-spacing: 2px;
+    text-align: center;
+    text-transform: uppercase;
+    -webkit-transition: all .15s ease-out;
+    -moz-transition: all .15s ease-out;
+    -o-transition: all .15s ease-out;
+    transition: all .15s ease-out;
+}
+
+.button-dark .top .label {
+    color: #fff;
+}
+
+.button:hover .bottom {
+    left: 0;
+    top: 0;
+    background-color: #f3f3f3;
+}
+
+.button:hover .top .label {
+    color: #2acdc1;
+}
+
+.button-border {
+    position: absolute;
+    background-color: #2acdc1;
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
+}
+
+.button:hover .top .button-border-left,.button:hover .top .button-border-right {
+    height: calc(100% + 2px);
+}
+
+.button:hover .top .button-border-top,.button:hover .top .button-border-bottom {
+    width: calc(100% + 2px);
+}
+
+.button-border-left {
+    left: -2px;
+    bottom: -2px;
+    width: 2px;
+    height: 0;
+}
+
+.button-border-top {
+    left: -2px;
+    top: -2px;
+    width: 0;
+    height: 2px;
+}
+
+.button-border-right {
+    right: -2px;
+    top: -2px;
+    width: 2px;
+    height: 0;
+}
+
+.button-border-bottom {
+    right: -2px;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+}
+
+//BUTTTTON 

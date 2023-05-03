@@ -1,0 +1,31 @@
+<p>presentation works!</p>
+<!-- ici on s'occupe de la partie présentateur
+(affiche la questions et les choix de reponses)
+ il faut utiliser un ngIf pour que seul
+ le role presentateur voit cet affichage
+ il faut les elements suivant :
+ - la question
+ - les reponses
+ - un element de completion type image, video, son ...
+ - un timer ou un bouton pour passer à la question suivante -->
+
+<div ngIf="user">
+  <label> ici on place la question ?</label>
+  <!-- ici les choix, il va falloir se mettre d'accord sur le mise en forme-->
+  <button mat-raised-button>
+    ici soit on affiche les resultats soit on passe à la suite ça depend du sujet
+  </button>
+</div>
+
+
+<!-- ici on fait la vue du participant
+(avec des boutons correspondants aux reponses possibles)
+il faut les elements suivants :
+- les reponses
+- un bouton de comfirmation
+-->
+<div ngIf="unlogged">
+  <!--ici la liste de boutons choix -->
+  <button mat-raised-button> Confirmer mes choix </button>
+</div>
+

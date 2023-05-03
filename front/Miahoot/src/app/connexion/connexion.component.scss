@@ -1,0 +1,37 @@
+.example-ripple-container {
+    cursor: pointer;
+    text-align: center;
+  
+    width: 300px;
+    height: 500px;
+    line-height: 300px;
+    margin : auto auto;
+    
+    
+  }
+
+  //Card
+  .leftCard{
+    background-color: burlywood;
+    width: 45%;
+    margin : auto auto;
+  }
+
+  
+  
+
+  //Center h1
+  h1 {
+    text-align: center;
+  }
+
+  //mail and mdp
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 80%;
+  }
