@@ -114,4 +114,11 @@ public class EnseignantController implements EnseignantEndpoint {
         enseignantService.deletePartieFromEnseignant(mail,codePartie);
     }
 
+    @Override
+    public void createMiahootOfEnseignant(String mail, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
+        enseignantService.createMiahootOfEnseignant(mail, createFullMiahootRequest);
+    }
+
+
+
 }

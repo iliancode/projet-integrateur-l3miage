@@ -9,6 +9,8 @@ import lombok.NonNull;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper
 public interface QuestionMapper {
 
@@ -16,6 +18,7 @@ public interface QuestionMapper {
     QuestionDTO toDto(Question questionEntity);
 
     Question toQuestion(CreateQuestionRequest request);
+    List<Question> toQuestionList(List<QuestionDTO> request);
 
     ReponseDTO map(Reponse reponse);
 
