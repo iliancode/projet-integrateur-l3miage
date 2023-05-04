@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {DataService} from "../service/data.service";
+import {DsService} from "../service/ds.service";
 
 @Component({
   selector: 'app-presentateur',
@@ -9,7 +9,7 @@ import {DataService} from "../service/data.service";
 })
 export class PresentateurComponent implements OnInit{
 
-  constructor(private ds : DataService) {}
+  constructor(private ds : DsService) {}
 
   ngOnInit() : void {
     this.ds.getEnseignant("adil@gmail.com")
