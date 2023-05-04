@@ -7,6 +7,25 @@ export interface Enseignant {
     mail: string;
     mdp: string;
 }
+
+export interface Reponse {
+  id?: number;
+  label: string;
+  estValide: boolean;
+}
+
+export interface Question {
+  id?: number;
+  label: string;
+  reponses: Reponse[];
+}
+
+export interface Miahoot {
+  id?: number;
+  nom: string;
+  questions: Question[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -39,4 +58,15 @@ export class DsService {
     console.log(reponse)
   }
 
+  async postM( mail:String,  miahoot: Miahoot){
+    let url = "http://localhost:8080/api/enseignants/"
+    url += mail + "/miahoot"
+    let reponse =  await lastValueFrom(this.http.post(url, miahoot));
+    console.log(reponse)
+  }
+
+
+}
+
+export class Mihaoot {
 }
