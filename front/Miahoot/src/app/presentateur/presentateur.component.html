@@ -19,8 +19,24 @@
          <h1>Welcome</h1>
         <p> choose which one you want to present ? <br>
             </p>
-            <button>Presentation 1</button>
-            <button>Presentation 2</button>
-          </section>
-      </header>
+        <div *ngIf="miahoots ">
+        <div *ngFor="let miahoot of miahoots">
+          <button>{{miahoot.nom}}</button>
+        </div>
+        </div>
+      </section>
+
+
+
+     <div *ngIf="question_courante | async as Q;">
+       <h2>{{ Q.label }}</h2>
+       <div *ngFor="let reponse of Q.reponses">
+         <p>{{ reponse.label }}</p>
+       </div>
+       <button (click)="questionSuivante()">Question suivante</button>
+     </div>
+
+   </header>
   </div>
+
+
