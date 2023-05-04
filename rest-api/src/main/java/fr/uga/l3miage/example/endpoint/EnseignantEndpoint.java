@@ -25,7 +25,7 @@ public interface EnseignantEndpoint {
     @Error400Custom
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    void createEntityEnseignant(@RequestBody CreateEnseignantRequest request) throws Exception;
+    void createEntityEnseignant(@RequestBody CreateEnseignantRequest request);
 
     @Operation(description = "Récupération d'une entité Enseignant par son email")
     @ApiResponse(responseCode = "200", description = "L'entité Enseignant a bien été récupérée.",

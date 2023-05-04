@@ -29,16 +29,21 @@ public class EnseignantComponent {
     private final PartieRepository partieRepository;
 
 
-    //test de creation d'un enseignant
-    public void createEnseignant(final Enseignant enseignant) throws Exception {
+    public void createEnseignant(final Enseignant enseignant) throws MailAlreadyExistException {
+        if(enseignantRepository.findByMail(enseignant.getMail()).isPresent()){
+            throw new MailAlreadyExistException(String.format("Ce mail [%s] existe deja dans la base de données", enseignant.getMail()), enseignant.getMail());
+        }
+
         enseignantRepository.save(enseignant);
     }
 
 
     public Enseignant getEnseignantById(final Long idEnseignant) throws Exception {
 
-        return enseignantRepository.findById(idEnseignant)
+        Enseignant enseignant = enseignantRepository.findById(idEnseignant)
                 .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " + idEnseignant));
+
+        return enseignant;
     }
 
 

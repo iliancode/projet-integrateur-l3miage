@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 @Schema(description = "correspond au DTO de l'entité Question")
 public class QuestionDTO{
+    private Long id;
 
     @NotBlank
     private String label;

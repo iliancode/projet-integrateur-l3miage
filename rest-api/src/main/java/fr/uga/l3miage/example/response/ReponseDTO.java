@@ -11,10 +11,12 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @Schema(description = "correspond au DTO de l'entité Reponse")
-public  class ReponseDTO{
+public class ReponseDTO{
+        private Long id;
+
         @NotBlank(message = "L'énonciation des réponses est obligatoire")
         private String label;
+
         @NotBlank(message = "La validité de la réponse est obligatoire")
         private Boolean estValide;
-
 }

@@ -22,7 +22,7 @@ public class EnseignantController implements EnseignantEndpoint {
 
 
     @Override
-    public void createEntityEnseignant(CreateEnseignantRequest request) throws Exception {
+    public void createEntityEnseignant(CreateEnseignantRequest request) {
         enseignantService.createEnseignant(request);
     }
 

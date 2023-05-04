@@ -38,7 +38,7 @@ public class EnseignantService {
     /**
      * @param createEnseignantRequest la requête qui permet de créer une entité enseignant
      */
-    public void createEnseignant( final CreateEnseignantRequest createEnseignantRequest) throws Exception {
+    public void createEnseignant(final CreateEnseignantRequest createEnseignantRequest) {
         try {
             Enseignant newEnseignant = enseignantMapper.toEntity(createEnseignantRequest);
             enseignantComponent.createEnseignant(newEnseignant);

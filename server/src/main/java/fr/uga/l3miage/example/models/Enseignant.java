@@ -1,20 +1,22 @@
 package fr.uga.l3miage.example.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "enseignant")
 @Getter
 @Setter
+@Builder
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "enseignant")
 public class Enseignant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column
     private String mail;

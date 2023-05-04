@@ -1,10 +1,11 @@
 package fr.uga.l3miage.example.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import nonapi.io.github.classgraph.json.Id;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.List;
 @Setter
 @Schema(description = "correspond au DTO de l'entité Enseignant")
 public class EnseignantDTO {
+    private Long id;
+
     @Email
     @NotBlank
     private String mail;
