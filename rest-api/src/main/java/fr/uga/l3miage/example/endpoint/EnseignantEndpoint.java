@@ -9,12 +9,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Endpoints des Enseignants")
 @CrossOrigin
 @RestController
 @RequestMapping("api/enseignants/")
@@ -163,32 +165,5 @@ public interface EnseignantEndpoint {
     @DeleteMapping("{idEnseignant}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses/{idReponse}")
     void deleteReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;
 
-
-    //post une partie dans un enseignant et choisir un miahoot a injecter dans la partie par son id
-    @Operation(description = "Ajout d'une partie à un enseignant")
-    @ApiResponse(responseCode = "202", description = "la partie a bien été ajoutée")
-    @Error400Custom
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("{idEnseignant}/miahoots/{idMiahoot}/parties")
-    void addPartieToEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @RequestBody CreatePartieRequest createPartieRequest);
-
-
-
-    //get a partie of enseignant by its id
-    @Operation(description = "Récupération une partie d'un enseignant")
-    @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités partie",
-            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("{idEnseignant}/parties/{codePartie}")
-    PartieDTO getPartieFromEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("codePartie") Long codePartie) throws Exception;
-
-    //delete a partie of enseignant by its id
-    @Operation(description = "Suppression d'une partie d'un enseignant")
-    @ApiResponse(responseCode = "200", description = "si  l'element est renvoyé et supprimé")
-    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
-            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
-    @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("{idEnseignant}/parties/{codePartie}")
-    void deletePartieFromEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("codePartie") Long codePartie) throws Exception;
 
 }

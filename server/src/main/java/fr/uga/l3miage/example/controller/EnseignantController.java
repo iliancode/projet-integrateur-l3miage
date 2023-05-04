@@ -97,20 +97,4 @@ public class EnseignantController implements EnseignantEndpoint {
         enseignantService.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion,idReponse);
     }
 
-    @Override
-    public void addPartieToEnseignant(Long idEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
-        enseignantService.addPartieToEnseignant(idEnseignant,idMiahoot,createPartieRequest);
-
-    }
-
-    @Override
-    public PartieDTO getPartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        return enseignantService.getPartieFromEnseignant(idEnseignant,codePartie);
-    }
-
-    @Override
-    public void deletePartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        enseignantService.deletePartieFromEnseignant(idEnseignant,codePartie);
-    }
-
 }

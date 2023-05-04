@@ -223,38 +223,5 @@ public class EnseignantComponent {
         }
     }
 
-    public void addPartieToEnseignant(final Long idEnseignant, final Long idMiahoot, final Partie newPartie) throws EnseignantEntityNotFoundException, MiahootEntityNotFoundException {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité Enseignant n'a été trouvée pour l'id [%s]", idEnseignant), idEnseignant));
-
-        Miahoot m = miahootRepository.findById(idMiahoot)
-                .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucune entité Miahoot n'a été trouvée pour l'id [%s]", idMiahoot), idMiahoot));
-        log.info("component atteint");
-
-        if (e.containsMiahoot(idMiahoot)) {
-            newPartie.setMiahoot(m);
-            e.addPartie(newPartie);
-            partieRepository.save(newPartie);
-            enseignantRepository.save(e);
-        }
-    }
-
-    public Partie getPartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id "));
-        try{
-            return e.getPartie(codePartie);
-        }catch (Exception ex){
-            throw new Exception("Aucune partie de cet id n'a été trouvé pour dans cet enseinant ");
-        }
-
-    }
-
-    public void deletePartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id Enseignant"));
-        e.removePartie(codePartie);
-        enseignantRepository.save(e);
-    }
 }
 

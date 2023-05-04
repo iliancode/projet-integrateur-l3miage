@@ -72,7 +72,7 @@ public class EnseignantService {
     }
 
 
-    public void updateEnseignant (final Long idEnseignant, final EnseignantDTO enseignant){
+    public void updateEnseignant (final Long idEnseignant, final EnseignantDTO enseignant) {
         try{
             enseignantComponent.updateEnseignantById(idEnseignant, enseignant);
         }catch (Exception ex) {
@@ -141,30 +141,6 @@ public class EnseignantService {
             enseignantComponent.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
         }catch (Exception ex){
             throw new Exception("Erreur lors de la suppression de la reponse");
-        }
-    }
-
-    public void addPartieToEnseignant(Long idEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
-        try {
-            Partie newPartie = partieMapper.toEntity(createPartieRequest);
-            enseignantComponent.addPartieToEnseignant(idEnseignant, idMiahoot, newPartie);
-        } catch (EnseignantEntityNotFoundException e) {
-            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),idEnseignant,e);
-        } catch (MiahootEntityNotFoundException e) {
-            throw new MiahootEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),idMiahoot,e);
-        }
-    }
-
-    public PartieDTO getPartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        return partieMapper.toDto(enseignantComponent.getPartieFromEnseignant(idEnseignant, codePartie));
-    }
-
-    @Transactional
-    public void deletePartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        try{
-            enseignantComponent.deletePartieFromEnseignant(idEnseignant, codePartie);
-        }catch (Exception ex){
-            throw new Exception("Erreur lors de la suppression de la partie");
         }
     }
 }
