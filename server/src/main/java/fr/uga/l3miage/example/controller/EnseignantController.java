@@ -27,8 +27,8 @@ public class EnseignantController implements EnseignantEndpoint {
     }
 
     @Override
-    public EnseignantDTO getEntityEnseignantByMail(final String mail) throws Exception {
-        return enseignantService.getEnseignantByMail(mail);
+    public EnseignantDTO getEntityEnseignantById(final Long idEnseignant) throws Exception {
+        return enseignantService.getEnseignantById(idEnseignant);
     }
 
     @Override
@@ -37,81 +37,80 @@ public class EnseignantController implements EnseignantEndpoint {
     }
 
     @Override
-    public void createEntityMiahootFromEnseignant(String mail, CreateMiahootRequest request) throws Exception {
-        enseignantService.createMiahootFromEnseignant(mail,request);
+    public void createEntityMiahootFromEnseignant(Long idEnseignant, CreateMiahootRequest request) throws Exception {
+        enseignantService.createMiahootFromEnseignant(idEnseignant,request);
     }
 
     @Override
-    public void deleteEnseignantEntity(String mail) throws EnseignantEntityNotFoundException {
-        enseignantService.deleteEnseignantByMail(mail);
+    public void deleteEnseignantEntity(Long idEnseignant) throws EnseignantEntityNotFoundException {
+        enseignantService.deleteEnseignantById(idEnseignant);
     }
 
     @Override
-    public void updateEnseignantEntity(String mail, EnseignantDTO enseignant) {
-        enseignantService.updateEnseignant(mail, enseignant);
+    public void updateEnseignantEntity(Long idEnseignant, EnseignantDTO enseignant) {
+        enseignantService.updateEnseignant(idEnseignant, enseignant);
     }
 
     @Override
-    public void addQuestionToMiahoot(String mail, Long idMiahoot, CreateQuestionRequest createQuestionRequest) throws Exception {
-        enseignantService.addQuestionToMiahoot(mail, idMiahoot , createQuestionRequest);
+    public void addQuestionToMiahoot(Long idEnseignant, Long idMiahoot, CreateQuestionRequest createQuestionRequest) throws Exception {
+        enseignantService.addQuestionToMiahoot(idEnseignant, idMiahoot , createQuestionRequest);
     }
 
     //get all question of a miahoot of an enseignant
     @Override
-    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(String mail, Long idMiahoot) throws Exception {
-        return enseignantService.getAllQuestionsOfMiahootOfEnseignant(mail, idMiahoot);
+    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
+        return enseignantService.getAllQuestionsOfMiahootOfEnseignant(idEnseignant, idMiahoot);
     }
 
     @Override
-    public List<MiahootDTO> getAllMiahootsOfEnseignant(String mail) throws Exception {
-        return enseignantService.getAllMiahootsOfEnseignant(mail);
+    public List<MiahootDTO> getAllMiahootsOfEnseignant(Long idEnseignant) throws Exception {
+        return enseignantService.getAllMiahootsOfEnseignant(idEnseignant);
     }
 
     @Override
-    public MiahootDTO getMiahootOfEnseignant(final String mail, final Long idMiahoot) throws Exception {
-        return enseignantService.getMiahootOfEnseignant(mail,idMiahoot);
+    public MiahootDTO getMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) throws Exception {
+        return enseignantService.getMiahootOfEnseignant(idEnseignant,idMiahoot);
     }
 
     @Override
-    public void deleteMiahootOfEnseignant(String mail, Long idMiahoot) throws Exception {
-        enseignantService.deleteMiahootOfEnseignant(mail,idMiahoot);
+    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
+        enseignantService.deleteMiahootOfEnseignant(idEnseignant,idMiahoot);
     }
 
     @Override
-    public void addReponseToQuestionOfMiahoot(String mail, Long idMiahoot, Long idQuestion, CreateReponseRequest createReponseRequest) throws Exception {
-        enseignantService.addReponseToQuestionOfMiahoot(mail,idMiahoot,idQuestion,createReponseRequest);
+    public void addReponseToQuestionOfMiahoot(Long idEnseignant, Long idMiahoot, Long idQuestion, CreateReponseRequest createReponseRequest) throws Exception {
+        enseignantService.addReponseToQuestionOfMiahoot(idEnseignant,idMiahoot,idQuestion,createReponseRequest);
     }
 
     @Override
-    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion) throws Exception {
-        return enseignantService.getAllReponsesOfQuestionOfMiahootOfEnseignant(mail,idMiahoot,idQuestion);
+    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
+        return enseignantService.getAllReponsesOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion);
     }
 
     @Override
-    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
-        return enseignantService.getReponseOfQuestionOfMiahootOfEnseignant(mail,idMiahoot,idQuestion,idReponse);
+    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+        return enseignantService.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion,idReponse);
     }
 
     @Override
-    public void deleteReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
-        enseignantService.deleteReponseOfQuestionOfMiahootOfEnseignant(mail,idMiahoot,idQuestion,idReponse);
+    public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+        enseignantService.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion,idReponse);
     }
 
     @Override
-    public void addPartieToEnseignant(String mail, Long idMiahoot, CreatePartieRequest createPartieRequest) throws Exception {
-        log.info("controller atteint");
-        enseignantService.addPartieToEnseignant(mail,idMiahoot,createPartieRequest);
+    public void addPartieToEnseignant(Long idEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
+        enseignantService.addPartieToEnseignant(idEnseignant,idMiahoot,createPartieRequest);
 
     }
 
     @Override
-    public PartieDTO getPartieFromEnseignant(String mail, Long codePartie) throws Exception {
-        return enseignantService.getPartieFromEnseignant(mail,codePartie);
+    public PartieDTO getPartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
+        return enseignantService.getPartieFromEnseignant(idEnseignant,codePartie);
     }
 
     @Override
-    public void deletePartieFromEnseignant(String mail, Long codePartie) throws Exception {
-        enseignantService.deletePartieFromEnseignant(mail,codePartie);
+    public void deletePartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
+        enseignantService.deletePartieFromEnseignant(idEnseignant,codePartie);
     }
 
 }

@@ -38,7 +38,7 @@ public class ParticipantService {
             Participant participant = participantMapper.toEntity(createParticipantRequest);
             participantComponent.createParticipantByPartie(partie, participant);
         } catch (PartieEntityNotFoundException e) {
-            throw new ParticipantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),codePartie,e);
+            throw new PartieEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),codePartie,e);
         }
     }
 
@@ -75,13 +75,13 @@ public class ParticipantService {
 
 
     /**
-     * @param mail le mail de l'enseignant
+     * @param idEnseignant l'id de l'enseignant
      * @param codePartie le code de la partie
      */
-    public void deleteAllParticipantsFromPartie(final String mail, final Long codePartie) {
+    public void deleteAllParticipantsFromPartie(final Long idEnseignant, final Long codePartie) {
         try {
             Partie partie = partieComponent.getPartie(codePartie);
-            participantComponent.deleteAllParticipantsFromPartie(mail, partie);
+            participantComponent.deleteAllParticipantsFromPartie(idEnseignant, partie);
         } catch (EnseignantEntityNotFoundException | PartieEntityNotFoundException | IsNotPartieOfEnseignantException e) {
             throw new ParticipantEntityNotDeletedRestException(e.getMessage());
         }

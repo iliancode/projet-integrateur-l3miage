@@ -5,7 +5,9 @@ import fr.uga.l3miage.example.exception.rest.alreadyUseRestException.MailAlready
 import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.EnseignantEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.TestEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.MiahootEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.TestEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.*;
@@ -41,28 +43,15 @@ public class EnseignantService {
             Enseignant newEnseignant = enseignantMapper.toEntity(createEnseignantRequest);
             enseignantComponent.createEnseignant(newEnseignant);
         } catch (MailAlreadyExistException e) {
-            throw new MailAlreadyUseRestException(String.format("L'email existe déjà. Raison : [%s]", e.getMessage()),createEnseignantRequest.getMail(),e);
+            throw new MailAlreadyUseRestException(String.format("L'email existe déjà. Raison : [%s]", e.getMessage()), createEnseignantRequest.getMail(), e);
         }
     }
 
-
-
-    @Transactional
-    public void deleteEnseignantById(long id) throws Exception {
+    public EnseignantDTO getEnseignantById(final Long idEnseignant) throws Exception {
         try {
-            enseignantComponent.deleteEnseignantById(id);
-        } catch ( Exception ex) {
-            throw new Exception(ex.getMessage());
-        }
-    }
-
-    public EnseignantDTO getEnseignantByMail(final String mail) throws Exception {
-        try {
-          //  Enseignant enseignant = enseignantComponent.getEnseignantByMail(mail);
-           // EnseignantDTO enseignantDTO = enseignantMapper.toDto(enseignant);
-            return enseignantMapper.toDto(enseignantComponent.getEnseignantByMail(mail));
+            return enseignantMapper.toDto(enseignantComponent.getEnseignantById(idEnseignant));
         } catch (EnseignantEntityNotFoundException e) {
-            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]", e.getMessage()),mail,e);
+            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]", e.getMessage()),idEnseignant,e);
         }
     }
 
@@ -71,104 +60,109 @@ public class EnseignantService {
     }
 
     /**
-     * @param mail de l'entité Participant à supprimer
+     * @param idEnseignant de l'entité Participant à supprimer
      */
     @Transactional
-    public void deleteEnseignantByMail(String mail) throws EnseignantEntityNotFoundException {
+    public void deleteEnseignantById(Long idEnseignant) throws EnseignantEntityNotFoundException {
         try {
-            enseignantComponent.deleteEnseignantByMail(mail);
+            enseignantComponent.deleteEnseignantById(idEnseignant);
         } catch (EnseignantEntityNotDeletedRestException ex) {
             throw new EnseignantEntityNotDeletedRestException(ex.getMessage());
         }
     }
 
 
-    public void updateEnseignant (final String lastMail, final EnseignantDTO enseignant){
+    public void updateEnseignant (final Long idEnseignant, final EnseignantDTO enseignant){
         try{
-            enseignantComponent.updateEnseignantByMail(lastMail, enseignant);
-        }catch (Exception ex){
-            log.info("OUI OUI CEST BIEN ICI LE PROBLEME LAGUI");
+            enseignantComponent.updateEnseignantById(idEnseignant, enseignant);
+        }catch (Exception ex) {
             throw new TestEntityNotDeletedRestException(ex.getMessage());
         }
     }
 
-    public void addQuestionToMiahoot(final String mail, final Long idMiahoot, final CreateQuestionRequest createQuestionRequest) throws Exception {
+    public void addQuestionToMiahoot(final Long idEnseignant, final Long idMiahoot, final CreateQuestionRequest createQuestionRequest) throws Exception {
         Question newQuestion = questionMapper.toQuestion(createQuestionRequest);
-        enseignantComponent.createQuestionInMiahoot(mail, idMiahoot, newQuestion);
+        enseignantComponent.createQuestionInMiahoot(idEnseignant, idMiahoot, newQuestion);
 
     }
 
     @Transactional
-    public void createMiahootFromEnseignant(final String mail, final CreateMiahootRequest createMiahootRequest) throws Exception {
+    public void createMiahootFromEnseignant(final Long idEnseignant, final CreateMiahootRequest createMiahootRequest) throws Exception {
 
         Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
-        enseignantComponent.createMiahootFromEnseignant(mail, newMiahoot);
+        enseignantComponent.createMiahootFromEnseignant(idEnseignant, newMiahoot);
     }
 
-    public List<MiahootDTO> getAllMiahootsOfEnseignant(String mail) throws Exception {
-        return enseignantMapper.toDtoMiahoot(enseignantComponent.getAllMiahootsOfEnseignant(mail));
+    public List<MiahootDTO> getAllMiahootsOfEnseignant(Long idEnseignant) throws Exception {
+        return enseignantMapper.toDtoMiahoot(enseignantComponent.getAllMiahootsOfEnseignant(idEnseignant));
     }
 
-    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(String mail, Long idMiahoot) throws Exception {
-        return enseignantMapper.toDtoQuestion(enseignantComponent.getAllQuestionsOfMiahootOfEnseignant(mail, idMiahoot));
+    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
+        return enseignantMapper.toDtoQuestion(enseignantComponent.getAllQuestionsOfMiahootOfEnseignant(idEnseignant, idMiahoot));
     }
 
     // recupere le miahoot avec l'id correspondant dans la liste de miahoot de l'enseignant
-    public MiahootDTO getMiahootOfEnseignant(final String mail, final Long idMiahoot) throws Exception {
+    public MiahootDTO getMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) throws Exception {
             try {
-                Miahoot miahoot = enseignantComponent.getMiahootOfEnseignant(mail, idMiahoot);
+                Miahoot miahoot = enseignantComponent.getMiahootOfEnseignant(idEnseignant, idMiahoot);
                 return miahootMapper.toDto(miahoot);
             } catch (EnseignantEntityNotFoundException e) {
-                throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), mail, e);
+                throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), idEnseignant, e);
             } catch (TestEntityNotFoundRestException e) {
                 throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
             }
     }
 
-    public void deleteMiahootOfEnseignant(String mail, Long idMiahoot) throws  Exception {
+    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws  Exception {
         try {
-            enseignantComponent.deleteMiahootOfEnseignant(mail, idMiahoot);
+            enseignantComponent.deleteMiahootOfEnseignant(idEnseignant, idMiahoot);
         } catch (EnseignantEntityNotFoundException e) {
-            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), mail, e);
+            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), idEnseignant, e);
         } catch (TestEntityNotFoundRestException e) {
             throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
         }
     }
 
-    public void addReponseToQuestionOfMiahoot(final String mail, final Long idMiahoot, final Long idQuestion, final CreateReponseRequest createReponseRequest) throws Exception {
+    public void addReponseToQuestionOfMiahoot(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final CreateReponseRequest createReponseRequest) throws Exception {
         Reponse newReponse = reponseMapper.toReponse(createReponseRequest);
-        enseignantComponent.addReponseToQuestionOfMiahoot(mail, idMiahoot, idQuestion, newReponse);
+        enseignantComponent.addReponseToQuestionOfMiahoot(idEnseignant, idMiahoot, idQuestion, newReponse);
     }
 
-    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion) throws Exception {
-        return enseignantMapper.toDtoReponse(enseignantComponent.getAllReponsesOfQuestionOfMiahootOfEnseignant(mail, idMiahoot, idQuestion));
+    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
+        return enseignantMapper.toDtoReponse(enseignantComponent.getAllReponsesOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion));
     }
 
-    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
-        return reponseMapper.toDto(enseignantComponent.getReponseOfQuestionOfMiahootOfEnseignant(mail, idMiahoot, idQuestion, idReponse));
+    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+        return reponseMapper.toDto(enseignantComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse));
     }
 
-    public void deleteReponseOfQuestionOfMiahootOfEnseignant(String mail, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+    public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
         try{
-            enseignantComponent.deleteReponseOfQuestionOfMiahootOfEnseignant(mail, idMiahoot, idQuestion, idReponse);
+            enseignantComponent.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
         }catch (Exception ex){
             throw new Exception("Erreur lors de la suppression de la reponse");
         }
     }
 
-    public void addPartieToEnseignant(String mail, Long idMiahoot, CreatePartieRequest createPartieRequest) throws Exception {
-        Partie newPartie = partieMapper.toEntity(createPartieRequest);
-        enseignantComponent.addPartieToEnseignant(mail, idMiahoot, newPartie);
+    public void addPartieToEnseignant(Long idEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
+        try {
+            Partie newPartie = partieMapper.toEntity(createPartieRequest);
+            enseignantComponent.addPartieToEnseignant(idEnseignant, idMiahoot, newPartie);
+        } catch (EnseignantEntityNotFoundException e) {
+            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),idEnseignant,e);
+        } catch (MiahootEntityNotFoundException e) {
+            throw new MiahootEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),idMiahoot,e);
+        }
     }
 
-    public PartieDTO getPartieFromEnseignant(String mail, Long codePartie) throws Exception {
-        return partieMapper.toDto(enseignantComponent.getPartieFromEnseignant(mail, codePartie));
+    public PartieDTO getPartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
+        return partieMapper.toDto(enseignantComponent.getPartieFromEnseignant(idEnseignant, codePartie));
     }
 
     @Transactional
-    public void deletePartieFromEnseignant(String mail, Long codePartie) throws Exception {
+    public void deletePartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
         try{
-            enseignantComponent.deletePartieFromEnseignant(mail, codePartie);
+            enseignantComponent.deletePartieFromEnseignant(idEnseignant, codePartie);
         }catch (Exception ex){
             throw new Exception("Erreur lors de la suppression de la partie");
         }

@@ -12,10 +12,9 @@ public interface EnseignantRepository extends JpaRepository<Enseignant,Long> {
 
 
     Optional<Enseignant> findByMail(final String mail);
-    Optional<Enseignant> findByPseudo(final String pseudo);
+    Optional<Enseignant> findById(final Long id);
 
-    int deleteByMail(final String mail);
-    int deleteById(final long id);
+    void deleteById(final Long id);
 
     //find all enseignants
     List<Enseignant> findAll();
