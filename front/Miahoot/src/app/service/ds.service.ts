@@ -1,32 +1,42 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from "@angular/common/http";
-import { lastValueFrom } from 'rxjs';
+import { HttpClient, HttpHeaders} from "@angular/common/http";
+import {firstValueFrom, lastValueFrom, Observable} from 'rxjs';
+
+export interface Enseignant {
+    pseudo: string;
+    mail: string;
+    mdp: string;
+}
 @Injectable({
   providedIn: 'root'
 })
 export class DsService {
 
 
+
   constructor(private http: HttpClient) {
   }
 
-  async getEnseignant(email: string) {
-    let url = "http://localhost:8080/api/enseignants/";
 
-    let reponse = await lastValueFrom(this.http.get(url + email));
+  //get
+  async get(endpoint: string, recherche: string) {
+    let url = "http://localhost:8080/api/";
+
+    let reponse = await lastValueFrom(this.http.get<any>(url + endpoint +"/"  +recherche));
     console.log(reponse)
   }
-  // getEnseignant(email : string) {
 
+  //post
+   post(endpoint: string, body: Enseignant) {
+    let url = "http://localhost:8080/api/";
 
-  /**
-   *
+    return firstValueFrom(this.http.post<any>(url + endpoint, body));
+  }
 
-  let update = await lastValueFrom(this.http.put<any>(this.url + "/2",this.body))
-  console.log(update)
+  async postE( enseignant: Enseignant){
+    let url = "http://localhost:8080/api/enseignants/"
+    let reponse =  await lastValueFrom(this.http.post(url, enseignant));
+    console.log(reponse)
+  }
 
-  let recup2 = await lastValueFrom(this.http.get<any>(this.url + "/2"))
-  console.log(recup2)
-
-   */
 }

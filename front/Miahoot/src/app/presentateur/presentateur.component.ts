@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {DsService} from "../service/ds.service";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-presentateur',
@@ -8,14 +9,20 @@ import {DsService} from "../service/ds.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PresentateurComponent implements OnInit{
+  form: any;
 
-  constructor(private ds : DsService) {}
+  constructor(private ds : DsService) {
+     }
 
   ngOnInit() : void {
-    this.ds.getEnseignant("adil@gmail.com")
+    this.ds.get("enseignants", "adil@gmail.com")
       .then(enseignant => console.log(enseignant))
       .catch(erreur =>console.log("pas d'enseignant trouve avec cet email"));
+
+
   }
+
+
 
 
 }

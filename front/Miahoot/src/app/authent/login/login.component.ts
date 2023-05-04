@@ -3,6 +3,7 @@ import { Auth, GoogleAuthProvider, User, authState, signInWithPopup, signOut } f
 import { Router } from '@angular/router';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { AuthService } from 'src/app/service/auth.service';
+import { DsService} from "../../service/ds.service";
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.authS.login(this.email,this.password);
-    
+
+
     this.email = '';
     this.password = '';
 
@@ -41,12 +43,12 @@ export class LoginComponent implements OnInit {
   /*signInWithGoogle() {
     this.auth.googleSignIn();
   }*/
-  
+
   public readonly user:  Observable<User | null> = EMPTY;
   bsIsAuth = new BehaviorSubject<boolean>(false);
 
 
-  constructor(private auth: Auth, private router :Router, private authS: AuthService) {
+  constructor(private auth: Auth, private router :Router, private authS: AuthService, private ds: DsService) {
     this.user = authState(this.auth); //ds.MiahootUser
   }
 
@@ -57,7 +59,7 @@ export class LoginComponent implements OnInit {
       prompt: 'select_account'
     });
     try{
-      await signInWithPopup(this.auth, googleProvider).then(()  => { 
+      await signInWithPopup(this.auth, googleProvider).then(()  => {
         this.router.navigate(['enseignant']) })
     }catch(err){
       console.error("erreur de login")
@@ -73,7 +75,7 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl("accountConfig")
   }
 
-  
- 
+
+
 }
 
