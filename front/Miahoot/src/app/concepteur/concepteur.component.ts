@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import { DsService} from "../service/ds.service";
 import {Miahoot} from "../service/ds.service";
 
@@ -13,6 +12,24 @@ import {Miahoot} from "../service/ds.service";
 export class ConcepteurComponent {
 
   constructor(public router : Router, private ds: DsService) {
+
+
+  }
+
+  ngOnInit(): void {
+    const input = document.getElementById('input') as HTMLInputElement;
+    const miahootInput = document.getElementById('miahoot') as HTMLInputElement;
+
+    input.addEventListener('change', () => {
+      const file = input.files![0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        miahootInput.value = reader.result as string;
+      };
+
+      reader.readAsText(file);
+    });
   }
 
 
@@ -36,5 +53,8 @@ export class ConcepteurComponent {
 
     this.ds.postM(mail, miahootObj);
   }
+
+
+
 
 }
