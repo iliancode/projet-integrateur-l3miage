@@ -30,18 +30,19 @@ export class RegisterComponent implements OnInit {
       alert('Please enter password');
       return;
     }
-    this.newEnseignant(this.email, "zwi", this.password)
+    let pseudo = "zwi"
+    let y : Enseignant = {mail:this.email, pseudo:pseudo, mdp:this.password};
+    this.newEnseignant(y);
     console.log("la")
-    timeout(5000);
-    this.auth.register(this.email,this.password);
+//    this.auth.register(this.email,this.password);
 
     this.email = '';
     this.password = '';
 
   }
 
-  newEnseignant(mail:string, pseudo:string, mdp:string) {
-    this.ds.post("enseignants", {mail:mail, pseudo:pseudo, mdp:mdp})
+  newEnseignant(e: Enseignant) {
+    this.ds.postE(e)
       .then(enseignant => console.log(enseignant))
       .catch(erreur =>console.log("pas d'enseignant trouve avec cet email"));
     console.log("ici")
