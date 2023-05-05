@@ -31,27 +31,27 @@ public interface MiahootEndpoint {
     public void createEntityMiahootFromEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @RequestBody CreateMiahootRequest request) throws Exception;
 
 
-    /*@Operation(description = "Récupération de tous les miahoots d'un enseignant")
+    @Operation(description = "Récupération de tous les miahoots d'un enseignant")
     @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités miahoot",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("enseignants/{idEnseignant}/miahoots")
     List<MiahootDTO> getAllMiahootsOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant) throws Exception;
-*/
 
-   /* @Operation(description = "recupere le miahoot avec l'id correspondant dans la liste de miahoot de l'enseignant")
+
+    @Operation(description = "recupere le miahoot avec l'id correspondant dans la liste de miahoot de l'enseignant")
     @ApiResponse(responseCode = "200", description = "Renvoie une entité miahoot avec l'id correspondant a  celui passé en parametre",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}")
     MiahootDTO getMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot) throws Exception;
-*/
 
-    /*@Operation(description = "Suppression d'une entité miahoot d'un enseignant en bd")
+
+    @Operation(description = "Suppression d'une entité miahoot d'un enseignant en bd")
     @ApiResponse(responseCode = "200", description = "si  l'element est renvoyé et supprimé")
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}")
-    void deleteMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot) throws  Exception;*/
+    void deleteMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot) throws  Exception;
 }

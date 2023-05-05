@@ -46,6 +46,6 @@ public class ReponseService {
         }
     }
 
-
-    public void updateEntityReponse(final Long idEnseignant, final Long idMiahoot, final Long )
+/*
+    public void updateEntityReponse(final Long idEnseignant, final Long idMiahoot, final Long )*/
 }
