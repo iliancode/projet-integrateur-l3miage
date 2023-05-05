@@ -12,6 +12,7 @@ import { DsService } from "../service/ds.service";
 export class ConcepteurComponent {
 
   constructor(public router : Router, public ds:DsService) {
+
   }
 
 
