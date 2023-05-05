@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static fr.uga.l3miage.example.service.ExampleService.ERROR_DETECTED;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -28,12 +30,7 @@ public class EnseignantService {
 
     private final EnseignantComponent enseignantComponent;
     private final EnseignantMapper enseignantMapper;
-    private final QuestionMapper questionMapper;
 
-    private final MiahootMapper miahootMapper;
-    private final ReponseMapper reponseMapper;
-
-    private final PartieMapper partieMapper;
 
     /**
      * @param createEnseignantRequest la requête qui permet de créer une entité enseignant
@@ -47,7 +44,7 @@ public class EnseignantService {
         }
     }
 
-    public EnseignantDTO getEnseignantById(final Long idEnseignant) throws Exception {
+    public EnseignantDTO getEnseignantById(final Long idEnseignant) {
         try {
             return enseignantMapper.toDto(enseignantComponent.getEnseignantById(idEnseignant));
         } catch (EnseignantEntityNotFoundException e) {
@@ -63,88 +60,23 @@ public class EnseignantService {
      * @param idEnseignant de l'entité Participant à supprimer
      */
     @Transactional
-    public void deleteEnseignantById(Long idEnseignant) throws EnseignantEntityNotFoundException {
+    public void deleteEnseignantById(Long idEnseignant) {
         try {
             enseignantComponent.deleteEnseignantById(idEnseignant);
-        } catch (EnseignantEntityNotDeletedRestException ex) {
+        } catch (EnseignantEntityNotFoundException ex) {
             throw new EnseignantEntityNotDeletedRestException(ex.getMessage());
         }
     }
 
 
-    public void updateEnseignant (final Long idEnseignant, final EnseignantDTO enseignant) {
+    public void updateEnseignant (final Long idEnseignant, final CreateEnseignantRequest request) {
         try{
-            enseignantComponent.updateEnseignantById(idEnseignant, enseignant);
-        }catch (Exception ex) {
-            throw new TestEntityNotDeletedRestException(ex.getMessage());
+            enseignantComponent.updateEnseignantById(idEnseignant, request);
+        }catch (EnseignantEntityNotFoundException ex) {
+            throw new EnseignantEntityNotDeletedRestException(ex.getMessage());
+        } catch (MailAlreadyExistException ex) {
+            throw new MailAlreadyUseRestException(ERROR_DETECTED,request.getMail(),ex);
         }
     }
 
-    public void addQuestionToMiahoot(final Long idEnseignant, final Long idMiahoot, final CreateQuestionRequest createQuestionRequest) throws Exception {
-        Question newQuestion = questionMapper.toQuestion(createQuestionRequest);
-        enseignantComponent.createQuestionInMiahoot(idEnseignant, idMiahoot, newQuestion);
-
-    }
-
-    @Transactional
-    public void createMiahootFromEnseignant(final Long idEnseignant, final CreateMiahootRequest createMiahootRequest) throws Exception {
-
-        Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
-        enseignantComponent.createMiahootFromEnseignant(idEnseignant, newMiahoot);
-    }
-
-    public List<MiahootDTO> getAllMiahootsOfEnseignant(Long idEnseignant) throws Exception {
-        return enseignantMapper.toDtoMiahoot(enseignantComponent.getAllMiahootsOfEnseignant(idEnseignant));
-    }
-
-    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
-        return enseignantMapper.toDtoQuestion(enseignantComponent.getAllQuestionsOfMiahootOfEnseignant(idEnseignant, idMiahoot));
-    }
-
-    // recupere le miahoot avec l'id correspondant dans la liste de miahoot de l'enseignant
-    public MiahootDTO getMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) throws Exception {
-            try {
-                Miahoot miahoot = enseignantComponent.getMiahootOfEnseignant(idEnseignant, idMiahoot);
-                return miahootMapper.toDto(miahoot);
-            } catch (EnseignantEntityNotFoundException e) {
-                throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), idEnseignant, e);
-            } catch (TestEntityNotFoundRestException e) {
-                throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
-            }
-    }
-
-    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws  Exception {
-        try {
-            enseignantComponent.deleteMiahootOfEnseignant(idEnseignant, idMiahoot);
-        } catch (EnseignantEntityNotFoundException e) {
-            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), idEnseignant, e);
-        } catch (TestEntityNotFoundRestException e) {
-            throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
-        }
-    }
-
-    public void addReponseToQuestionOfMiahoot(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final CreateReponseRequest createReponseRequest) throws Exception {
-        Reponse newReponse = reponseMapper.toReponse(createReponseRequest);
-        enseignantComponent.addReponseToQuestionOfMiahoot(idEnseignant, idMiahoot, idQuestion, newReponse);
-    }
-
-    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
-        return enseignantMapper.toDtoReponse(enseignantComponent.getAllReponsesOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion));
-    }
-
-    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
-        return reponseMapper.toDto(enseignantComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse));
-    }
-
-    public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
-        try{
-            enseignantComponent.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
-        }catch (Exception ex){
-            throw new Exception("Erreur lors de la suppression de la reponse");
-        }
-    }
-
-    public void createMiahootOfEnseignant(Long idEnseignant, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
-        enseignantComponent.createMiahootOfEnseignant(idEnseignant, createFullMiahootRequest);
-    }
 }

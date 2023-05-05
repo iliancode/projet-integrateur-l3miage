@@ -31,6 +31,7 @@ public interface EnseignantEndpoint {
     @PostMapping
     void createEntityEnseignant(@Valid @RequestBody CreateEnseignantRequest request);
 
+
     @Operation(description = "Récupération d'une entité Enseignant par son email")
     @ApiResponse(responseCode = "200", description = "L'entité Enseignant a bien été récupérée.",
     content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_STREAM_JSON_VALUE))
@@ -38,7 +39,7 @@ public interface EnseignantEndpoint {
            content = @Content(schema = @Schema(implementation = EnseignantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{idEnseignant}")
-    EnseignantDTO getEntityEnseignantById(@PathVariable("idEnseignant") Long idEnseignant) throws Exception;
+    EnseignantDTO getEntityEnseignantById(@PathVariable("idEnseignant") Long idEnseignant);
 
 
     //get all enseignants
@@ -47,7 +48,7 @@ public interface EnseignantEndpoint {
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    List<EnseignantDTO> getAllEnseignants() throws Exception;
+    List<EnseignantDTO> getAllEnseignants();
 
 
     //delete enseignant by mail
@@ -57,15 +58,15 @@ public interface EnseignantEndpoint {
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("{idEnseignant}")
-    void deleteEnseignantEntity(@PathVariable("idEnseignant") Long idEnseignant) throws Exception;
+    void deleteEnseignantEntity(@PathVariable("idEnseignant") Long idEnseignant);
 
 
     @Operation(description = "Modification d'une entité enseignant en bd")
     @ApiResponse(responseCode = "202", description = "l'entité a bien été modifiée")
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être modifiée",
-            content = @Content(schema = @Schema(implementation = TestNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+            content = @Content(schema = @Schema(implementation = EnseignantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @Error400Custom
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping("{idEnseignant}")
-    void updateEnseignantEntity(@PathVariable("idEnseignant") Long idEnseignant, @RequestBody EnseignantDTO enseignantDTO) throws Exception;
+    void updateEnseignantEntity(@PathVariable("idEnseignant") Long idEnseignant, @RequestBody CreateEnseignantRequest request);
 }

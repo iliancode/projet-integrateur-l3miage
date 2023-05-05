@@ -1,6 +1,7 @@
 package fr.uga.l3miage.example.controller;
 
 import fr.uga.l3miage.example.endpoint.EnseignantEndpoint;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.request.*;
 import fr.uga.l3miage.example.response.*;
@@ -27,23 +28,23 @@ public class EnseignantController implements EnseignantEndpoint {
     }
 
     @Override
-    public EnseignantDTO getEntityEnseignantById(final Long idEnseignant) throws Exception {
+    public EnseignantDTO getEntityEnseignantById(final Long idEnseignant) {
         return enseignantService.getEnseignantById(idEnseignant);
     }
 
     @Override
-    public List<EnseignantDTO> getAllEnseignants() throws Exception {
+    public List<EnseignantDTO> getAllEnseignants() {
         return enseignantService.getAllEnseignants();
     }
     
     @Override
-    public void deleteEnseignantEntity(Long idEnseignant) throws EnseignantEntityNotFoundException {
+    public void deleteEnseignantEntity(Long idEnseignant) {
         enseignantService.deleteEnseignantById(idEnseignant);
     }
 
     @Override
-    public void updateEnseignantEntity(Long idEnseignant, EnseignantDTO enseignant) {
-        enseignantService.updateEnseignant(idEnseignant, enseignant);
+    public void updateEnseignantEntity(Long idEnseignant, CreateEnseignantRequest request) {
+        enseignantService.updateEnseignant(idEnseignant, request);
     }
 
 }
