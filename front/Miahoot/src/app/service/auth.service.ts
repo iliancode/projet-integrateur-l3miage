@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   currentUser = authState(this.auth);
-  
+
   constructor(private fireauth : AngularFireAuth, private router : Router, private auth : Auth) { }
 
   // login method
@@ -32,7 +32,7 @@ export class AuthService {
       alert(err.message);
       this.router.navigate(['/register']);
     })
-    
+
   }
 
   // sign out
