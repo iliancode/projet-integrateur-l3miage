@@ -18,7 +18,7 @@ export class AuthService {
         localStorage.setItem('token','true');
         this.router.navigate(['enseignant']);
   }, err => {
-        alert(err.message);
+        console.warn(err.message);
         this.router.navigate(['/login']);
     })
   }
@@ -26,10 +26,10 @@ export class AuthService {
   // register method
   register(email : string, password : string) {
     this.fireauth.createUserWithEmailAndPassword(email, password).then( () => {
-      alert('Registration Successful');
-      this.router.navigate(['/login']);
+      console.log("wow ça marche !")
+      this.router.navigate(['/enseignant']);
     }, err => {
-      alert(err.message);
+      console.warn(err.message);
       this.router.navigate(['/register']);
     })
 
@@ -53,7 +53,7 @@ export class AuthService {
       localStorage.setItem('token',JSON.stringify(res.user?.uid));
 
     }, err => {
-      alert(err.message);
+      console.warn(err.message);
     })
   }
 

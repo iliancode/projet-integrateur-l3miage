@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {DsService} from "../service/ds.service";
+import {AuthService} from "../service/auth.service";
+import {Auth} from "@angular/fire/auth";
+import {Miahoot, Reponse} from "../service/interfaces";
 
 @Component({
   selector: 'app-creation',
@@ -7,9 +11,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./creation.component.scss']
 })
 export class CreationComponent implements OnInit{
-  name = 'Angular';
+  nameMiahoot = 'Angular';
   reactiveForm !: FormGroup;
   formIsValid: boolean = true;
+  miahootIsCreated : boolean = false;
+
+  constructor(public ds:  DsService, private auth : Auth) {
+  }
 
   //tableau rempli avec les question saisies par l'enseignant
   questions: any[] = [];
@@ -28,6 +36,7 @@ export class CreationComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.miahootIsCreated = false
     this.reactiveForm = new FormGroup({
       question : new FormControl(null,[Validators.required]),
       reponse1 : new FormControl(null,[Validators.required]),
@@ -61,10 +70,22 @@ export class CreationComponent implements OnInit{
 
   submitName(input : string){
     console.warn(input);
-    this.name =input;
+    this.nameMiahoot =input;
 
   }
 
+
+
+
+    postMiahoot(miahoot: string) {
+      let jsonmiahoot = JSON.parse(miahoot);
+      //json to Miahoot object
+      let miahootObj: Miahoot = {
+        nom: jsonmiahoot.nom,
+        questions: jsonmiahoot.questions
+      }
+      this.ds.createMiahoot(miahootObj)
+  }
 
 
 }
