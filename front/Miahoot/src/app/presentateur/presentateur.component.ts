@@ -8,11 +8,12 @@ import {DsService} from "../service/ds.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PresentateurComponent implements OnInit{
+  form: any;
 
   constructor(private ds : DsService) {}
 
   ngOnInit() : void {
-    this.ds.getEnseignant("adil@gmail.com")
+    this.ds.get("enseignants", "adil@gmail.com")
       .then(enseignant => console.log(enseignant))
       .catch(erreur =>console.log("pas d'enseignant trouve avec cet email"));
   }

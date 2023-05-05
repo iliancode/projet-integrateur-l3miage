@@ -11,14 +11,18 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(uses = ReponseMapper.class)
+@Mapper
 public interface QuestionMapper {
 
-    QuestionDTO toDto(Question question);
-    List<QuestionDTO> toDto(List<Question> questions);
+    // @Mapping(source = "miahoots",target = "miahootsDTO",qualifiedBy = TestMapperUtils.ToSumTestInt.class)
+    QuestionDTO toDto(Question questionEntity);
 
-    Question toEntity(CreateQuestionRequest request);
+    Question toQuestion(CreateQuestionRequest request);
+    List<Question> toQuestionList(List<QuestionDTO> request);
+    List<QuestionDTO> toQuestionListDto(List<Question> request);
 
     ReponseDTO map(Reponse reponse);
+
+    void mergeQuestionEntity(@MappingTarget @NonNull Question ancienQuestion, QuestionDTO newQuestion);
 
 }

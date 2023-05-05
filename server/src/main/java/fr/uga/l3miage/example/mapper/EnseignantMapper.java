@@ -14,6 +14,9 @@ import java.util.List;
 @Mapper (uses = {MiahootMapper.class, PartieMapper.class})
 public interface EnseignantMapper {
 
+    List<MiahootDTO> toDtoMiahoot(List<Miahoot> testEntities);
+    List<QuestionDTO> toDtoQuestion(List<Question> testEntities);
+
     Enseignant toEntity(CreateEnseignantRequest request);
     EnseignantDTO toDto(Enseignant enseignant);
 
@@ -21,4 +24,8 @@ public interface EnseignantMapper {
 
     List<EnseignantDTO> toDto(List<Enseignant> enseignants);
 
+    @IterableMapping(qualifiedByName = "useThis")
+    List<ReponseDTO> toDtoReponse(List<Reponse> testEntities);
+    @Named(value = "useThis")
+    ReponseDTO map(Reponse reponse);
 }

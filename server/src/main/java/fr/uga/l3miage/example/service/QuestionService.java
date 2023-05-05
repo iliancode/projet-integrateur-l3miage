@@ -18,12 +18,12 @@ public class QuestionService {
 
 
     public void addQuestionToMiahoot(final Long idEnseignant, final Long idMiahoot, final CreateQuestionRequest createQuestionRequest) throws Exception {
-        Question newQuestion = questionMapper.toEntity(createQuestionRequest);
+        Question newQuestion = questionMapper.toQuestion(createQuestionRequest);
         questionComponent.createQuestionInMiahoot(idEnseignant, idMiahoot, newQuestion);
 
     }
 
     public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
-        return questionMapper.toDto(questionComponent.getAllQuestionsOfMiahootOfEnseignant(idEnseignant, idMiahoot));
+        return questionMapper.toQuestionListDto(questionComponent.getAllQuestionsOfMiahootOfEnseignant(idEnseignant, idMiahoot));
     }
 }

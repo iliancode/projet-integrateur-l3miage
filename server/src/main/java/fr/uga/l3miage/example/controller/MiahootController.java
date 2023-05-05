@@ -19,18 +19,18 @@ public class MiahootController implements MiahootEndpoint {
         miahootService.createMiahootFromEnseignant(idEnseignant,request);
     }
 
-    @Override
+    /*@Override
     public List<MiahootDTO> getAllMiahootsOfEnseignant(Long idEnseignant) throws Exception {
         return miahootService.getAllMiahootsOfEnseignant(idEnseignant);
-    }
+    }*/
 
-    @Override
+   /* @Override
     public MiahootDTO getMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) throws Exception {
         return miahootService.getMiahootOfEnseignant(idEnseignant,idMiahoot);
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
         miahootService.deleteMiahootOfEnseignant(idEnseignant,idMiahoot);
-    }
+    }*/
 }

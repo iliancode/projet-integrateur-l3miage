@@ -15,7 +15,6 @@ public interface MiahootMapper {
     Miahoot toEntity(CreateMiahootRequest request);
 
     MiahootDTO toDto(Miahoot miahoot);
-    List<MiahootDTO> toDto(List<Miahoot> miahoots);
 
 
     Miahoot toEntity(MiahootDTO miahootDTO);
