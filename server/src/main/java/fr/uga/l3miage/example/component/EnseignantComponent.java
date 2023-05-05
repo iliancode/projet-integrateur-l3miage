@@ -1,18 +1,11 @@
 package fr.uga.l3miage.example.component;
 
-//import fr.uga.l3miage.example.mapper.EnseignantMapper;
-
-import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
-import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
-import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.*;
 import fr.uga.l3miage.example.repository.*;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
-import fr.uga.l3miage.example.request.CreateFullMiahootRequest;
-import fr.uga.l3miage.example.response.EnseignantDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -37,10 +30,8 @@ public class EnseignantComponent {
 
 
     public Enseignant getEnseignantById(final Long idEnseignant) throws EnseignantEntityNotFoundException {
-        Enseignant enseignant = enseignantRepository.findById(idEnseignant)
+        return enseignantRepository.findById(idEnseignant)
                 .orElseThrow(() -> new EnseignantEntityNotFoundException("L'entité à supprimer n'a pas été trouvée", idEnseignant));
-
-        return enseignant;
     }
 
 

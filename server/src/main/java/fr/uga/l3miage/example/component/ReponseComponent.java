@@ -1,5 +1,9 @@
 package fr.uga.l3miage.example.component;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.QuestionEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ReponseEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.QuestionEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ReponseEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.models.Enseignant;
@@ -23,6 +27,7 @@ public class ReponseComponent {
     private final MiahootRepository miahootRepository;
     private final QuestionRepository questionRepository;
     private final ReponseRepository reponseRepository;
+    private final QuestionComponent questionComponent;
 
 
     public void addReponseToQuestionOfMiahoot(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final Reponse newReponse) throws Exception {
@@ -69,49 +74,20 @@ public class ReponseComponent {
     }
 
 
-    public Reponse getReponseOfQuestionOfMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final Long idReponse) throws Exception {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id Enseignant"));
-        Miahoot m = miahootRepository.findById(idMiahoot)
-                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id"));
-        if (e.containsMiahoot(idMiahoot)) {
-            if (m.containsQuestion(idQuestion)) {
-                return e.getMiahoot(idMiahoot).getQuestion(idQuestion).getReponse(idReponse);
-            }else {
-                throw new Exception("Question non contenu dans ce miahoot");
-            }
-        }else {
-            throw new Exception("L'enseignant n'a pas le droit de modifier ce miahoot");
+    public Reponse getReponseOfQuestionOfMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final Long idReponse) {
+        try {
+            questionComponent.getQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion);
+            return reponseRepository.findById(idReponse)
+                    .orElseThrow(() -> new ReponseEntityNotFoundRestException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idReponse), idReponse));
+        } catch (EnseignantEntityNotFoundException | MiahootEntityNotFoundException | QuestionEntityNotFoundException e) {
+            throw new ReponseEntityNotFoundRestException("Aucune entité n'a été trouvé pour cet utilisateur", idQuestion);
         }
+
     }
 
 
-    public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour le mail [%s]", idEnseignant), "" + idEnseignant));
-
-        Miahoot m = miahootRepository.findById(idMiahoot)
-                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idMiahoot), "erreur"));
-
-        if (e.containsMiahoot(idMiahoot)) {
-            if (m.containsQuestion(idQuestion)) {
-                e.getMiahoot(idMiahoot).getQuestion(idQuestion).removeReponse(idReponse);
-                enseignantRepository.save(e);
-                miahootRepository.save(m);
-            } else {
-                throw new Exception("Aucune entité n'a été trouvé pour l'id");
-            }
-        } else {
-            throw new Exception("Aucune entité n'a été trouvé pour l'id");
-        }
-    }
-
-
-
-    //TROUVER UNE REPONSE
-    public Reponse getReponse(final String label) throws ReponseEntityNotFoundException {
-        return reponseRepository.findByLabel((label))
-                .orElseThrow(()-> new ReponseEntityNotFoundRestException(String.format("Aucune entité Reponse n'a été trouvée pour le label [%s]", label), label));
+    public void deleteReponse(Long idReponse) {
+        reponseRepository.deleteById(idReponse);
     }
 
 }

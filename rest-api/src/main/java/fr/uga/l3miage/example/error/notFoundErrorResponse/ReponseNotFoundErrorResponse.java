@@ -27,14 +27,14 @@ public class ReponseNotFoundErrorResponse extends ErrorResponse {
     @JsonProperty(access = WRITE_ONLY)
     private final String errorCodeSwaggerDocumentation = "Field used only to generate documentation, don't use it";
 
-    @Schema(description = "le label utilisé pour la recherche",example = "description")
-    private final String label;
+    @Schema(description = "l'id utilisé pour la recherche",example = "1")
+    private final Long id;
 
     @Builder
     @Jacksonized
-    public ReponseNotFoundErrorResponse(String uri, HttpStatus httpStatus, ErrorCode errorCode, String errorMessage, String label) {
+    public ReponseNotFoundErrorResponse(String uri, HttpStatus httpStatus, ErrorCode errorCode, String errorMessage, Long id) {
         super(uri, httpStatus, errorCode, errorMessage);
-        this.label = label;
+        this.id = id;
     }
 
 }
