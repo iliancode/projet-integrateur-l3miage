@@ -1,6 +1,8 @@
 package fr.uga.l3miage.example.endpoint;
 
 import fr.uga.l3miage.example.annotations.Error400Custom;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.ReponseNotFoundErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.ReponseDTO;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Tag(name = "Endpoints des Réponses")
@@ -21,15 +24,15 @@ import java.util.List;
 @RequestMapping("api/")
 public interface ReponseEndpoint {
 
-   /* @Operation(description = "Ajout d'une reponse à une question d'un miahoot d'un enseignant")
+    @Operation(description = "Ajout d'une reponse à une question d'un miahoot d'un enseignant")
     @ApiResponse(responseCode = "202", description = "la reponse a bien été ajoutée")
     @Error400Custom
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses")
     void addReponseToQuestionOfMiahoot(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @RequestBody CreateReponseRequest createReponseRequest) throws Exception;
-*/
 
-    /*@Operation(description = "Récupération de toutes les reponses d'une question d'un miahoot d'un enseignant")
+
+    @Operation(description = "Récupération de toutes les reponses d'une question d'un miahoot d'un enseignant")
     @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités reponse",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
@@ -51,5 +54,15 @@ public interface ReponseEndpoint {
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses/{idReponse}")
-    void deleteReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;*/
+    void deleteReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;
+
+
+    @Operation(description = "Modification d'une entité reponse d'une question d'un miahoot par un enseignant")
+    @ApiResponse(responseCode = "202", description = "L'entité a bien été modifiée")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être modifiée",
+            content = @Content(schema = @Schema(implementation = ReponseNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @Error400Custom
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PatchMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses/{idReponse}")
+    void updateReponseEntity(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse, @Valid @RequestBody CreateReponseRequest request);
 }

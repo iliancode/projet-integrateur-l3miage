@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Null;
+
 @Data
 @Builder
 @Getter
@@ -13,10 +15,11 @@ import lombok.Setter;
 @Schema(description = "Correspond à la requête permettant de créer une entité question")
 public class CreateQuestionRequest {
 
-    @Schema(description = "id de l'objet question", example = "1")
+    @Schema(description = "id de l'objet question", hidden = true)
+    @Null
     private Long id;
 
-    @Schema(description = "description de l'objet question", example = "description question ? ")
+    @Schema(description = "description de l'objet question", example = "Qu'est-ce qu'un \"URL\" ?")
     private String label;
 
 }

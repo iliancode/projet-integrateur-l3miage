@@ -45,4 +45,7 @@ public class ReponseService {
             throw new Exception("Erreur lors de la suppression de la reponse");
         }
     }
+
+
+    public void updateEntityReponse(final Long idEnseignant, final Long idMiahoot, final Long )
 }
