@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import fr.uga.l3miage.example.error.*;
 import fr.uga.l3miage.example.error.alreadyUseErrorResponse.DescriptionAlreadyUseErrorResponse;
+import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.MiahootEntityNotDeletedErrorResponse;
 import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.ParticipantEntityNotDeletedErrorResponse;
 import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.TestEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.MiahootNotFoundErrorResponse;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.ParticipantNotFoundErrorResponse;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,25 +34,25 @@ import org.springframework.http.HttpStatus;
  * </ul>
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "errorCode", visible = true,
-        defaultImpl = ParticipantErrorResponse.class)
+        defaultImpl = MiahootErrorResponse.class)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = ParticipantEntityNotDeletedErrorResponse.class),
-        @JsonSubTypes.Type(value = ParticipantNotFoundErrorResponse.class)
+        @JsonSubTypes.Type(value = MiahootEntityNotDeletedErrorResponse.class),
+        @JsonSubTypes.Type(value = MiahootNotFoundErrorResponse.class)
 })
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Data
-public abstract class ParticipantErrorResponse {
-    @Schema(description = "endpoint appelé", example = "/participant")
+public abstract class MiahootErrorResponse {
+    @Schema(description = "endpoint appelé", example = "/miahoots")
     private final String uri;
     @Schema(description = "code http de la réponse", example = "404")
     private final HttpStatus httpStatus;
-    @Schema(description = "code de l'erreur", example="PARTICIPANT_NOT_FOUND_ERROR")
+    @Schema(description = "code de l'erreur", example="MIAHOOT_NOT_FOUND_ERROR")
     private final ErrorCode errorCode;
     @Schema(description = "message d'erreur")
     private final String errorMessage;
 
-    protected ParticipantErrorResponse(final ErrorCode errorCode){
+    protected MiahootErrorResponse(final ErrorCode errorCode){
         this(null,null,errorCode,null);
     }
 }

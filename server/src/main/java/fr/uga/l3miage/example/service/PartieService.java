@@ -1,7 +1,11 @@
 package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.PartieComponent;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.MiahootEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.PartieEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.PartieEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.PartieMapper;
 import fr.uga.l3miage.example.models.Partie;
@@ -20,32 +24,29 @@ public class PartieService {
     private  final PartieComponent partieComponent;
     private final PartieMapper partieMapper;
 
-    public void createPartie(final CreatePartieRequest createPartieRequest) throws Exception{
-        Partie newPartie = partieMapper.toEntity(createPartieRequest);
 
-        if(newPartie.getCodePartie()> 0){
-            if(!Objects.isNull(newPartie.getMiahoot())){
-                partieComponent.createPartie(newPartie);
-            }else throw new Exception("miahoot null -> creation de partie impossible");
-
-        }else throw new Exception("code partie <0, creation de partie impossible");
-    }
-
-    public PartieDTO getPartie(final Long codePartie) throws Exception{
-        try{
-            return partieMapper.toDto(partieComponent.getPartie(codePartie) );
-        }catch (PartieEntityNotFoundException e){
-            throw new PartieEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),codePartie,e);
+    public void addPartieToEnseignant(Long idEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
+        try {
+            Partie newPartie = partieMapper.toEntity(createPartieRequest);
+            partieComponent.addPartieToEnseignant(idEnseignant, idMiahoot, newPartie);
+        } catch (EnseignantEntityNotFoundException e) {
+            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),idEnseignant,e);
+        } catch (MiahootEntityNotFoundException e) {
+            throw new MiahootEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),idMiahoot,e);
         }
     }
 
+    public PartieDTO getPartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
+        return partieMapper.toDto(partieComponent.getPartieFromEnseignant(idEnseignant, codePartie));
+    }
 
     @Transactional
-    public void deletePartieById(long id) throws Exception {
-        try {
-            partieComponent.deletePartieById(id);
-        } catch ( Exception ex) {
-            throw new Exception(ex.getMessage());
+    public void deletePartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
+        try{
+            partieComponent.deletePartieFromEnseignant(idEnseignant, codePartie);
+        }catch (Exception ex) {
+            throw new Exception("Erreur lors de la suppression de la partie");
         }
     }
+
 }

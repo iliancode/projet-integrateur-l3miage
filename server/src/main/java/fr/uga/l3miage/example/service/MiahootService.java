@@ -1,6 +1,9 @@
 package fr.uga.l3miage.example.service;
 
 import fr.uga.l3miage.example.component.MiahootComponent;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.TestEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.Miahoot;
@@ -12,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,54 +24,41 @@ public class MiahootService {
 
     private final MiahootComponent miahootComponent;
     private final MiahootMapper miahootMapper;
-    private final QuestionMapper questionMapper;
 
-    public MiahootDTO getMiahoot(final Long id) throws Exception {
-        try {
-            return miahootMapper.toDto(miahootComponent.getMiahoot(id));
-        }catch(Exception ex){
-            throw new Exception( "Impossible de charger l'entité. Raison" );
-        }
-    }
 
-    public void createMiahoot(final CreateMiahootRequest createMiahootRequest){
+    @Transactional
+    public void createMiahootFromEnseignant(final Long idEnseignant, final CreateMiahootRequest createMiahootRequest) throws Exception {
+
         Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
-        miahootComponent.createMiahoot(newMiahoot);
+        miahootComponent.createMiahootFromEnseignant(idEnseignant, newMiahoot);
     }
 
-    @Transactional
-    public void deleteParticipant(Long id) throws Exception {
+
+    public List<MiahootDTO> getAllMiahootsOfEnseignant(Long idEnseignant) throws Exception {
+        return miahootMapper.toDto(miahootComponent.getAllMiahootsOfEnseignant(idEnseignant));
+    }
+
+
+    public MiahootDTO getMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) throws Exception {
         try {
-            miahootComponent.deleteMiahoot(id);
-        } catch (Exception e) {
-            throw new Exception("pas pu delete le participant lol");
+            Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(idEnseignant, idMiahoot);
+            return miahootMapper.toDto(miahoot);
+        } catch (EnseignantEntityNotFoundException e) {
+            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), idEnseignant, e);
+        } catch (TestEntityNotFoundRestException e) {
+            throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
         }
     }
 
-    public QuestionDTO getQuestion(Long idMiahoot, Long idQuestion) throws Exception {
+
+    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws  Exception {
         try {
-            log.info("entre dans service getQuestion");
-            return questionMapper.toDto(miahootComponent.getQuestion(idMiahoot, idQuestion));
-        } catch (Exception e) {
-            throw new Exception("Impossible de charger l'entitée ");
+            miahootComponent.deleteMiahootOfEnseignant(idEnseignant, idMiahoot);
+        } catch (EnseignantEntityNotFoundException e) {
+            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), idEnseignant, e);
+        } catch (TestEntityNotFoundRestException e) {
+            throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
         }
     }
 
-    @Transactional
-    public void deleteQuestion(Long idMiahoot, Long idQuestion) throws Exception {
-        try {
-            miahootComponent.deleteQuestion(idMiahoot, idQuestion);
-        } catch (Exception e) {
-            throw new Exception("Impossible de supprimer l'entitée ");
-        }
-    }
-
-    public void updateQuestion(Long idMiahoot, Long idQuestion, QuestionDTO questionDTO) throws Exception {
-        try {
-            miahootComponent.updateQuestion(idMiahoot, idQuestion, questionDTO);
-
-        }catch (Exception e) {
-            throw new Exception("Impossible de mettre à jour l'entitée ");
-        }
-    }
 }

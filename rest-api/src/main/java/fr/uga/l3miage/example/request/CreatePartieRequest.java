@@ -11,8 +11,8 @@ import javax.validation.constraints.NotBlank;
 @Schema(description = "Correspond à la requête permettant de créer une entité partie")
 public class CreatePartieRequest {
 
-    @Schema(description = "description d'un entier", example = "12")
-    private int codePartie;
+    @Schema(description = "description d'un entier", example = "1")
+    private Long codePartie;
 
     @Schema(description = "description d'un nom", example = "quizz vache")
     @NotBlank

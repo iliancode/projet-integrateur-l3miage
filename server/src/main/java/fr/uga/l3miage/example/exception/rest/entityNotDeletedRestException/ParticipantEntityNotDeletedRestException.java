@@ -14,5 +14,5 @@ public class ParticipantEntityNotDeletedRestException extends RuntimeException {
 
     public HttpStatus getHttpStatus() {return HttpStatus.NOT_FOUND;}
 
-    public ErrorCode getErrorCode(){return ErrorCode.TEST_ENTITY_NOT_DELETED_ERROR;}
+    public ErrorCode getErrorCode(){return ErrorCode.PARTICIPANT_ENTITY_NOT_DELETED_ERROR;}
 }

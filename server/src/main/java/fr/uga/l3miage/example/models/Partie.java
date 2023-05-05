@@ -14,7 +14,7 @@ public class Partie {
 
     @Id
     @GeneratedValue
-    private long codePartie;
+    private Long codePartie;
 
     @Column
     private String nom;

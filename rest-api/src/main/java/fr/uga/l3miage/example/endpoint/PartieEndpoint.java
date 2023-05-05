@@ -1,11 +1,9 @@
 package fr.uga.l3miage.example.endpoint;
 
-
 import fr.uga.l3miage.example.annotations.Error400Custom;
-import fr.uga.l3miage.example.error.notFoundErrorResponse.ParticipantNotFoundErrorResponse;
-import fr.uga.l3miage.example.error.notFoundErrorResponse.PartieNotFoundErrorResponse;
-import fr.uga.l3miage.example.request.CreateParticipantRequest;
-import fr.uga.l3miage.example.response.ParticipantDTO;
+import fr.uga.l3miage.example.request.CreatePartieRequest;
+import fr.uga.l3miage.example.response.EnseignantDTO;
+import fr.uga.l3miage.example.response.PartieDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,41 +13,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
-
-@Tag(name = "Partie tag")
+@Tag(name = "Endpoints des Parties")
 @CrossOrigin
 @RestController
-@RequestMapping("parties/")
+@RequestMapping("api/")
 public interface PartieEndpoint {
 
-    @Operation(description = "Création d'une entité Participant dans la Partie du codePartie passé en paramètre")
-    @ApiResponse(responseCode = "201", description = "L'entité Participant de la Partie avec le codePartie demandé a bien été créée.")
+    @Operation(description = "Ajout d'une partie à un enseignant")
+    @ApiResponse(responseCode = "202", description = "la partie a bien été ajoutée")
     @Error400Custom
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("{codePartie}/participants")
-    void createParticipantOfPartie(@PathVariable("codePartie") Long codePartie, @Valid @RequestBody CreateParticipantRequest request);
+    @PostMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}/parties")
+    void addPartieToEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @RequestBody CreatePartieRequest createPartieRequest);
 
 
-    @Operation(description = "Récupérer la liste de DTO des entités participants de la partie qui a pour codePartie celui passé en paramètre")
-    @ApiResponse(responseCode = "200", description = "Renvoie la liste de DTO des entités participants de la partie demandée",
-            content = @Content(schema = @Schema(implementation = ParticipantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
-    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité partie demandée n'est pas trouvée",
-            content = @Content(schema = @Schema(implementation = PartieNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @Operation(description = "Récupération une partie d'un enseignant")
+    @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités partie",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("{codePartie}/participants")
-    List<ParticipantDTO> getAllParticipantsByPartie(@PathVariable("codePartie") Long codePartie);
+    @GetMapping("enseignants/{idEnseignant}/parties/{codePartie}")
+    PartieDTO getPartieFromEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("codePartie") Long codePartie) throws Exception;
 
 
-    @Operation(description = "Récupérer le DTO de l'entité participant qui a pour id celui passé en paramètre dans la partie avec codePartie demandé en paramètre")
-    @ApiResponse(responseCode = "200", description = "Renvoie le DTO de l'entité participant demandée de la partie avec le codePartie demandé",
-            content = @Content(schema = @Schema(implementation = ParticipantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
-    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité partie n'est pas trouvée",
-            content = @Content(schema = @Schema(implementation = PartieNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
-    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité participant n'est pas trouvée",
-            content = @Content(schema = @Schema(implementation = ParticipantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @Operation(description = "Suppression d'une partie d'un enseignant")
+    @ApiResponse(responseCode = "200", description = "si  l'element est renvoyé et supprimé")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("{codePartie}/participants/{id}")
-    ParticipantDTO getParticipantByPartie(@PathVariable("codePartie") Long codePartie, @PathVariable("id") Long id);
+    @DeleteMapping("enseignants/{idEnseignant}/parties/{codePartie}")
+    void deletePartieFromEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("codePartie") Long codePartie) throws Exception;
 }

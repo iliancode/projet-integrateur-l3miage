@@ -20,7 +20,6 @@ import java.util.List;
 @Slf4j
 public class ParticipantComponent {
     private final ParticipantRepository participantRepository;
-    private final ParticipantMapper participantMapper;
     private final EnseignantRepository enseignantRepository;
 
 
@@ -55,15 +54,15 @@ public class ParticipantComponent {
 
 
     /**
-     * @param mail le mail de l'enseignant
+     * @param idEnseignant l'id de l'enseignant
      * @param partie la partie à laquelle appartient le participant
      * @throws EnseignantEntityNotFoundException si l'enseignant n'existe pas
      */
-    public void deleteAllParticipantsFromPartie(String mail, Partie partie) throws EnseignantEntityNotFoundException, IsNotPartieOfEnseignantException {
+    public void deleteAllParticipantsFromPartie(Long idEnseignant, Partie partie) throws EnseignantEntityNotFoundException, IsNotPartieOfEnseignantException {
         boolean isPartieofEnseignant = false;
 
-        Enseignant enseignant = enseignantRepository.findByMail(mail)
-                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour le mail [%s]", mail), mail));
+        Enseignant enseignant = enseignantRepository.findById(idEnseignant)
+                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idEnseignant), idEnseignant));
 
         for (Partie p : enseignant.getParties()) {
             if (partie.getCodePartie() == p.getCodePartie()) {
@@ -72,7 +71,7 @@ public class ParticipantComponent {
         }
 
         if (!isPartieofEnseignant) {
-            throw new IsNotPartieOfEnseignantException(String.format("L'enseignant [%s] n'a pas la partie [%s]", mail, partie.getCodePartie()), mail, partie.getCodePartie());
+            throw new IsNotPartieOfEnseignantException(String.format("La partie [%s] n'appartient pas à l'enseignant [%s]", idEnseignant, partie.getCodePartie()), idEnseignant, partie.getCodePartie());
         }
 
         List<Participant> participants = participantRepository.findAllByPartie(partie);

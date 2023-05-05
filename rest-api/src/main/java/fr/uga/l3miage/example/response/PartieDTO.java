@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Schema(description = "correspond au DTO de l'entité Partie")
 public class PartieDTO {
-    private long codePartie;
+    private Long codePartie;
 
     @NotBlank
     private String nom;

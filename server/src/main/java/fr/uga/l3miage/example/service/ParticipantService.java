@@ -3,7 +3,6 @@ package fr.uga.l3miage.example.service;
 import fr.uga.l3miage.example.component.ParticipantComponent;
 import fr.uga.l3miage.example.component.PartieComponent;
 import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.ParticipantEntityNotDeletedRestException;
-import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ParticipantEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.PartieEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
@@ -13,12 +12,12 @@ import fr.uga.l3miage.example.exception.technical.isNotEntityOf.IsNotPartieOfEns
 import fr.uga.l3miage.example.mapper.ParticipantMapper;
 import fr.uga.l3miage.example.models.Participant;
 import fr.uga.l3miage.example.models.Partie;
-import fr.uga.l3miage.example.request.CreateParticipantRequest;
+import fr.uga.l3miage.example.request
+        .CreateParticipantRequest;
 import fr.uga.l3miage.example.response.ParticipantDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -39,7 +38,7 @@ public class ParticipantService {
             Participant participant = participantMapper.toEntity(createParticipantRequest);
             participantComponent.createParticipantByPartie(partie, participant);
         } catch (PartieEntityNotFoundException e) {
-            throw new ParticipantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),codePartie,e);
+            throw new PartieEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),codePartie,e);
         }
     }
 
@@ -76,15 +75,15 @@ public class ParticipantService {
 
 
     /**
-     * @param mail le mail de l'enseignant
+     * @param idEnseignant l'id de l'enseignant
      * @param codePartie le code de la partie
      */
-    public void deleteAllParticipantsFromPartie(final String mail, final Long codePartie) {
+    public void deleteAllParticipantsFromPartie(final Long idEnseignant, final Long codePartie) {
         try {
             Partie partie = partieComponent.getPartie(codePartie);
-            participantComponent.deleteAllParticipantsFromPartie(mail, partie);
+            participantComponent.deleteAllParticipantsFromPartie(idEnseignant, partie);
         } catch (EnseignantEntityNotFoundException | PartieEntityNotFoundException | IsNotPartieOfEnseignantException e) {
-            throw new ParticipantEntityNotFoundRestException(e.getMessage());
+            throw new ParticipantEntityNotDeletedRestException(e.getMessage());
         }
     }
 

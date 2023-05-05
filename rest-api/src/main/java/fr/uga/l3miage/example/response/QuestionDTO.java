@@ -15,10 +15,12 @@ import java.util.List;
 @Setter
 @Schema(description = "correspond au DTO de l'entité Question")
 public class QuestionDTO{
+    private Long id;
 
     @NotBlank
     private String label;
     //@NotNull
     //@Size(min=2, message= "Il dot y avoir au moins 2 reponses pour une question donnée")
+
     List<ReponseDTO> reponses;
 }

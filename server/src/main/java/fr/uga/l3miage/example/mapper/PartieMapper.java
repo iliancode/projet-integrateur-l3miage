@@ -7,13 +7,10 @@ import org.mapstruct.Mapper;
 
 import java.util.Optional;
 
-@Mapper
+@Mapper(uses = MiahootMapper.class)
 public interface PartieMapper {
 
 
     PartieDTO toDto(Partie testEntity);
     Partie toEntity(CreatePartieRequest request);
-
-
-   // Partie toPartie(CreatePartieRequest createPartieRequest);
 }

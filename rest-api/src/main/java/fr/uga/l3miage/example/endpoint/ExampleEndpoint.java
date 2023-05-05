@@ -43,7 +43,7 @@ import javax.validation.Valid;
 @Tag(name = "Exemple tag")
 @CrossOrigin
 @RestController
-@RequestMapping("exemple/")
+@RequestMapping("api/exemple/")
 public interface ExampleEndpoint {
 
     /**

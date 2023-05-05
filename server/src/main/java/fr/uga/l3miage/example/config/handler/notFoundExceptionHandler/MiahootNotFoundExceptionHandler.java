@@ -1,7 +1,11 @@
 package fr.uga.l3miage.example.config.handler.notFoundExceptionHandler;
 
-import fr.uga.l3miage.example.error.notFoundErrorResponse.EnseignantNotFoundErrorResponse;
-import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
+import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
+import fr.uga.l3miage.example.error.errorResponse.MiahootErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.MiahootNotFoundErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.ParticipantNotFoundErrorResponse;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.MiahootEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ParticipantEntityNotFoundRestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -13,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 /**
- * Cette classe correspond au handler d'exception rest. Ici, on catch l'exception {@link EnseignantEntityNotFoundRestException}<br>
+ * Cette classe correspond au handler d'exception rest. Ici, on catch l'exception {@link MiahootEntityNotFoundRestException}<br>
  * Les annotations :
  * <ul>
  *     <li>{@link ConditionalOnWebApplication} permet de dire que cette classe est utilisée si nous sommes sur une application web</li>
@@ -26,31 +30,31 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @ControllerAdvice
 @Slf4j
-public class EnseignantNotFoundExceptionHandler {
+public class MiahootNotFoundExceptionHandler {
 
     /**
-     * Cette classe correspond au handler de l'exception {@link EnseignantEntityNotFoundRestException}.<br>
-     * Ici lorsque le code va lever l'exception {@link EnseignantEntityNotFoundRestException} alors la fonction <b color="blue">handle()</b> sera appelée.<br>
+     * Cette classe correspond au handler de l'exception {@link MiahootEntityNotFoundRestException}.<br>
+     * Ici lorsque le code va lever l'exception {@link MiahootEntityNotFoundRestException} alors la fonction <b color="blue">handle()</b> sera appelée.<br>
      * Les annotations :
      * <ul>
      *     <li>{@link ExceptionHandler} permet de donner tous les types d'exceptions qui vont être catch par ce handler</li>
      * </ul>
-     *
      * @param httpServletRequest correspond à la requête effectuée par le client
-     * @param exception          L'exception qui a été levée dans le code server, et qui a été catch par ce handler
-     * @return {@link ResponseEntity}<{@link EnseignantNotFoundErrorResponse}></li>
+     * @param exception L'exception qui a été levée dans le code server, et qui a été catch par ce handler
+     * @return {@link ResponseEntity}<{@link MiahootNotFoundErrorResponse}></li>
      */
-    @ExceptionHandler(EnseignantEntityNotFoundRestException.class)
-    public ResponseEntity<EnseignantNotFoundErrorResponse> handle(HttpServletRequest httpServletRequest, Exception exception) {
-        EnseignantEntityNotFoundRestException ex = (EnseignantEntityNotFoundRestException) exception;
-        final EnseignantNotFoundErrorResponse response = EnseignantNotFoundErrorResponse.builder()
+    @ExceptionHandler(MiahootEntityNotFoundRestException.class)
+    public ResponseEntity<MiahootErrorResponse> handle(HttpServletRequest httpServletRequest, Exception exception) {
+        MiahootEntityNotFoundRestException ex = (MiahootEntityNotFoundRestException) exception;
+        final MiahootNotFoundErrorResponse response = MiahootNotFoundErrorResponse.builder()
                 .uri(httpServletRequest.getRequestURI())
                 .httpStatus(ex.getHttpStatus())
                 .errorMessage(ex.getMessage())
                 .errorCode(ex.getErrorCode())
-                .idEnseignant(ex.getId())
+                .id(ex.getId())
                 .build();
         log.warn(ex.getMessage());
         return ResponseEntity.status(ex.getHttpStatus()).body(response);
     }
 }
+
