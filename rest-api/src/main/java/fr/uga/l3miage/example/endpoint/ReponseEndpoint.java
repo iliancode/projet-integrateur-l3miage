@@ -21,15 +21,15 @@ import java.util.List;
 @RequestMapping("api/")
 public interface ReponseEndpoint {
 
-    @Operation(description = "Ajout d'une reponse à une question d'un miahoot d'un enseignant")
+   /* @Operation(description = "Ajout d'une reponse à une question d'un miahoot d'un enseignant")
     @ApiResponse(responseCode = "202", description = "la reponse a bien été ajoutée")
     @Error400Custom
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses")
     void addReponseToQuestionOfMiahoot(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @RequestBody CreateReponseRequest createReponseRequest) throws Exception;
+*/
 
-
-    @Operation(description = "Récupération de toutes les reponses d'une question d'un miahoot d'un enseignant")
+    /*@Operation(description = "Récupération de toutes les reponses d'une question d'un miahoot d'un enseignant")
     @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités reponse",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
@@ -51,5 +51,5 @@ public interface ReponseEndpoint {
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses/{idReponse}")
-    void deleteReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;
+    void deleteReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;*/
 }
