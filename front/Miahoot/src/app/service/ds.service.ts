@@ -42,6 +42,9 @@ private bsAskUpdate = new BehaviorSubject<void>(undefined);
 readonly obsMiahoots: Observable<Miahoot[]>;
   public  user: Observable<User | null> = EMPTY;
 
+  mail = '';
+  mdp = '';
+  pseudo = '';
 
   constructor(private http: HttpClient, private auth: AuthService,  fireS: Firestore) {
     this.obsMiahoots = combineLatest([this.bsAskUpdate, auth.currentUser]).pipe(
@@ -140,4 +143,18 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   }
 
 
+
+  //recp user
+
+  recupUser(mail: string , pseudo:string, mdp:string ): void{
+
+    this.mail = mail;
+    this.pseudo = pseudo;
+    this.mdp = mdp;
+  }
+
+  //envoyer user
+  envoyerUser(): string[]{
+    return [this.mail, this.pseudo, this.mdp];
+  }
 }
