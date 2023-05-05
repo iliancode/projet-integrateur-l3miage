@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
-
+import {Miahoot} from "../service/interfaces";
+import { DsService } from "../service/ds.service";
 @Component({
   selector: 'app-concepteur',
   templateUrl: './concepteur.component.html',
@@ -10,18 +11,12 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class ConcepteurComponent {
 
-  constructor(public router : Router) {
+  constructor(public router : Router, public ds:DsService) {
   }
 
 
   // supprime dans la vue html et dans l'api
-  deleteMiahoot(id : string) {
-    const del = document.getElementById(id)
-    if(del !== null){
-      del.remove()
-    }
 
-  }
 
   // supprime dans la vue html et dans l'api
   supprimeMiahoot(id : number) {

@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {DsService} from "../service/ds.service";
-import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-presentateur',

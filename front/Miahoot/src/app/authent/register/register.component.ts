@@ -20,24 +20,24 @@ export class RegisterComponent implements OnInit {
 
   register() {
 
-    if(this.email == '') {
+    if (this.email == '') {
       alert('Please enter email');
       return;
     }
 
-    if(this.password == '') {
+    if (this.password == '') {
       alert('Please enter password');
       return;
     }
     let pseudo = "zwi"
-    let y : Enseignant = {mail:this.email, pseudo:pseudo, mdp:this.password};
+    let y: Enseignant = {mail: this.email, pseudo: pseudo, mdp: this.password};
     this.newEnseignant(y);
     console.log("la")
-    this.auth.register(this.email,this.password);
+    this.auth.register(this.email, this.password);
 
     this.email = '';
     this.password = '';
-
+  }
     newEnseignant(e: Enseignant) {
       this.ds.postE(e)
         .then(enseignant => console.log(enseignant))

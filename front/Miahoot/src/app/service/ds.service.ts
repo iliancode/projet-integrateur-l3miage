@@ -1,12 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from "@angular/common/http";
-import { lastValueFrom } from 'rxjs';
+import {BehaviorSubject, combineLatest, firstValueFrom, lastValueFrom, Observable, switchMap} from 'rxjs';
+import {Miahoot, Enseignant} from "./interfaces";
+import {Auth} from "@angular/fire/auth";
+import {AuthService} from "./auth.service";
+
 @Injectable({
   providedIn: 'root'
 })
 export class DsService {
 
+private bsAskUpdate = new BehaviorSubject<void>(undefined);
+readonly obsMiahoots: Observable<Miahoot[]>;
 
+
+  constructor(private http: HttpClient, private auth: AuthService) {
     this.obsMiahoots = combineLatest([this.bsAskUpdate, auth.currentUser]).pipe(
       switchMap( async ([_, U]) => {
         if (U === null) {
@@ -16,9 +24,10 @@ export class DsService {
         return miahoots;
       })
     )
-
-  constructor(private http: HttpClient) {
   }
+
+
+
 
   async createMiahoot(M: Miahoot): Promise<Miahoot> {
     const U = await firstValueFrom(this.auth.currentUser);
@@ -52,6 +61,14 @@ export class DsService {
      return firstValueFrom(this.http.post<any>(url + endpoint, body));
    }
 
+  async deleteMiahoot(idMiahoot:  number){
+    const U = await firstValueFrom(this.auth.currentUser);
+    if(U !== null){
+      this.http.delete<Miahoot>(`/api/enseignants/${U.uid}/miahoots/${idMiahoot}`)
+    }
+    throw "erreur lors de la suppression du Miahoot"
+  }
+
   /**
    *
 
@@ -64,7 +81,7 @@ export class DsService {
    */
 
 
-  async get(endpoint: string, recherche: string) {
+  async getGeneral(endpoint: string, recherche: string) {
     let url = "http://localhost:8080/api/";
 
     let reponse = await lastValueFrom(this.http.get<any>(url + endpoint +"/"  +recherche));
@@ -72,7 +89,7 @@ export class DsService {
   }
 
   //post
-  post(endpoint: string, body: Enseignant) {
+  postGeneral(endpoint: string, body: Enseignant) {
     let url = "http://localhost:8080/api/";
 
     return firstValueFrom(this.http.post<any>(url + endpoint, body));
