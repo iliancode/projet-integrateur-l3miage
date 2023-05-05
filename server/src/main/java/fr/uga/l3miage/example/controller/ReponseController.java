@@ -33,17 +33,4 @@ public class ReponseController implements ReponseEndpoint {
     public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
         reponseService.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion,idReponse);
     }
-
-    /**
-     * Modifie une reponse
-     * @param idEnseignant l'id de l'enseignant
-     * @param idMiahoot l'id du miahoot
-     * @param idQuestion l'id de la question
-     * @param idReponse l'id de la reponse
-     * @param request la requete pour modifier la reponse
-     */
-    @Override
-    public void updateReponseEntity(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final Long idReponse, final CreateReponseRequest request) {
-        reponseService.updateReponseEntity(idEnseignant,idMiahoot,idQuestion,idReponse,request);
-    }
 }

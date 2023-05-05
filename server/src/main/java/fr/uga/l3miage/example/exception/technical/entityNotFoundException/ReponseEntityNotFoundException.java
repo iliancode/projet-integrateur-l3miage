@@ -8,14 +8,14 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class ReponseEntityNotFoundException extends Exception {
 
-    private final String label;
-    public ReponseEntityNotFoundException(String message, String label) {
+    private final Long id;
+    public ReponseEntityNotFoundException(String message, Long id) {
         super(message);
-        this.label = label;
+        this.id = id;
     }
 
-    public ReponseEntityNotFoundException(String message, String label, Throwable cause){
+    public ReponseEntityNotFoundException(String message, Long id, Throwable cause){
         super(message,cause);
-        this.label = label;
+        this.id = id;
     }
 }

@@ -1,5 +1,8 @@
 package fr.uga.l3miage.example.component;
 
+import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.QuestionEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
@@ -51,6 +54,18 @@ public class QuestionComponent {
         } else {
             throw new Exception("L'enseignant n'a pas le droit de modifier ce miahoot");
         }
+    }
+
+
+    public Question getQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws EnseignantEntityNotFoundException, MiahootEntityNotFoundException, QuestionEntityNotFoundException {
+        Enseignant enseignant = enseignantRepository.findById(idEnseignant)
+                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idEnseignant), idEnseignant));
+
+        Miahoot miahoot = miahootRepository.findById(idMiahoot)
+                .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idMiahoot), idMiahoot));
+
+        return questionRepository.findById(idQuestion)
+                .orElseThrow(() -> new QuestionEntityNotFoundException(String.format("L'entité à supprimer n'a pas été trouvée pour l'id [%s]", idQuestion), idQuestion));
     }
 
 }

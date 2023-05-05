@@ -37,7 +37,7 @@ public class MiahootService {
 
 
     public List<MiahootDTO> getAllMiahootsOfEnseignant(Long idEnseignant) throws Exception {
-        return enseignantMapper.toDtoMiahoot(miahootComponent.getAllMiahootsOfEnseignant(idEnseignant));
+        return miahootMapper.toDto(miahootComponent.getAllMiahootsOfEnseignant(idEnseignant));
     }
 
 
