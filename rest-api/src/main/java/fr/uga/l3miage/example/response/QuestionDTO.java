@@ -21,5 +21,6 @@ public class QuestionDTO{
     private String label;
     //@NotNull
     //@Size(min=2, message= "Il dot y avoir au moins 2 reponses pour une question donnée")
+
     List<ReponseDTO> reponses;
 }

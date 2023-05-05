@@ -166,4 +166,12 @@ public interface EnseignantEndpoint {
     void deleteReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;
 
 
+
+    //create a miahoots and all his questions and all his reponses of enseignant by its id by taking a json in body
+    @Operation(description = "Récupération d'un miahoot et de toutes ses questions et de toutes ses reponses d'un enseignant")
+    @ApiResponse(responseCode = "200", description = "Créer un miahoot entier",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("{mail}/miahoot")
+    void createMiahootOfEnseignant(@PathVariable("mail") String mail, @RequestBody CreateFullMiahootRequest createFullMiahootRequest) throws Exception;
 }

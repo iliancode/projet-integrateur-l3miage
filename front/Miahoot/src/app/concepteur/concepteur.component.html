@@ -23,10 +23,23 @@
        et il faudra recuperer le nom des miahoot pour les afficher à la place de miahoot name-->
       <button mat-button [matMenuTriggerFor]="menu"  id="Miahoot-1">Miahoot name</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="deleteMiahoot('Miahoot-1')"> Supprimer </button>
+        <button mat-menu-item (click)="supprimeMiahoot(1)"> Supprimer </button>
         <button mat-menu-item> Modifier </button>
       </mat-menu>
       <a href="/creation"><button mat-raised-button id="addMiahoot" > + </button></a>
     </section>
   </header>
 </div>
+
+<div id="inputmiahoot">
+  <form action="">
+    <input type="jsoninput" id="miahoot" #miahoot style="width: 300px; height: 300px;" />
+    <button type="submit" (click)="postMiahoot('enseignant1@gmail.com', miahoot.value)">Submit</button>
+  </form>
+
+</div>
+
+
+
+<input type="file" id="input">
+
