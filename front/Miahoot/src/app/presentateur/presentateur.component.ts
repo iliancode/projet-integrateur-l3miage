@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {DataService} from "../service/data.service";
 import {PresentationService} from "../service/presentation.service";
 import {BehaviorSubject, Observable} from "rxjs";
+import {Auth, authState, User} from "@angular/fire/auth";
 
 interface Reponse {
   id?: string;
@@ -34,6 +35,7 @@ interface Enseignant {
 })
 export class PresentateurComponent implements OnInit{
 
+
   enseignant : Enseignant = <Enseignant>{pseudo: 'adil', mail:'lpb@gmail.com', mdp : 'trop fort'};
   miahoots: Miahoot[] = [];
   miahoot : Miahoot;
@@ -41,10 +43,10 @@ export class PresentateurComponent implements OnInit{
   indexQuestionCourante = 0;
 
 
-  constructor(private ps : PresentationService) {
-    this.miahoot = this.miahoots[0];
-    this.question_courante = new BehaviorSubject<Question | null>(null);
 
+  constructor(private ps : PresentationService, private auth: Auth) {
+    this.miahoot = this.miahoots[0];
+    this.question_courante = new BehaviorSubject<Question | null>(null,);
   }
 
   questionSuivante() {
