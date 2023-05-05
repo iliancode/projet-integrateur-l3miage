@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 import { DsService} from "../../service/ds.service";
-import {timeout} from "rxjs";
-import { Enseignant } from 'src/app/service/ds.service';
+import { Enseignant } from 'src/app/service/interfaces';
 
 @Component({
   selector: 'app-register',
@@ -34,7 +33,7 @@ export class RegisterComponent implements OnInit {
     let y : Enseignant = {mail:this.email, pseudo:pseudo, mdp:this.password};
     this.newEnseignant(y);
     console.log("la")
-//    this.auth.register(this.email,this.password);
+    this.auth.register(this.email,this.password);
 
     this.email = '';
     this.password = '';

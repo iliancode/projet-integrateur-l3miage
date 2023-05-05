@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from "@angular/common/http";
-import { BehaviorSubject, Observable, combineLatest, firstValueFrom, lastValueFrom, switchMap } from 'rxjs';
+import {BehaviorSubject, combineLatest, firstValueFrom, lastValueFrom, Observable, switchMap} from 'rxjs';
 import { AuthService } from './auth.service';
-import { Miahoot, Enseignant } from './interfaces'
+import { Miahoot, Enseignant } from '../service/interfaces'
 
 // Le service d'accès aux données du professeur en tant que concepteur
 import { HttpClient, HttpHeaders} from "@angular/common/http";
-import {firstValueFrom, lastValueFrom, Observable} from 'rxjs';
 
-export interface Enseignant {
-    pseudo: string;
-    mail: string;
-    mdp: string;
-}
+
 @Injectable({
   providedIn: 'root'
 })

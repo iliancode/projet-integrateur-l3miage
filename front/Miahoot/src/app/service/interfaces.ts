@@ -22,8 +22,8 @@ export interface Enseignant {
   mail: string;
   mdp: string;
   pseudo: string;
-  miahoots: Miahoot[];
-  parties: Partie[];
+  miahoots?: Miahoot[];
+  parties?: Partie[];
 }
 
 export interface Partie{
