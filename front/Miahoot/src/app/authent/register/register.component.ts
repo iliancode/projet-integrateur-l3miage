@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
     this.password = '';
   }
     newEnseignant(e: Enseignant) {
-    /**
+
       const docRef = doc(this.us.getFirestore(), "enseignants", e.mail); // on utilise l'email comme ID du document
       setDoc(docRef, e)
         .then(() => {
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
         .catch((error) => {
           console.error("Erreur lors de l'enregistrement de l'enseignant sur Firestore : ", error);
         });
- */
+
       this.ds.postE(e)
         .then(enseignant => console.log(enseignant))
         .catch(erreur =>console.log("pas d'enseignant trouve avec cet email"));
