@@ -9,16 +9,16 @@ import lombok.NonNull;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-@Mapper
+import java.util.List;
+
+@Mapper(uses = ReponseMapper.class)
 public interface QuestionMapper {
 
-    // @Mapping(source = "miahoots",target = "miahootsDTO",qualifiedBy = TestMapperUtils.ToSumTestInt.class)
-    QuestionDTO toDto(Question questionEntity);
+    QuestionDTO toDto(Question question);
+    List<QuestionDTO> toDto(List<Question> questions);
 
-    Question toQuestion(CreateQuestionRequest request);
+    Question toEntity(CreateQuestionRequest request);
 
     ReponseDTO map(Reponse reponse);
-
-    void mergeQuestionEntity(@MappingTarget @NonNull Question ancienQuestion, QuestionDTO newQuestion);
 
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PartieController implements PartieEndpoint {
     private final PartieService partieService;
 
-    
+
     @Override
     public void addPartieToEnseignant(Long idEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
         partieService.addPartieToEnseignant(idEnseignant,idMiahoot,createPartieRequest);

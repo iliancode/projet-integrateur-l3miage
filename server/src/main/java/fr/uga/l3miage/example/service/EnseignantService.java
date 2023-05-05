@@ -30,11 +30,6 @@ public class EnseignantService {
     private final EnseignantMapper enseignantMapper;
     private final QuestionMapper questionMapper;
 
-    private final MiahootMapper miahootMapper;
-    private final ReponseMapper reponseMapper;
-
-    private final PartieMapper partieMapper;
-
     /**
      * @param createEnseignantRequest la requête qui permet de créer une entité enseignant
      */
@@ -56,6 +51,8 @@ public class EnseignantService {
     }
 
     public List<EnseignantDTO> getAllEnseignants() {
+
+
         return enseignantMapper.toDto(enseignantComponent.getAllEnseignants());
     }
 
@@ -80,67 +77,4 @@ public class EnseignantService {
         }
     }
 
-    public void addQuestionToMiahoot(final Long idEnseignant, final Long idMiahoot, final CreateQuestionRequest createQuestionRequest) throws Exception {
-        Question newQuestion = questionMapper.toQuestion(createQuestionRequest);
-        enseignantComponent.createQuestionInMiahoot(idEnseignant, idMiahoot, newQuestion);
-
-    }
-
-    @Transactional
-    public void createMiahootFromEnseignant(final Long idEnseignant, final CreateMiahootRequest createMiahootRequest) throws Exception {
-
-        Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
-        enseignantComponent.createMiahootFromEnseignant(idEnseignant, newMiahoot);
-    }
-
-    public List<MiahootDTO> getAllMiahootsOfEnseignant(Long idEnseignant) throws Exception {
-        return enseignantMapper.toDtoMiahoot(enseignantComponent.getAllMiahootsOfEnseignant(idEnseignant));
-    }
-
-    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
-        return enseignantMapper.toDtoQuestion(enseignantComponent.getAllQuestionsOfMiahootOfEnseignant(idEnseignant, idMiahoot));
-    }
-
-    // recupere le miahoot avec l'id correspondant dans la liste de miahoot de l'enseignant
-    public MiahootDTO getMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) throws Exception {
-            try {
-                Miahoot miahoot = enseignantComponent.getMiahootOfEnseignant(idEnseignant, idMiahoot);
-                return miahootMapper.toDto(miahoot);
-            } catch (EnseignantEntityNotFoundException e) {
-                throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), idEnseignant, e);
-            } catch (TestEntityNotFoundRestException e) {
-                throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
-            }
-    }
-
-    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws  Exception {
-        try {
-            enseignantComponent.deleteMiahootOfEnseignant(idEnseignant, idMiahoot);
-        } catch (EnseignantEntityNotFoundException e) {
-            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), idEnseignant, e);
-        } catch (TestEntityNotFoundRestException e) {
-            throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
-        }
-    }
-
-    public void addReponseToQuestionOfMiahoot(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final CreateReponseRequest createReponseRequest) throws Exception {
-        Reponse newReponse = reponseMapper.toReponse(createReponseRequest);
-        enseignantComponent.addReponseToQuestionOfMiahoot(idEnseignant, idMiahoot, idQuestion, newReponse);
-    }
-
-    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
-        return enseignantMapper.toDtoReponse(enseignantComponent.getAllReponsesOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion));
-    }
-
-    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
-        return reponseMapper.toDto(enseignantComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse));
-    }
-
-    public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
-        try{
-            enseignantComponent.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
-        }catch (Exception ex){
-            throw new Exception("Erreur lors de la suppression de la reponse");
-        }
-    }
 }

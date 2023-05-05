@@ -1,9 +1,12 @@
 package fr.uga.l3miage.example.component;
 
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
+import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.models.Question;
+import fr.uga.l3miage.example.repository.EnseignantRepository;
 import fr.uga.l3miage.example.repository.MiahootRepository;
 import fr.uga.l3miage.example.repository.QuestionRepository;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -11,65 +14,51 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class MiahootComponent {
+    private final EnseignantRepository enseignantRepository;
     private final MiahootRepository miahootRepository;
-    private final MiahootMapper miahootMapper;
-    private final QuestionRepository questionRepository;
-    private final QuestionMapper questionMapper;
 
-    public Miahoot getMiahoot(final Long id) throws Exception {
-        return miahootRepository.findById(id)
-                .orElseThrow(() -> new Exception("Aucune entité Miahoot n'a été trouvée pour l'id "));
-    }
 
-    public void createMiahoot(final Miahoot entity){
-        miahootRepository.save(entity);
-    }
-
-    public void deleteMiahoot(final Long id) throws Exception {
+    public void createMiahootFromEnseignant(final Long idEnseignant, final Miahoot miahoot) throws Exception {
         try {
-            Miahoot deleted = getMiahoot(id);
-            miahootRepository.deleteById(id);
-        }catch(Exception e){
-            throw new Exception("L'entité Miahoot à supprimer n'a pas été trouvée");
+            Enseignant enseignant = enseignantRepository.findById(idEnseignant)
+                    .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idEnseignant), "" + idEnseignant));
+            enseignant.getMiahoots().add(miahoot);
+        } catch (Exception ex) {
+            throw new Exception("Impossible de créer le Miahoot et de l'ajouter. Raison :" + ex.getMessage());
         }
     }
 
-    public Question getQuestion(Long idMiahoot, Long idQuestion) throws Exception {
+    public List<Miahoot> getAllMiahootsOfEnseignant(Long idEnseignant) throws Exception {
+        Enseignant e = enseignantRepository.findById(idEnseignant)
+                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id "));
 
-        log.info("j'entre dans getQuestion");
-        Miahoot m =   miahootRepository.findById(idMiahoot)
-                .orElseThrow(() -> new Exception("Aucune entité Miahoot n'a été trouvée pour l'id "));
-
-        log.info("Miahoot trouvé");
-        if(m.containsQuestion(idQuestion)){
-            log.info("Question trouvée");
-            return m.getQuestion(idQuestion);
-        }else {
-            throw new Exception("Aucune entité Question n'a été trouvée pour l'id ");
-        }
+        return e.getMiahoots();
     }
 
-    public void deleteQuestion(Long idMiahoot, Long idQuestion) throws Exception {
+    public Miahoot getMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
+        Enseignant e = enseignantRepository.findById(idEnseignant)
+                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id "));
+        return e.getMiahoot(idMiahoot);
+    }
+
+    public void deleteMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) throws Exception {
+        Enseignant e = enseignantRepository.findById(idEnseignant)
+                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour l'id [%s]", idEnseignant), "" + idEnseignant));
+
         Miahoot m = miahootRepository.findById(idMiahoot)
-                .orElseThrow(()  -> new Exception("Aucune entité Miahoot n'a été trouvée pour l'id "));
+                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le mail [%s]", idMiahoot), "erreur"));
 
-        if(m.containsQuestion(idQuestion)){
-            m.deleteQuestion(idQuestion);
-            questionRepository.deleteById(idQuestion);
-            miahootRepository.save(m);
+        if (e.containsMiahoot(idMiahoot)) {
+            e.removeMiahoot(m);
+            enseignantRepository.save(e);
+            miahootRepository.delete(m);
         }
     }
 
-    public void updateQuestion(Long idMiahoot, Long idQuestion, QuestionDTO questionDTO) {
-        Miahoot m = miahootRepository.findById(idMiahoot).get();
-        if(m.containsQuestion(idQuestion)){
-            Question q = m.getQuestion(idQuestion);
-            questionMapper.mergeQuestionEntity(q, questionDTO);
-            questionRepository.save(q);
-        }
-    }
 }
