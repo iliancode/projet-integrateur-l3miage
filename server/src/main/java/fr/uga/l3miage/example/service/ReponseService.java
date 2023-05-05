@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,36 +21,28 @@ public class ReponseService {
     private final ReponseComponent reponseComponent;
     private final ReponseMapper reponseMapper;
 
-    // Recuperer le DTO réponse correspondant a la description
-    public ReponseDTO getReponse(final String label){
-        try {
-            return reponseMapper.toDto(reponseComponent.getReponse(label));
-        } catch (ReponseEntityNotFoundException e) {
-            throw new ReponseEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),label,e);
-        }
-    }
 
-    //On creer l'entité réponse
-    public void createReponse(final CreateReponseRequest createReponseRequest) {
+    public void addReponseToQuestionOfMiahoot(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final CreateReponseRequest createReponseRequest) throws Exception {
         Reponse newReponse = reponseMapper.toEntity(createReponseRequest);
-        reponseComponent.createReponse(newReponse);
-        /**
-        if(newReponse.getLabel().length()  != 0) {
-            try {
-                reponseComponent.createReponse(newReponse);
-            }catch(Exception exception){
-                throw new Exception("Erreur de création de l'entité réponse partie service");
-            }
-        } **/
+        reponseComponent.addReponseToQuestionOfMiahoot(idEnseignant, idMiahoot, idQuestion, newReponse);
     }
 
-    // On supprime l'entité réponse
-    @Transactional
-    public void deleteReponse(final String label){
-        try {
-            reponseComponent.deleteReponse(label);
-        }catch(ReponseEntityNotFoundException e){
-            throw new ReponseEntityNotDeletedRestException(e.getMessage());
+
+    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
+        return reponseMapper.toDto(reponseComponent.getAllReponsesOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion));
+    }
+
+
+    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+        return reponseMapper.toDto(reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse));
+    }
+
+
+    public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+        try{
+            reponseComponent.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
+        }catch (Exception ex){
+            throw new Exception("Erreur lors de la suppression de la reponse");
         }
     }
 }

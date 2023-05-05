@@ -7,18 +7,18 @@ import lombok.NonNull;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper(uses = QuestionMapper.class)
 public interface MiahootMapper {
 
     Miahoot toEntity(CreateMiahootRequest request);
-    // @Mapping(source = "miahoots",target = "miahootsDTO",qualifiedBy = TestMapperUtils.ToSumTestInt.class)
-    MiahootDTO toDto(Miahoot testEntity);
 
-    //QuestionDTO map(Question question);
+    MiahootDTO toDto(Miahoot miahoot);
+    List<MiahootDTO> toDto(List<Miahoot> miahoots);
 
 
     Miahoot toEntity(MiahootDTO miahootDTO);
 
-    void mergeMiahootEntity(@MappingTarget @NonNull Miahoot ancienMiahoot, MiahootDTO newMiahoot);
 
 }
