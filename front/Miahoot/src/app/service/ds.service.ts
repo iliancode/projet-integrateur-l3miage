@@ -90,21 +90,13 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   async deleteMiahoot(idMiahoot:  number){
     const U = await firstValueFrom(this.auth.currentUser);
     if(U !== null){
+      console.log("user not null")
+      console.log(""+U.uid)
       this.http.delete<Miahoot>(`/api/enseignants/${U.uid}/miahoots/${idMiahoot}`)
+    }else{
+      throw "erreur lors de la suppression du Miahoot"
     }
-    throw "erreur lors de la suppression du Miahoot"
   }
-
-  /**
-   *
-
-  let update = await lastValueFrom(this.http.put<any>(this.url + "/2",this.body))
-  console.log(update)
-
-  let recup2 = await lastValueFrom(this.http.get<any>(this.url + "/2"))
-  console.log(recup2)
-
-   */
 
 
   async getGeneral(endpoint: string, recherche: string) {
