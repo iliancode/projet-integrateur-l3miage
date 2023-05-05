@@ -41,10 +41,10 @@ public class EnseignantComponent {
     }
 
 
-    public Enseignant getEnseignantById(final Long idEnseignant) throws Exception {
+    public Enseignant getEnseignantByUid(final String uid) throws Exception {
 
-        Enseignant enseignant = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " + idEnseignant));
+        Enseignant enseignant = enseignantRepository.findByUid(uid)
+                .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " + uid));
 
         return enseignant;
     }

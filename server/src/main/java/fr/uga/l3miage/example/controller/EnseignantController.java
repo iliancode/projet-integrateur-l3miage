@@ -27,8 +27,8 @@ public class EnseignantController implements EnseignantEndpoint {
     }
 
     @Override
-    public EnseignantDTO getEntityEnseignantById(final Long idEnseignant) throws Exception {
-        return enseignantService.getEnseignantById(idEnseignant);
+    public EnseignantDTO getEntityEnseignantByUid(final String uid) throws Exception {
+        return enseignantService.getEnseignantByUid(uid);
     }
 
     @Override

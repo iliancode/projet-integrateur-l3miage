@@ -18,6 +18,7 @@ public interface EnseignantMapper {
     List<QuestionDTO> toDtoQuestion(List<Question> testEntities);
 
     Enseignant toEntity(CreateEnseignantRequest request);
+    Enseignant toEnseignant(CreateEnseignantRequest request);
     EnseignantDTO toDto(Enseignant enseignant);
 
     void mergeEnseignantEntity(@MappingTarget @NonNull Enseignant ancientEnseignant, EnseignantDTO newEnseignant);

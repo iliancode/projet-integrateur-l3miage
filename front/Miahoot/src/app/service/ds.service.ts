@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from "@angular/common/http";
-import {BehaviorSubject, combineLatest, firstValueFrom, lastValueFrom, Observable, switchMap} from 'rxjs';
+import {BehaviorSubject, combineLatest, EMPTY, firstValueFrom, lastValueFrom, Observable, switchMap} from 'rxjs';
 //import {Miahoot, Enseignant} from "./interfaces";
-import {Auth} from "@angular/fire/auth";
+import {Auth, authState, User} from "@angular/fire/auth";
 import {AuthService} from "./auth.service";
+import {Firestore} from "@angular/fire/firestore";
 
 
 
 export interface Enseignant {
+  uid?: string;
   pseudo: string;
   mail: string;
   mdp: string;
@@ -38,9 +40,10 @@ export class DsService {
 
 private bsAskUpdate = new BehaviorSubject<void>(undefined);
 readonly obsMiahoots: Observable<Miahoot[]>;
+  public  user: Observable<User | null> = EMPTY;
 
 
-  constructor(private http: HttpClient, private auth: AuthService) {
+  constructor(private http: HttpClient, private auth: AuthService,  fireS: Firestore) {
     this.obsMiahoots = combineLatest([this.bsAskUpdate, auth.currentUser]).pipe(
       switchMap( async ([_, U]) => {
         if (U === null) {
@@ -50,6 +53,8 @@ readonly obsMiahoots: Observable<Miahoot[]>;
         return miahoots;
       })
     )
+
+
   }
 
 
@@ -133,4 +138,6 @@ readonly obsMiahoots: Observable<Miahoot[]>;
     let reponse =  await lastValueFrom(this.http.post(url, miahoot));
     console.log(reponse)
   }
+
+
 }

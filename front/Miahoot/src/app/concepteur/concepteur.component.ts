@@ -2,7 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Miahoot} from "../service/interfaces";
-import { DsService } from "../service/ds.service";
+import {DsService, Enseignant} from "../service/ds.service";
+import {Auth, authState, User} from "@angular/fire/auth";
+import {AuthService} from "../service/auth.service";
+import {Observable} from "rxjs";
 @Component({
   selector: 'app-concepteur',
   templateUrl: './concepteur.component.html',
@@ -10,12 +13,18 @@ import { DsService } from "../service/ds.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConcepteurComponent {
+private email : string | null | undefined ;
 
-  constructor(public router : Router, public ds:DsService) {
+
+  constructor(public router : Router, public ds:DsService, public auth :Auth) {
 
   }
 
 
+
+  ngOnInit(): void {
+
+  }
   // supprime dans la vue html et dans l'api
 
 

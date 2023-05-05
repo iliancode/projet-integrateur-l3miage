@@ -35,8 +35,8 @@ public interface EnseignantEndpoint {
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'est pas trouvée",
            content = @Content(schema = @Schema(implementation = EnseignantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("{idEnseignant}")
-    EnseignantDTO getEntityEnseignantById(@PathVariable("idEnseignant") Long idEnseignant) throws Exception;
+    @GetMapping("{uid}")
+    EnseignantDTO getEntityEnseignantByUid(@PathVariable("uid") String uid) throws Exception;
 
 
     //get all enseignants

@@ -1,4 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {firstValueFrom} from "rxjs";
+import { DsService} from "../service/ds.service";
+import {AuthService} from "../service/auth.service";
 
 @Component({
   selector: 'app-enseignant',
@@ -8,4 +11,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class EnseignantComponent {
 
+  constructor(private ds :DsService, private auth : AuthService) {
+  }
+ngOnInit(): void {
+  const u = firstValueFrom(this.auth.currentUser).then(user => console.log( user?.uid));
+
+}
 }
