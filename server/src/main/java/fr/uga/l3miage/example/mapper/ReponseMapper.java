@@ -16,6 +16,7 @@ public interface ReponseMapper {
      * @return le <b color="yellow">DTO</b> d'une entité Réponse
      */
     ReponseDTO toDto(Reponse reponse);
+    Reponse toReponse(CreateReponseRequest request);
 
     /**
      * Cette fonction va faire le mapping d'une liste d'entités vers une liste de <b color="yellow">DTO</b> de ReponseDTO

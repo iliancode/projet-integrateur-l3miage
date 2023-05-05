@@ -4,6 +4,7 @@ import fr.uga.l3miage.example.component.MiahootComponent;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.TestEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.Miahoot;
@@ -24,6 +25,7 @@ public class MiahootService {
 
     private final MiahootComponent miahootComponent;
     private final MiahootMapper miahootMapper;
+    private final EnseignantMapper enseignantMapper;
 
 
     @Transactional
@@ -35,7 +37,7 @@ public class MiahootService {
 
 
     public List<MiahootDTO> getAllMiahootsOfEnseignant(Long idEnseignant) throws Exception {
-        return miahootMapper.toDto(miahootComponent.getAllMiahootsOfEnseignant(idEnseignant));
+        return enseignantMapper.toDtoMiahoot(miahootComponent.getAllMiahootsOfEnseignant(idEnseignant));
     }
 
 
