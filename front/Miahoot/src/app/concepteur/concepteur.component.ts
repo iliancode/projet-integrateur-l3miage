@@ -15,14 +15,13 @@ export class ConcepteurComponent {
   }
 
 
-  // supprime dans la vue html et dans l'api
-
 
   // supprime dans la vue html et dans l'api
   supprimeMiahoot(id : number) {
     this.ds.deleteMiahoot(id)
       .then(()=>{
         console.log("supprimé de la bd api")
+        //get by id à modifier
         const del = document.getElementById("" + id)
         if(del !== null){
           del.remove()
