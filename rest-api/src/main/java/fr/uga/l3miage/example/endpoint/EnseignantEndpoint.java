@@ -172,6 +172,6 @@ public interface EnseignantEndpoint {
     @ApiResponse(responseCode = "200", description = "Créer un miahoot entier",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("{mail}/miahoot")
-    void createMiahootOfEnseignant(@PathVariable("mail") String mail, @RequestBody CreateFullMiahootRequest createFullMiahootRequest) throws Exception;
+    @PostMapping("{idEnseignant}/miahoot")
+    void createMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @RequestBody CreateFullMiahootRequest createFullMiahootRequest) throws Exception;
 }

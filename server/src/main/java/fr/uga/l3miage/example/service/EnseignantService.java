@@ -143,4 +143,8 @@ public class EnseignantService {
             throw new Exception("Erreur lors de la suppression de la reponse");
         }
     }
+
+    public void createMiahootOfEnseignant(Long idEnseignant, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
+        enseignantComponent.createMiahootOfEnseignant(idEnseignant, createFullMiahootRequest);
+    }
 }

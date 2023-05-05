@@ -98,8 +98,8 @@ public class EnseignantController implements EnseignantEndpoint {
     }
 
     @Override
-    public void createMiahootOfEnseignant(String mail, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
-        enseignantService.createMiahootOfEnseignant(mail, createFullMiahootRequest);
+    public void createMiahootOfEnseignant(Long idEnseignant, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
+        enseignantService.createMiahootOfEnseignant(idEnseignant, createFullMiahootRequest);
     }
 
 

@@ -7,8 +7,10 @@ import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlre
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
+import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.*;
 import fr.uga.l3miage.example.repository.*;
+import fr.uga.l3miage.example.request.CreateFullMiahootRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,7 @@ public class EnseignantComponent {
     private final QuestionRepository questionRepository;
     private final ReponseRepository reponseRepository;
 
+    private final QuestionMapper questionMapper;
     private final PartieRepository partieRepository;
 
 
@@ -223,5 +226,16 @@ public class EnseignantComponent {
         }
     }
 
+    public void createMiahootOfEnseignant(Long idEnseignant, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
+        //parse request
+        Enseignant e = enseignantRepository.findById(idEnseignant)
+                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour le mail "));
+        Miahoot miahoot = new Miahoot();
+        miahoot.setNom(createFullMiahootRequest.getNom());
+        miahoot.setQuestions(questionMapper.toQuestionList( createFullMiahootRequest.getQuestions()));
+        e.getMiahoots().add(miahoot);
+        miahootRepository.save(miahoot);
+
+    }
 }
 

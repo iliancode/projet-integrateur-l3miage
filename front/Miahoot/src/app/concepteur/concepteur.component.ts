@@ -32,7 +32,7 @@ export class ConcepteurComponent {
       })
   }
 
-  postMiahoot(mail: string, miahoot: string) {
+  postMiahoot(id: number, miahoot: string) {
     let jsonmiahoot = JSON.parse(miahoot);
     //json to Miahoot object
     let miahootObj: Miahoot = {
@@ -41,7 +41,7 @@ export class ConcepteurComponent {
     }
 
 
-    this.ds.postM(mail, miahootObj);
+    this.ds.postM(id, miahootObj);
   }
 
 

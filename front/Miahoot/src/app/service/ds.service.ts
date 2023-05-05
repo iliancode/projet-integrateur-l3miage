@@ -1,14 +1,40 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from "@angular/common/http";
 import {BehaviorSubject, combineLatest, firstValueFrom, lastValueFrom, Observable, switchMap} from 'rxjs';
-import {Miahoot, Enseignant} from "./interfaces";
+//import {Miahoot, Enseignant} from "./interfaces";
 import {Auth} from "@angular/fire/auth";
 import {AuthService} from "./auth.service";
 
+
+
+export interface Enseignant {
+  pseudo: string;
+  mail: string;
+  mdp: string;
+}
+
+export interface Reponse {
+  id?: number;
+  label: string;
+  estValide: boolean;
+}
+
+export interface Question {
+  id?: number;
+  label: string;
+  reponses: Reponse[];
+}
+
+export interface Miahoot {
+  id?: number;
+  nom: string;
+  questions: Question[];
+}
 @Injectable({
   providedIn: 'root'
 })
 export class DsService {
+
 
 private bsAskUpdate = new BehaviorSubject<void>(undefined);
 readonly obsMiahoots: Observable<Miahoot[]>;
@@ -101,9 +127,9 @@ readonly obsMiahoots: Observable<Miahoot[]>;
     console.log(reponse)
   }
 
-  async postM( mail:String,  miahoot: Miahoot){
+  async postM( id:number,  miahoot: Miahoot){
     let url = "http://localhost:8080/api/enseignants/"
-    url += mail + "/miahoot"
+    url += id + "/miahoot"
     let reponse =  await lastValueFrom(this.http.post(url, miahoot));
     console.log(reponse)
   }
