@@ -38,18 +38,16 @@ export class RegisterComponent implements OnInit {
     this.email = '';
     this.password = '';
 
-  }
+    newEnseignant(e: Enseignant) {
+      this.ds.postE(e)
+        .then(enseignant => console.log(enseignant))
+        .catch(erreur =>console.log("pas d'enseignant trouve avec cet email"));
+      console.log("ici")
+    }
+    wawawa() {
 
-  newEnseignant(e: Enseignant) {
-    this.ds.postE(e)
-      .then(enseignant => console.log(enseignant))
-      .catch(erreur =>console.log("pas d'enseignant trouve avec cet email"));
-    console.log("ici")
+      let x: Enseignant = {  mail:"oui@gmail.com",pseudo:"ni", mdp:"na"}
+      this.ds.postE( x);
+      console.log(x)
+    }
   }
-  wawawa() {
-
-    let x: Enseignant = {  mail:"oui@gmail.com",pseudo:"ni", mdp:"na"}
-    this.ds.postE( x);
-    console.log(x)
-  }
-}

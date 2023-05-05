@@ -1,20 +1,11 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, combineLatest, firstValueFrom, lastValueFrom, Observable, switchMap} from 'rxjs';
-import { AuthService } from './auth.service';
-import { Miahoot, Enseignant } from '../service/interfaces'
-
-// Le service d'accès aux données du professeur en tant que concepteur
-import { HttpClient, HttpHeaders} from "@angular/common/http";
-
-
+import { HttpClient} from "@angular/common/http";
+import { lastValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class DsService {
-  private bsAskUpdate = new BehaviorSubject<void>(undefined);
-  readonly obsMiahoots: Observable<Miahoot[]>;
 
-  constructor(private http: HttpClient, private auth: AuthService) {
 
     this.obsMiahoots = combineLatest([this.bsAskUpdate, auth.currentUser]).pipe(
       switchMap( async ([_, U]) => {
@@ -25,6 +16,8 @@ export class DsService {
         return miahoots;
       })
     )
+
+  constructor(private http: HttpClient) {
   }
 
   async createMiahoot(M: Miahoot): Promise<Miahoot> {
@@ -59,14 +52,31 @@ export class DsService {
      return firstValueFrom(this.http.post<any>(url + endpoint, body));
    }
 
-  async deleteMiahoot(idMiahoot:  number){
-    const U = await firstValueFrom(this.auth.currentUser);
-    if(U !== null){
-      this.http.delete<Miahoot>(`/api/enseignants/${U.uid}/miahoots/${idMiahoot}`)
-    }
-    throw "erreur lors de la suppression du Miahoot"
+  /**
+   *
+
+  let update = await lastValueFrom(this.http.put<any>(this.url + "/2",this.body))
+  console.log(update)
+
+  let recup2 = await lastValueFrom(this.http.get<any>(this.url + "/2"))
+  console.log(recup2)
+
+   */
+
+
+  async get(endpoint: string, recherche: string) {
+    let url = "http://localhost:8080/api/";
+
+    let reponse = await lastValueFrom(this.http.get<any>(url + endpoint +"/"  +recherche));
+    console.log(reponse)
   }
 
+  //post
+  post(endpoint: string, body: Enseignant) {
+    let url = "http://localhost:8080/api/";
+
+    return firstValueFrom(this.http.post<any>(url + endpoint, body));
+  }
 
   async postE( enseignant: Enseignant){
     let url = "http://localhost:8080/api/enseignants/"
@@ -74,4 +84,10 @@ export class DsService {
     console.log(reponse)
   }
 
+  async postM( mail:String,  miahoot: Miahoot){
+    let url = "http://localhost:8080/api/enseignants/"
+    url += mail + "/miahoot"
+    let reponse =  await lastValueFrom(this.http.post(url, miahoot));
+    console.log(reponse)
+  }
 }

@@ -173,4 +173,8 @@ public class EnseignantService {
             throw new Exception("Erreur lors de la suppression de la partie");
         }
     }
+
+    public void createMiahootOfEnseignant(String mail, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
+       enseignantComponent.createMiahootOfEnseignant(mail, createFullMiahootRequest);
+    }
 }
