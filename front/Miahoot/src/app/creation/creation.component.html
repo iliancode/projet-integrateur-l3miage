@@ -2,8 +2,7 @@
   <mat-label>Nom du Miahoot</mat-label>
   <br/>
   <span class="input">
-    <input [ngModel]="name" #input (keyup)="submitName(input.value)"  type="text" placeholder="Entrez un nom">
-    <span></span>
+    <input [(ngModel)]="nameMiahoot" #input (keyup)="submitName(input.value)"  type="text" placeholder="Entrez un nom">
   </span>
 </p>
 
@@ -47,3 +46,8 @@
   <p>Réponse C : <span [ngClass]="{'valid-response': question.isValidReponse3}">{{ question.reponse3 }}</span></p>
   <p>Réponse D : <span [ngClass]="{'valid-response': question.isValidReponse4}">{{ question.reponse4 }}</span></p>
 </div>
+
+<form action="">
+  <input type="jsoninput" id="miahoot" #miahoot>
+  <button type="submit" (click)="postMiahoot(miahoot.value)">Submit</button>
+</form>
