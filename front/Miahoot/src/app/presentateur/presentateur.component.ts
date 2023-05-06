@@ -3,29 +3,9 @@ import {DataService} from "../service/data.service";
 import {PresentationService} from "../service/presentation.service";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Auth, authState, User} from "@angular/fire/auth";
+import { Enseignant, Miahoot, Question } from '../service/interfaces';
 
-interface Reponse {
-  id?: string;
-  label: string;
-  estValide: boolean;
-}
 
-interface Question {
-  id?: string;
-  label: string;
-  reponses: Reponse[];
-}
-
-interface Miahoot {
-  id?: string;
-  nom: string;
-  questions: Question[];
-}
-interface Enseignant {
-  pseudo : String,
-  mail : String,
-  mdp : String
-}
 
 @Component({
   selector: 'app-presentateur',
@@ -36,7 +16,7 @@ interface Enseignant {
 export class PresentateurComponent implements OnInit{
 
 
-  enseignant : Enseignant = <Enseignant>{pseudo: 'adil', mail:'lpb@gmail.com', mdp : 'trop fort'};
+  enseignant !: Enseignant;
   miahoots: Miahoot[] = [];
   miahoot : Miahoot;
   public readonly question_courante: BehaviorSubject<Question | null>;
@@ -57,11 +37,13 @@ export class PresentateurComponent implements OnInit{
   }
 
   ngOnInit() {
-      this.ps.getMiahootsOfEnseignant('adil@gmail.com')
+    console.log("ccc")
+      this.ps.getMiahootsOfEnseignant(1)
       .then(miahoots => {
         this.miahoots = miahoots;
         this.miahoot = this.miahoots[0];
         this.question_courante.next(this.miahoot.questions[this.indexQuestionCourante]);
+        //console.log(this.enseignant)
         console.log(this.miahoots);
         console.log(this.miahoot);
         console.log(this.question_courante);

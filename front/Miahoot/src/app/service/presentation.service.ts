@@ -1,29 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
+import { Enseignant, Miahoot } from './interfaces';
 
-interface Reponse {
-  id?: string;
-  label: string;
-  estValide: boolean;
-}
 
-interface Question {
-  id?: string;
-  label: string;
-  reponses: Reponse[];
-}
-
-interface Miahoot {
-  id?: string;
-  nom: string;
-  questions: Question[];
-}
-interface Enseignant {
-  pseudo : String,
-  mail : String,
-  mdp : String
-}
 @Injectable({
   providedIn: 'root'
 })
@@ -31,16 +11,16 @@ export class PresentationService {
 
   constructor(private http : HttpClient) {}
 
-  private urlServeurApi = '/enseignants/';
+  private urlServeurApi = '/api/enseignants';
 
 
-  async getEnseignant(mail : String) : Promise<Enseignant> {
-    return firstValueFrom(this.http.get<Enseignant>(`${this.urlServeurApi}/${mail}`));
+  async getEnseignant(id : number) : Promise<Enseignant> {
+    return firstValueFrom(this.http.get<Enseignant>(`${this.urlServeurApi}/${id}`));
   }
 
-  async getMiahootsOfEnseignant(mail: string): Promise<Miahoot[]> {
-    const enseignant = await this.getEnseignant(mail);
-    const url = `${this.urlServeurApi}/${mail}/miahoots`;
+  async getMiahootsOfEnseignant(id: number): Promise<Miahoot[]> {
+    const enseignant = await this.getEnseignant(id);
+    const url = `${this.urlServeurApi}/${id}/miahoots`;
     return firstValueFrom(this.http.get<Miahoot[]>(url));
   }
 

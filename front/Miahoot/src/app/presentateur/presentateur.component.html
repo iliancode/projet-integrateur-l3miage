@@ -17,8 +17,10 @@
 <!-- title & content -->
       <section class="header-content">
          <h1>Welcome</h1>
-        <p> choose which one you want to present ? <br>
-            </p>
+        <p> choose which one you want to present ? <br> </p>
+
+        
+<!-- affichage du Miahoot -->
         <div *ngIf="miahoots ">
         <div *ngFor="let miahoot of miahoots">
           <button>{{miahoot.nom}}</button>
