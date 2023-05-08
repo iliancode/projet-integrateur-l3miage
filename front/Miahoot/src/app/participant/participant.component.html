@@ -6,14 +6,23 @@
 <body>
   <button (click)="signInAnonymously()"> anonyme</button>
 
-  <div class="entrerCodePartie" style="">
-    <h1> Entrez le code de la partie </h1>
-    <div class="accesMiahoot">
-    <input type="text" name="codePartie" id="codePartie">
+  <div class="entrerCodePartie" >
+    <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+      <!--renseignement du code de la partie et du pseudo-->
+      <div class="inline">
+        <input type="text" name="codePartie" formControlName="codePartie" placeholder="Entrez le code de la partie">
+      </div><br>
+      <div class="inline">
+        <input type="text" name="pseudoParticipant" formControlName="pseudoParticipant" placeholder="Entrez votre pseudo">
+      </div><br>
 
+      <button type="submit" class="submit">Commencer la partie ! </button>
+    </form>
 
-      <button>Commencer la partie</button>
-    </div>
+    <p class ="messageSubmit" >
+      {{ message }}
+    </p>
+
 
   </div>
 

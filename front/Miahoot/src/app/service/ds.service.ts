@@ -4,6 +4,7 @@ import {BehaviorSubject, combineLatest, firstValueFrom, lastValueFrom, Observabl
 //import {Miahoot, Enseignant} from "./interfaces";
 import {Auth} from "@angular/fire/auth";
 import {AuthService} from "./auth.service";
+import {Participant, Partie} from "./interfaces";
 
 
 
@@ -131,6 +132,14 @@ readonly obsMiahoots: Observable<Miahoot[]>;
     let url = "http://localhost:8080/api/enseignants/"
     url += id + "/miahoot"
     let reponse =  await lastValueFrom(this.http.post(url, miahoot));
+    console.log(reponse)
+  }
+
+  //ajout d'un participant à une partie
+  async postP( codePartie:number,  partie: Partie){
+    let url = "/api/parties/"
+    url += codePartie + "/participants"
+    let reponse =  await lastValueFrom(this.http.post(url, partie));
     console.log(reponse)
   }
 }

@@ -31,7 +31,8 @@ export class ConcepteurComponent {
         }
       })
   }
-
+  //post mihaoot déplacé dans creation miahoot
+/*
   postMiahoot(id: number, miahoot: string) {
     let jsonmiahoot = JSON.parse(miahoot);
     //json to Miahoot object
@@ -43,7 +44,7 @@ export class ConcepteurComponent {
 
     this.ds.postM(id, miahootObj);
   }
-
+*/
 
 
 
