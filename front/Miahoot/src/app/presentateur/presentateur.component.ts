@@ -1,31 +1,12 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {DataService} from "../service/data.service";
 import {PresentationService} from "../service/presentation.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, firstValueFrom, Observable} from "rxjs";
 import {Auth, authState, User} from "@angular/fire/auth";
+import {AuthService} from "../service/auth.service";
+import {Enseignant, Miahoot, Question} from "../service/interfaces";
 
-interface Reponse {
-  id?: string;
-  label: string;
-  estValide: boolean;
-}
 
-interface Question {
-  id?: string;
-  label: string;
-  reponses: Reponse[];
-}
-
-interface Miahoot {
-  id?: string;
-  nom: string;
-  questions: Question[];
-}
-interface Enseignant {
-  pseudo : String,
-  mail : String,
-  mdp : String
-}
 
 @Component({
   selector: 'app-presentateur',
@@ -44,7 +25,7 @@ export class PresentateurComponent implements OnInit{
 
 
 
-  constructor(private ps : PresentationService, private auth: Auth) {
+  constructor(private ps : PresentationService, private auth: AuthService) {
     this.miahoot = this.miahoots[0];
     this.question_courante = new BehaviorSubject<Question | null>(null,);
   }
@@ -57,7 +38,10 @@ export class PresentateurComponent implements OnInit{
   }
 
   ngOnInit() {
-      this.ps.getMiahootsOfEnseignant('adil@gmail.com')
+
+    const u =  firstValueFrom(this.auth.currentUser).then(user=>{
+
+      this.ps.getMiahootsOfEnseignant(user?.uid??'vache')
       .then(miahoots => {
         this.miahoots = miahoots;
         this.miahoot = this.miahoots[0];
@@ -69,7 +53,7 @@ export class PresentateurComponent implements OnInit{
 
       });
 
-
+    }) ;
 
   }
   }

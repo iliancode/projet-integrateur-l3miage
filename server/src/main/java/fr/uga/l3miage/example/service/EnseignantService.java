@@ -37,18 +37,18 @@ public class EnseignantService {
      */
     public void createEnseignant(final CreateEnseignantRequest createEnseignantRequest) {
         try {
-            Enseignant newEnseignant = enseignantMapper.toEntity(createEnseignantRequest);
+            Enseignant newEnseignant = enseignantMapper.toEnseignant(createEnseignantRequest);
             enseignantComponent.createEnseignant(newEnseignant);
         } catch (MailAlreadyExistException e) {
             throw new MailAlreadyUseRestException(String.format("L'email existe déjà. Raison : [%s]", e.getMessage()), createEnseignantRequest.getMail(), e);
         }
     }
 
-    public EnseignantDTO getEnseignantById(final Long idEnseignant) {
+    public EnseignantDTO getEnseignantByUid(final String uid) throws Exception {
         try {
-            return enseignantMapper.toDto(enseignantComponent.getEnseignantById(idEnseignant));
-        } catch (EnseignantEntityNotFoundException e) {
-            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]", e.getMessage()),idEnseignant,e);
+            return enseignantMapper.toDto(enseignantComponent.getEnseignantByUid(uid));
+        } catch (Exception e) {
+            throw new Exception("Impossible de charger l'entité" );
         }
     }
 

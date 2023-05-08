@@ -64,4 +64,8 @@ export class AuthService {
       .catch(()=>console.log("erreur lors de la connexion anonyme"))
   }
 
+  getUserMail(){
+    return this.auth.currentUser?.email;
+  }
+
 }

@@ -14,7 +14,9 @@ import java.util.List;
 @Setter
 @Schema(description = "correspond au DTO de l'entité Enseignant")
 public class EnseignantDTO {
-    private Long id;
+
+    @NotBlank
+    private String uid;
 
     @Email
     @NotBlank

@@ -12,7 +12,6 @@ import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
-import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -30,24 +29,25 @@ public class MiahootService {
     private final EnseignantComponent enseignantComponent;
     private final MiahootComponent miahootComponent;
     private final MiahootMapper miahootMapper;
+    private final EnseignantMapper enseignantMapper;
 
 
     @Transactional
-    public void createMiahootFromEnseignant(final Long idEnseignant, final CreateMiahootRequest createMiahootRequest) throws Exception {
+    public void createMiahootFromEnseignant(final String uidEnseignant, final CreateMiahootRequest createMiahootRequest) throws Exception {
 
         Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
-        miahootComponent.createMiahootFromEnseignant(idEnseignant, newMiahoot);
+        miahootComponent.createMiahootFromEnseignant(uidEnseignant, newMiahoot);
     }
 
 
-    public List<MiahootDTO> getAllMiahootsOfEnseignant(Long idEnseignant) throws Exception {
-        return miahootMapper.toDto(miahootComponent.getAllMiahootsOfEnseignant(idEnseignant));
+    public List<MiahootDTO> getAllMiahootsOfEnseignant(String uidEnseignant) throws Exception {
+        return miahootMapper.toDto(miahootComponent.getAllMiahootsOfEnseignant(uidEnseignant));
     }
 
 
-    public MiahootDTO getMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) {
+    public MiahootDTO getMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot) {
         try {
-            Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(idEnseignant, idMiahoot);
+            Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(uidEnseignant, idMiahoot);
             return miahootMapper.toDto(miahoot);
         } catch (MiahootEntityNotFoundException e) {
             throw new MiahootEntityNotFoundRestException(e.getMessage(), idMiahoot, e);
@@ -55,14 +55,17 @@ public class MiahootService {
     }
 
 
-    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) {
+    public void deleteMiahootOfEnseignant(String uidEnseignant, Long idMiahoot) {
         try {
-            Enseignant enseignant = enseignantComponent.getEnseignantById(idEnseignant);
-            Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(idEnseignant, idMiahoot);
+            Enseignant enseignant = enseignantComponent.getEnseignantByUid(uidEnseignant);
+            Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(uidEnseignant, idMiahoot);
             miahootComponent.deleteMiahootOfEnseignant(enseignant, miahoot);
         } catch (EnseignantEntityNotFoundException | MiahootEntityNotFoundException e) {
             throw new MiahootEntityNotFoundRestException(e.getMessage(), idMiahoot, e);
         }
     }
 
+    public void createMiahootOfEnseignant(String uidEnseignant, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
+        miahootComponent.createMiahootOfEnseignant(uidEnseignant, createFullMiahootRequest);
+    }
 }
