@@ -31,4 +31,10 @@ public class QuestionController implements QuestionEndpoint {
     public QuestionDTO getQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) {
         return questionService.getQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion);
     }
+
+
+    @Override
+    public void deleteQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) {
+        questionService.deleteQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion);
+    }
 }

@@ -22,7 +22,7 @@ public class Question {
     @Column
     private String label;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Reponse> reponses;
 
 
@@ -46,6 +46,12 @@ public class Question {
             if (reponse.getId() == idReponse) {
                 this.reponses.remove(reponse);
             }
+        }
+    }
+
+    public void removeAllReponse() {
+        for (Reponse reponse : this.reponses) {
+            this.reponses.remove(reponse);
         }
     }
 }

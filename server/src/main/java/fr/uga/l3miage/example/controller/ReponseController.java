@@ -33,4 +33,10 @@ public class ReponseController implements ReponseEndpoint {
     public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
         reponseService.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion,idReponse);
     }
+
+/*
+    @Override
+    public void deleteAllReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) {
+        reponseService.deleteAllReponseOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion);
+    }*/
 }

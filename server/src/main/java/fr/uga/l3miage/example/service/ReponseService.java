@@ -72,5 +72,15 @@ public class ReponseService {
     }
 
 /*
+    public void deleteAllReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) {
+        try {
+            Question question = questionComponent.getQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion);
+            reponseComponent.deleteAllReponseOfQuestion(question);
+        } catch (QuestionEntityNotFoundException e) {
+            throw new ReponseEntityNotDeletedRestException(e.getMessage(), e);
+        }
+    }*/
+
+/*
     public void updateEntityReponse(final Long idEnseignant, final Long idMiahoot, final Long )*/
 }

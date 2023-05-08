@@ -96,4 +96,11 @@ public class ReponseComponent {
         reponseRepository.delete(reponse);
     }
 
+/*
+    public void deleteAllReponseOfQuestion(Question question) {
+        for(Reponse reponse : question.getReponses()) {
+            deleteReponseOfQuestion(question, reponse);
+        }
+    }*/
+
 }

@@ -47,4 +47,13 @@ public interface QuestionEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}/questions/{idQuestion}")
     QuestionDTO getQuestionOfMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion);
+
+
+    @Operation(description = "Suppression d'une entité question ainsi que ses réponses en bd")
+    @ApiResponse(responseCode = "200", description = "si  l'element est renvoyé et supprimé")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
+            content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}/questions/{idQuestion}")
+    void deleteQuestionOfMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion);
 }

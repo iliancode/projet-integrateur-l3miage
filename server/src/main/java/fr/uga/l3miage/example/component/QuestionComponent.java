@@ -10,6 +10,7 @@ import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEn
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.models.Question;
+import fr.uga.l3miage.example.models.Reponse;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
 import fr.uga.l3miage.example.repository.MiahootRepository;
 import fr.uga.l3miage.example.repository.QuestionRepository;
@@ -74,6 +75,12 @@ public class QuestionComponent {
         } catch (MiahootEntityNotFoundException e) {
             throw new QuestionEntityNotFoundException(e.getMessage(), idMiahoot, e);
         }
+    }
+
+
+    public void deleteQuestionOfMiahoot(Miahoot miahoot, Question question) {
+        miahoot.getQuestions().remove(question);
+        questionRepository.delete(question);
     }
 
 }
