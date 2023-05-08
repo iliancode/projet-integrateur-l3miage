@@ -15,8 +15,7 @@ import java.util.List;
 public class Enseignant {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String uid;
 
     @Column
     private String mail;

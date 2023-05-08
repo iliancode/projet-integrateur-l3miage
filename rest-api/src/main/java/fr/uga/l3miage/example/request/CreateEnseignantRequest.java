@@ -13,9 +13,9 @@ import javax.validation.constraints.Null;
 @Schema(description = "Correspond à la requête permettant de créer une entité participant")
 public class CreateEnseignantRequest {
 
-    @Schema(description = "id de l'objet participant", hidden = true)
-    @Null
-    private Long id;
+    @Schema(description = "id de l'objet participant", example = "TUGY23436GERFERG")
+    @NotBlank
+    private String uid;
 
     @Schema(description = "description de l'objet participant", example = "enseignant1")
     @NotBlank

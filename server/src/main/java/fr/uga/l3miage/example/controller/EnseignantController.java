@@ -28,15 +28,15 @@ public class EnseignantController implements EnseignantEndpoint {
     }
 
     @Override
-    public EnseignantDTO getEntityEnseignantById(final Long idEnseignant) {
-        return enseignantService.getEnseignantById(idEnseignant);
+    public EnseignantDTO getEntityEnseignantByUid(final String uid) throws Exception {
+        return enseignantService.getEnseignantByUid(uid);
     }
 
     @Override
     public List<EnseignantDTO> getAllEnseignants() {
         return enseignantService.getAllEnseignants();
     }
-    
+
     @Override
     public void deleteEnseignantEntity(Long idEnseignant) {
         enseignantService.deleteEnseignantById(idEnseignant);

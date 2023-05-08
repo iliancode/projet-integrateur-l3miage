@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Correspond au main de l'application et donc ce qui va la lancer
  * Les Annotations :
  * <ul>
- *     <li>{@link SpringBootApplication} permet de dire à spring que cette classe est le run de l'application</li>
+ *     <li>{@link SpringBootApplication} permet de dire à spring que =cette classe est le run de l'application</li>
  * </ul>
  */
 @SpringBootApplication

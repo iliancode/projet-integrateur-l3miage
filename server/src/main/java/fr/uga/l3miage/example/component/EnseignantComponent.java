@@ -1,8 +1,13 @@
 package fr.uga.l3miage.example.component;
 
+//import fr.uga.l3miage.example.mapper.EnseignantMapper;
+
+import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
+import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.*;
 import fr.uga.l3miage.example.repository.*;
 import fr.uga.l3miage.example.request.CreateEnseignantRequest;
@@ -18,6 +23,12 @@ import java.util.List;
 public class EnseignantComponent {
     private final EnseignantRepository enseignantRepository;
     private final EnseignantMapper enseignantMapper;
+    private final MiahootRepository miahootRepository;
+    private final QuestionRepository questionRepository;
+    private final ReponseRepository reponseRepository;
+
+    private final QuestionMapper questionMapper;
+    private final PartieRepository partieRepository;
 
 
     public void createEnseignant(final Enseignant enseignant) throws MailAlreadyExistException {
@@ -29,9 +40,12 @@ public class EnseignantComponent {
     }
 
 
-    public Enseignant getEnseignantById(final Long idEnseignant) throws EnseignantEntityNotFoundException {
-        return enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new EnseignantEntityNotFoundException("L'entité à supprimer n'a pas été trouvée", idEnseignant));
+    public Enseignant getEnseignantByUid(final String uid) throws Exception {
+
+        Enseignant enseignant = enseignantRepository.findByUid(uid)
+                .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " + uid));
+
+        return enseignant;
     }
 
 

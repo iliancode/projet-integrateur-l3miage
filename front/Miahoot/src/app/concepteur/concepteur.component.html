@@ -21,8 +21,7 @@
       <p> which operation you want to make ? <br></p>
       <!-- il faudra faire un ngFor pour chaque miahoot existant pour l'enseignant connecté
        et il faudra recuperer le nom des miahoot pour les afficher à la place de miahoot name-->
-      <button mat-button [matMenuTriggerFor]="menu"  >Miahoot name</button>
-
+      <button mat-button [matMenuTriggerFor]="menu"  id="Miahoot-1">Miahoot name</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="supprimeMiahoot(1)"> Supprimer </button>
         <button mat-menu-item> Modifier </button>
@@ -37,9 +36,11 @@
     <input type="jsoninput" id="miahoot" #miahoot style="width: 300px; height: 300px;" />
     <button type="submit" (click)="postMiahoot(1, miahoot.value)">Submit</button>
   </form>
+
 </div>
 
 
-<button (click)="supprimeMiahoot(1)"> Supprimer </button>
+<button mat-menu-item (click)="supprimeMiahoot(1)"> Supprimer </button>
+
 <input type="file" id="input">
 
