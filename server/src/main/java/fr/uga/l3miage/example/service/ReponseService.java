@@ -65,7 +65,7 @@ public class ReponseService {
         try {
             Question question = questionComponent.getQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion);
             Reponse reponse = reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
-            reponseComponent.deleteReponse(reponse);
+            reponseComponent.deleteReponseOfQuestion(question, reponse);
         } catch (QuestionEntityNotFoundException | ReponseEntityNotFoundException e) {
             throw new ReponseEntityNotDeletedRestException(e.getMessage(), e);
         }

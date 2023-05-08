@@ -20,7 +20,7 @@ public class Miahoot {
     @Column
     private String nom;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany
     private List<Question> questions;
 
     public void addQuestion(Question question){

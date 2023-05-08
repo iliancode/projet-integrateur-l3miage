@@ -91,8 +91,8 @@ public class ReponseComponent {
     }
 
 
-    public void deleteReponse(Reponse reponse) {
-
+    public void deleteReponseOfQuestion(Question question, Reponse reponse) {
+        question.getReponses().remove(reponse);
         reponseRepository.delete(reponse);
     }
 
