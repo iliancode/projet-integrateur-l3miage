@@ -1,7 +1,10 @@
 package fr.uga.l3miage.example.config.handler.notFoundExceptionHandler;
 
 import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
+import fr.uga.l3miage.example.error.errorResponse.QuestionErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.QuestionNotFoundErrorResponse;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.ReponseNotFoundErrorResponse;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.QuestionEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ReponseEntityNotFoundRestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @ControllerAdvice
 @Slf4j
-public class ReponseNotFoundExceptionHandler {
-    @ExceptionHandler(ReponseEntityNotFoundRestException.class)
-    public ResponseEntity<ErrorResponse> handle(HttpServletRequest httpServletRequest, Exception exception) {
-        ReponseEntityNotFoundRestException ex = (ReponseEntityNotFoundRestException) exception;
-        final ReponseNotFoundErrorResponse response = ReponseNotFoundErrorResponse.builder()
+public class QuestionNotFoundExceptionHandler {
+    @ExceptionHandler(QuestionEntityNotFoundRestException.class)
+    public ResponseEntity<QuestionErrorResponse> handle(HttpServletRequest httpServletRequest, Exception exception) {
+        QuestionEntityNotFoundRestException ex = (QuestionEntityNotFoundRestException) exception;
+        final QuestionNotFoundErrorResponse response = QuestionNotFoundErrorResponse.builder()
                 .uri(httpServletRequest.getRequestURI())
                 .httpStatus(ex.getHttpStatus())
                 .errorMessage(ex.getMessage())

@@ -42,7 +42,7 @@ public interface ReponseEndpoint {
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}/questions/{idQuestion}/reponses/{idReponse}")
-    ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse) throws Exception;
+    ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @PathVariable("idQuestion") Long idQuestion, @PathVariable("idReponse") Long idReponse);
 
 
     @Operation(description = "Suppression d'une entité enseignant en bd")

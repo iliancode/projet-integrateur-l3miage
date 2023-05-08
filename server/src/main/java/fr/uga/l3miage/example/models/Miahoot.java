@@ -40,7 +40,7 @@ public class Miahoot {
 
     //get question by id
 
-    public Question getQuestion(Long idQuestion){
+   public Question getQuestion(Long idQuestion) {
         for(Question q : this.questions){
             if(q.getId() == idQuestion){
                 return q;

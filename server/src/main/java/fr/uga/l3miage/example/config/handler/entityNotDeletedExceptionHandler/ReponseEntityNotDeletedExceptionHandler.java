@@ -2,7 +2,9 @@ package fr.uga.l3miage.example.config.handler.entityNotDeletedExceptionHandler;
 
 import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
 import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.ReponseEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.error.errorResponse.ReponseErrorResponse;
 import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.ReponseEntityNotDeletedRestException;
+import fr.uga.l3miage.example.models.Reponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class ReponseEntityNotDeletedExceptionHandler {
     @ExceptionHandler(ReponseEntityNotDeletedRestException.class)
-    public ResponseEntity<ErrorResponse> handle(HttpServletRequest httpServletRequest, Exception exception){
+    public ResponseEntity<ReponseErrorResponse> handle(HttpServletRequest httpServletRequest, Exception exception){
         ReponseEntityNotDeletedRestException ex = (ReponseEntityNotDeletedRestException) exception;
         final ReponseEntityNotDeletedErrorResponse response = ReponseEntityNotDeletedErrorResponse.builder()
                 .uri(httpServletRequest.getRequestURI())

@@ -45,8 +45,12 @@ public class ReponseService {
     }
 
 
-    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
-        return reponseMapper.toDto(reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse));
+    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
+        try {
+            return reponseMapper.toDto(reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse));
+        } catch (ReponseEntityNotFoundException e) {
+            throw new ReponseEntityNotFoundRestException(e.getMessage(), idReponse, e);
+        }
     }
 
 
@@ -58,12 +62,12 @@ public class ReponseService {
      * @param idReponse
      */
     public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
-        try{
-            // verifie que c'est la reponse de la question du miahoot de l'enseignant
-            reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
-            reponseComponent.deleteReponse(idReponse);
-        }catch (ReponseEntityNotFoundRestException e){
-            throw new ReponseEntityNotDeletedRestException(e.getMessage());
+        try {
+            Question question = questionComponent.getQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion);
+            Reponse reponse = reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
+            reponseComponent.deleteReponse(reponse);
+        } catch (QuestionEntityNotFoundException | ReponseEntityNotFoundException e) {
+            throw new ReponseEntityNotDeletedRestException(e.getMessage(), e);
         }
     }
 

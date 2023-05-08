@@ -1,5 +1,9 @@
 package fr.uga.l3miage.example.component;
 
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.MiahootEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ReponseEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
@@ -20,6 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class MiahootComponent {
+    private final EnseignantComponent enseignantComponent;
     private final EnseignantRepository enseignantRepository;
     private final MiahootRepository miahootRepository;
 
@@ -41,10 +46,19 @@ public class MiahootComponent {
         return e.getMiahoots();
     }
 
-    public Miahoot getMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id "));
-        return e.getMiahoot(idMiahoot);
+    public Miahoot getMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws MiahootEntityNotFoundException {
+        try {
+            Enseignant enseignant = enseignantComponent.getEnseignantById(idEnseignant);
+            Miahoot miahoot =  miahootRepository.findById(idMiahoot)
+                    .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucun miahoot n'a été trouvé pour l'id [%s]", idMiahoot), idMiahoot));
+            if (enseignant.getMiahoot(idMiahoot).equals(miahoot)) {
+                return miahoot;
+            } else {
+                throw new MiahootEntityNotFoundException(String.format("Le miahoot [%s] n'appartient pas à l'enseignant [%s]", idMiahoot, idEnseignant), idMiahoot);
+            }
+        } catch (EnseignantEntityNotFoundException e) {
+            throw new MiahootEntityNotFoundException(e.getMessage(), idEnseignant, e);
+        }
     }
 
     public void deleteMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) throws Exception {

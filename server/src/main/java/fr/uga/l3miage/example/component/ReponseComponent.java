@@ -74,20 +74,26 @@ public class ReponseComponent {
     }
 
 
-    public Reponse getReponseOfQuestionOfMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final Long idReponse) {
+    public Reponse getReponseOfQuestionOfMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final Long idReponse) throws ReponseEntityNotFoundException {
         try {
-            questionComponent.getQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion);
-            return reponseRepository.findById(idReponse)
-                    .orElseThrow(() -> new ReponseEntityNotFoundRestException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idReponse), idReponse));
-        } catch (EnseignantEntityNotFoundException | MiahootEntityNotFoundException | QuestionEntityNotFoundException e) {
-            throw new ReponseEntityNotFoundRestException("Aucune entité n'a été trouvé pour cet utilisateur", idQuestion);
+            Question question = questionComponent.getQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion);
+            Reponse reponse = reponseRepository.findById(idReponse)
+                    .orElseThrow(() -> new ReponseEntityNotFoundException(String.format("La réponse [%s] n'existe pas", idReponse), idReponse));
+            if (question.getReponse(idReponse).equals(reponse)) {
+                return reponse;
+            } else {
+                throw new ReponseEntityNotFoundException(String.format("La réponse [%s] de la question [%s] du miahoot [%s] de l'enseignant [%s] n'a pas été trouvé", idReponse, idQuestion, idMiahoot, idEnseignant), idReponse);
+            }
+        } catch (QuestionEntityNotFoundException e) {
+            throw new ReponseEntityNotFoundException(e.getMessage(), idQuestion, e);
         }
 
     }
 
 
-    public void deleteReponse(Long idReponse) {
-        reponseRepository.deleteById(idReponse);
+    public void deleteReponse(Reponse reponse) {
+
+        reponseRepository.delete(reponse);
     }
 
 }

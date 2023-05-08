@@ -1,5 +1,6 @@
 package fr.uga.l3miage.example.component;
 
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
@@ -31,7 +32,7 @@ public class EnseignantComponent {
 
     public Enseignant getEnseignantById(final Long idEnseignant) throws EnseignantEntityNotFoundException {
         return enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new EnseignantEntityNotFoundException("L'entité à supprimer n'a pas été trouvée", idEnseignant));
+                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("L'enseignant [%s] n'a pas été trouvée", idEnseignant), idEnseignant));
     }
 
 

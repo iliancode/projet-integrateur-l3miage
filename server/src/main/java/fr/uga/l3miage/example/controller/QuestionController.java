@@ -3,6 +3,7 @@ package fr.uga.l3miage.example.controller;
 import fr.uga.l3miage.example.endpoint.QuestionEndpoint;
 import fr.uga.l3miage.example.request.CreateQuestionRequest;
 import fr.uga.l3miage.example.response.QuestionDTO;
+import fr.uga.l3miage.example.response.ReponseDTO;
 import fr.uga.l3miage.example.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,5 +25,10 @@ public class QuestionController implements QuestionEndpoint {
     @Override
     public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
         return questionService.getAllQuestionsOfMiahootOfEnseignant(idEnseignant, idMiahoot);
+    }
+
+    @Override
+    public QuestionDTO getQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) {
+        return questionService.getQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion);
     }
 }

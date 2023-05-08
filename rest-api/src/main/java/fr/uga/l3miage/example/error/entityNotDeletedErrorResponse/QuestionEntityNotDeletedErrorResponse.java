@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import fr.uga.l3miage.example.error.ErrorCode;
 import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
+import fr.uga.l3miage.example.error.errorResponse.QuestionErrorResponse;
 import fr.uga.l3miage.example.error.errorResponse.ReponseErrorResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -16,12 +17,12 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 
 
 
-@JsonTypeName(ReponseEntityNotDeletedErrorResponse.TYPE_NAME)
+@JsonTypeName(QuestionEntityNotDeletedErrorResponse.TYPE_NAME)
 @ToString(callSuper = true, exclude = "errorCodeSwaggerDocumentation")
 @EqualsAndHashCode(callSuper = true)
-public class ReponseEntityNotDeletedErrorResponse extends ReponseErrorResponse {
+public class QuestionEntityNotDeletedErrorResponse extends QuestionErrorResponse {
 
-    protected static final String TYPE_NAME = "REPONSE_ENTITY_NOT_DELETED_ERROR";
+    protected static final String TYPE_NAME = "QUESTION_ENTITY_NOT_DELETED_ERROR";
 
 
     @SuppressWarnings({ "java:S115", "java:S1170" }) // Use only to generate documentation
@@ -33,7 +34,7 @@ public class ReponseEntityNotDeletedErrorResponse extends ReponseErrorResponse {
 
     @Builder
     @Jacksonized
-    public ReponseEntityNotDeletedErrorResponse(String uri, HttpStatus httpStatus, ErrorCode errorCode, String errorMessage) {
+    public QuestionEntityNotDeletedErrorResponse(String uri, HttpStatus httpStatus, ErrorCode errorCode, String errorMessage) {
         super(uri, httpStatus, errorCode, errorMessage);
     }
 }

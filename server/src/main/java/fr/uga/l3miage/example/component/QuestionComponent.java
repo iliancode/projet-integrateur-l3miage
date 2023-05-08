@@ -1,5 +1,8 @@
 package fr.uga.l3miage.example.component;
 
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.QuestionEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ReponseEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.QuestionEntityNotFoundException;
@@ -18,6 +21,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class QuestionComponent {
+    private final MiahootComponent miahootComponent;
     private final EnseignantRepository enseignantRepository;
     private final MiahootRepository miahootRepository;
     private final QuestionRepository questionRepository;
@@ -57,15 +61,19 @@ public class QuestionComponent {
     }
 
 
-    public Question getQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws EnseignantEntityNotFoundException, MiahootEntityNotFoundException, QuestionEntityNotFoundException {
-        Enseignant enseignant = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idEnseignant), idEnseignant));
-
-        Miahoot miahoot = miahootRepository.findById(idMiahoot)
-                .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idMiahoot), idMiahoot));
-
-        return questionRepository.findById(idQuestion)
-                .orElseThrow(() -> new QuestionEntityNotFoundException(String.format("L'entité à supprimer n'a pas été trouvée pour l'id [%s]", idQuestion), idQuestion));
+    public Question getQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws QuestionEntityNotFoundException{
+        try {
+            Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(idEnseignant, idMiahoot);
+            Question question = questionRepository.findById(idQuestion)
+                    .orElseThrow(() -> new QuestionEntityNotFoundException(String.format("L'entité Question n'a pas été trouvée pour l'id [%s]", idQuestion), idQuestion));
+            if (miahoot.getQuestion(idQuestion).equals(question)) {
+                return question;
+            } else {
+                throw new QuestionEntityNotFoundException(String.format("La question [%s] n'appartient pas au miahoot [%s] de l'enseignant [%s]", idQuestion, idMiahoot, idEnseignant), idQuestion);
+            }
+        } catch (MiahootEntityNotFoundException e) {
+            throw new QuestionEntityNotFoundException(e.getMessage(), idMiahoot, e);
+        }
     }
 
 }
