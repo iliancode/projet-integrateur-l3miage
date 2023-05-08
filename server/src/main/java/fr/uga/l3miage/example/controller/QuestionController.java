@@ -17,24 +17,24 @@ public class QuestionController implements QuestionEndpoint {
 
 
     @Override
-    public void addQuestionToMiahoot(Long idEnseignant, Long idMiahoot, CreateQuestionRequest createQuestionRequest) throws Exception {
-        questionService.addQuestionToMiahoot(idEnseignant, idMiahoot , createQuestionRequest);
+    public void addQuestionToMiahoot(String uidEnseignant, Long idMiahoot, CreateQuestionRequest createQuestionRequest) throws Exception {
+        questionService.addQuestionToMiahoot(uidEnseignant, idMiahoot , createQuestionRequest);
     }
 
     //get all question of a miahoot of an enseignant
     @Override
-    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
-        return questionService.getAllQuestionsOfMiahootOfEnseignant(idEnseignant, idMiahoot);
+    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot) throws Exception {
+        return questionService.getAllQuestionsOfMiahootOfEnseignant(uidEnseignant, idMiahoot);
     }
 
     @Override
-    public QuestionDTO getQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) {
-        return questionService.getQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion);
+    public QuestionDTO getQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion) {
+        return questionService.getQuestionOfMiahootOfEnseignant(uidEnseignant,idMiahoot,idQuestion);
     }
 
 
     @Override
-    public void deleteQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) {
-        questionService.deleteQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion);
+    public void deleteQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion) {
+        questionService.deleteQuestionOfMiahootOfEnseignant(uidEnseignant,idMiahoot,idQuestion);
     }
 }

@@ -4,14 +4,14 @@ import lombok.Getter;
 
 @Getter
 public class EnseignantEntityNotFoundException extends Exception {
-    private final Long id;
+    private final String id;
 
-    public EnseignantEntityNotFoundException(String message, Long id) {
+    public EnseignantEntityNotFoundException(String message, String id) {
         super(message);
         this.id = id;
     }
 
-    public EnseignantEntityNotFoundException(String message, Long id, Throwable cause) {
+    public EnseignantEntityNotFoundException(String message, String id, Throwable cause) {
         super(message, cause);
         this.id = id;
     }

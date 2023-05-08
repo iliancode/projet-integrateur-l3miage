@@ -53,8 +53,8 @@ public interface MiahootEndpoint {
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}")
-    void deleteMiahootOfEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot);
+    @DeleteMapping("enseignants/{uidEnseignant}/miahoots/{idMiahoot}")
+    void deleteMiahootOfEnseignant(@PathVariable("uidEnseignant") String uidEnseignant, @PathVariable("idMiahoot") Long idMiahoot);
 
 
     @Operation(description = "Récupération d'un miahoot et de toutes ses questions et de toutes ses reponses d'un enseignant")

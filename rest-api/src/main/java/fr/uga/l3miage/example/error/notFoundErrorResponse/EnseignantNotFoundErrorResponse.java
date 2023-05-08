@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 
-@JsonTypeName(ParticipantNotFoundErrorResponse.TYPE_NAME)
+@JsonTypeName(EnseignantNotFoundErrorResponse.TYPE_NAME)
 @Getter
 @ToString(callSuper = true, exclude = "errorCodeSwaggerDocumentation")
 @EqualsAndHashCode(callSuper = true)
@@ -27,13 +27,13 @@ public class EnseignantNotFoundErrorResponse extends EnseignantErrorResponse {
     @JsonProperty(access = WRITE_ONLY)
     private final String errorCodeSwaggerDocumentation = "Field used only to generate documentation, don't use it";
 
-    @Schema(description = "l'id utilisé pour la recherche",example = "1")
-    private final Long idEnseignant;
+    @Schema(description = "l'uid utilisé pour la recherche",example = "STHDJ6457DD")
+    private final String uidEnseignant;
 
     @Builder
     @Jacksonized
-    public EnseignantNotFoundErrorResponse(String uri, HttpStatus httpStatus, ErrorCode errorCode, String errorMessage, Long idEnseignant) {
+    public EnseignantNotFoundErrorResponse(String uri, HttpStatus httpStatus, ErrorCode errorCode, String errorMessage, String uidEnseignant) {
         super(uri, httpStatus, errorCode, errorMessage);
-        this.idEnseignant = idEnseignant;
+        this.uidEnseignant = uidEnseignant;
     }
 }

@@ -57,8 +57,8 @@ public interface EnseignantEndpoint {
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("{idEnseignant}")
-    void deleteEnseignantEntity(@PathVariable("idEnseignant") Long idEnseignant);
+    @DeleteMapping("{uidEnseignant}")
+    void deleteEnseignantEntity(@PathVariable("uidEnseignant") String uidEnseignant);
 
 
     @Operation(description = "Modification d'une entité enseignant en bd")
@@ -67,6 +67,6 @@ public interface EnseignantEndpoint {
             content = @Content(schema = @Schema(implementation = EnseignantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @Error400Custom
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PatchMapping("{idEnseignant}")
-    void updateEnseignantEntity(@PathVariable("idEnseignant") Long idEnseignant, @RequestBody CreateEnseignantRequest request);
+    @PatchMapping("{uidEnseignant}")
+    void updateEnseignantEntity(@PathVariable("uidEnseignant") String uidEnseignant, @RequestBody CreateEnseignantRequest request);
 }

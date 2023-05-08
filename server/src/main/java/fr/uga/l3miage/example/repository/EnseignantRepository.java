@@ -15,7 +15,7 @@ public interface EnseignantRepository extends JpaRepository<Enseignant,Long> {
     Optional<Enseignant> findById(final Long id);
 
     Optional<Enseignant> findByUid(final String uid);
-    void deleteById(final Long id);
+    void deleteByUid(final String uid);
 
     //find all enseignants
     List<Enseignant> findAll();

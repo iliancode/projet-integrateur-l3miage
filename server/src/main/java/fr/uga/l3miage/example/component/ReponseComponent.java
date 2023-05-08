@@ -30,10 +30,10 @@ public class ReponseComponent {
     private final QuestionComponent questionComponent;
 
 
-    public void addReponseToQuestionOfMiahoot(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final Reponse newReponse) throws Exception {
+    public void addReponseToQuestionOfMiahoot(final String uidEnseignant, final Long idMiahoot, final Long idQuestion, final Reponse newReponse) throws Exception {
 
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idEnseignant), "" + idEnseignant));
+        Enseignant e = enseignantRepository.findByUid(uidEnseignant)
+                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", uidEnseignant), uidEnseignant));
 
         Miahoot m = miahootRepository.findById(idMiahoot)
                 .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id "));
@@ -56,9 +56,9 @@ public class ReponseComponent {
     }
 
 
-    public List<Reponse> getAllReponsesOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idEnseignant), "" + idEnseignant));
+    public List<Reponse> getAllReponsesOfQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
+        Enseignant e = enseignantRepository.findByUid(uidEnseignant)
+                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", uidEnseignant), uidEnseignant));
 
         if (e.containsMiahoot(idMiahoot)) {
             if (e.getMiahoot(idMiahoot).containsQuestion(idQuestion)) {
@@ -74,15 +74,15 @@ public class ReponseComponent {
     }
 
 
-    public Reponse getReponseOfQuestionOfMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final Long idReponse) throws ReponseEntityNotFoundException {
+    public Reponse getReponseOfQuestionOfMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot, final Long idQuestion, final Long idReponse) throws ReponseEntityNotFoundException {
         try {
-            Question question = questionComponent.getQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion);
+            Question question = questionComponent.getQuestionOfMiahootOfEnseignant(uidEnseignant, idMiahoot, idQuestion);
             Reponse reponse = reponseRepository.findById(idReponse)
                     .orElseThrow(() -> new ReponseEntityNotFoundException(String.format("La réponse [%s] n'existe pas", idReponse), idReponse));
             if (question.getReponse(idReponse).equals(reponse)) {
                 return reponse;
             } else {
-                throw new ReponseEntityNotFoundException(String.format("La réponse [%s] de la question [%s] du miahoot [%s] de l'enseignant [%s] n'a pas été trouvé", idReponse, idQuestion, idMiahoot, idEnseignant), idReponse);
+                throw new ReponseEntityNotFoundException(String.format("La réponse [%s] de la question [%s] du miahoot [%s] de l'enseignant [%s] n'a pas été trouvé", idReponse, idQuestion, idMiahoot, uidEnseignant), idReponse);
             }
         } catch (QuestionEntityNotFoundException e) {
             throw new ReponseEntityNotFoundException(e.getMessage(), idQuestion, e);
@@ -95,12 +95,5 @@ public class ReponseComponent {
         question.getReponses().remove(reponse);
         reponseRepository.delete(reponse);
     }
-
-/*
-    public void deleteAllReponseOfQuestion(Question question) {
-        for(Reponse reponse : question.getReponses()) {
-            deleteReponseOfQuestion(question, reponse);
-        }
-    }*/
 
 }

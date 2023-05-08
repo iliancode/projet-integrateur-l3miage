@@ -29,30 +29,30 @@ public class QuestionService {
     private final QuestionMapper questionMapper;
 
 
-    public void addQuestionToMiahoot(final Long idEnseignant, final Long idMiahoot, final CreateQuestionRequest createQuestionRequest) throws Exception {
+    public void addQuestionToMiahoot(final String uidEnseignant, final Long idMiahoot, final CreateQuestionRequest createQuestionRequest) throws Exception {
         Question newQuestion = questionMapper.toQuestion(createQuestionRequest);
-        questionComponent.createQuestionInMiahoot(idEnseignant, idMiahoot, newQuestion);
+        questionComponent.createQuestionInMiahoot(uidEnseignant, idMiahoot, newQuestion);
 
     }
 
-    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
-        return questionMapper.toQuestionListDto(questionComponent.getAllQuestionsOfMiahootOfEnseignant(idEnseignant, idMiahoot));
+    public List<QuestionDTO> getAllQuestionsOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot) throws Exception {
+        return questionMapper.toQuestionListDto(questionComponent.getAllQuestionsOfMiahootOfEnseignant(uidEnseignant, idMiahoot));
     }
 
 
-    public QuestionDTO getQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) {
+    public QuestionDTO getQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion) {
         try {
-            return questionMapper.toDto(questionComponent.getQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion));
+            return questionMapper.toDto(questionComponent.getQuestionOfMiahootOfEnseignant(uidEnseignant, idMiahoot, idQuestion));
         } catch (QuestionEntityNotFoundException e) {
             throw new QuestionEntityNotFoundRestException(e.getMessage(), idQuestion, e);
         }
     }
 
 
-    public void deleteQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) {
+    public void deleteQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion) {
         try {
-            Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(idEnseignant, idMiahoot);
-            Question question = questionComponent.getQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion);
+            Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(uidEnseignant, idMiahoot);
+            Question question = questionComponent.getQuestionOfMiahootOfEnseignant(uidEnseignant, idMiahoot, idQuestion);
             questionComponent.deleteQuestionOfMiahoot(miahoot, question);
         } catch (MiahootEntityNotFoundException | QuestionEntityNotFoundException e) {
             throw new QuestionEntityNotDeletedRestException(e.getMessage(), e);

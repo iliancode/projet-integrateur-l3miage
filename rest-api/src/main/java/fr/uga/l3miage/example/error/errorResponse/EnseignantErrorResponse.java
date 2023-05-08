@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import fr.uga.l3miage.example.error.*;
 import fr.uga.l3miage.example.error.alreadyUseErrorResponse.DescriptionAlreadyUseErrorResponse;
+import fr.uga.l3miage.example.error.alreadyUseErrorResponse.MailAlreadyUseErrorResponse;
+import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.EnseignantEntityNotDeletedErrorResponse;
 import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.TestEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.EnseignantNotFoundErrorResponse;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -32,17 +35,15 @@ import org.springframework.http.HttpStatus;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "errorCode", visible = true,
         defaultImpl = ErrorResponse.class)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = TestIntIsZeroErrorResponse.class),
-        @JsonSubTypes.Type(value = IsNotTestErrorResponse.class),
-        @JsonSubTypes.Type(value = DescriptionAlreadyUseErrorResponse.class),
-        @JsonSubTypes.Type(value = TestEntityNotDeletedErrorResponse.class),
-        @JsonSubTypes.Type(value = TestNotFoundErrorResponse.class)
+        @JsonSubTypes.Type(value = MailAlreadyUseErrorResponse.class),
+        @JsonSubTypes.Type(value = EnseignantEntityNotDeletedErrorResponse.class),
+        @JsonSubTypes.Type(value = EnseignantNotFoundErrorResponse.class)
 })
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Data
 public abstract class EnseignantErrorResponse {
-    @Schema(description = "endpoint appelé", example = "/enseignant/{mail}")
+    @Schema(description = "endpoint appelé", example = "/enseignants")
     private final String uri;
     @Schema(description = "code http de la réponse", example = "404")
     private final HttpStatus httpStatus;

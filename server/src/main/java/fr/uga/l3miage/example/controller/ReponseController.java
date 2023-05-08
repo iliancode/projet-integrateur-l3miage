@@ -15,23 +15,23 @@ public class ReponseController implements ReponseEndpoint {
     private final ReponseService reponseService;
 
     @Override
-    public void addReponseToQuestionOfMiahoot(Long idEnseignant, Long idMiahoot, Long idQuestion, CreateReponseRequest createReponseRequest) throws Exception {
-        reponseService.addReponseToQuestionOfMiahoot(idEnseignant,idMiahoot,idQuestion,createReponseRequest);
+    public void addReponseToQuestionOfMiahoot(String uidEnseignant, Long idMiahoot, Long idQuestion, CreateReponseRequest createReponseRequest) throws Exception {
+        reponseService.addReponseToQuestionOfMiahoot(uidEnseignant,idMiahoot,idQuestion,createReponseRequest);
     }
 
     @Override
-    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
-        return reponseService.getAllReponsesOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion);
+    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
+        return reponseService.getAllReponsesOfQuestionOfMiahootOfEnseignant(uidEnseignant,idMiahoot,idQuestion);
     }
 
     @Override
-    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
-        return reponseService.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion,idReponse);
+    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
+        return reponseService.getReponseOfQuestionOfMiahootOfEnseignant(uidEnseignant,idMiahoot,idQuestion,idReponse);
     }
 
     @Override
-    public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
-        reponseService.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion,idReponse);
+    public void deleteReponseOfQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
+        reponseService.deleteReponseOfQuestionOfMiahootOfEnseignant(uidEnseignant,idMiahoot,idQuestion,idReponse);
     }
 
 /*

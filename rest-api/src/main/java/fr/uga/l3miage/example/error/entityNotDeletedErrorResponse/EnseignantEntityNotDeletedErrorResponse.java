@@ -3,6 +3,7 @@ package fr.uga.l3miage.example.error.entityNotDeletedErrorResponse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import fr.uga.l3miage.example.error.ErrorCode;
+import fr.uga.l3miage.example.error.errorResponse.EnseignantErrorResponse;
 import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -16,7 +17,7 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 @JsonTypeName(EnseignantEntityNotDeletedErrorResponse.TYPE_NAME)
 @ToString(callSuper = true, exclude = "errorCodeSwaggerDocumentation")
 @EqualsAndHashCode(callSuper = true)
-public class EnseignantEntityNotDeletedErrorResponse extends ErrorResponse {
+public class EnseignantEntityNotDeletedErrorResponse extends EnseignantErrorResponse {
 
     protected static final String TYPE_NAME = "ENSEIGNANT_ENTITY_NOT_DELETED_ERROR";
 

@@ -23,9 +23,9 @@ public class PartieComponent {
     private final MiahootRepository miahootRepository;
 
 
-    public void addPartieToEnseignant(final Long idEnseignant, final Long idMiahoot, final Partie newPartie) throws EnseignantEntityNotFoundException, MiahootEntityNotFoundException {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité Enseignant n'a été trouvée pour l'id [%s]", idEnseignant), idEnseignant));
+    public void addPartieToEnseignant(final String uidEnseignant, final Long idMiahoot, final Partie newPartie) throws EnseignantEntityNotFoundException, MiahootEntityNotFoundException {
+        Enseignant e = enseignantRepository.findByUid(uidEnseignant)
+                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité Enseignant n'a été trouvée pour l'id [%s]", uidEnseignant), uidEnseignant));
 
         Miahoot m = miahootRepository.findById(idMiahoot)
                 .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucune entité Miahoot n'a été trouvée pour l'id [%s]", idMiahoot), idMiahoot));
@@ -50,8 +50,8 @@ public class PartieComponent {
     }
 
 
-    public Partie getPartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
+    public Partie getPartieFromEnseignant(String uidEnseignant, Long codePartie) throws Exception {
+        Enseignant e = enseignantRepository.findByUid(uidEnseignant)
                 .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id "));
         try{
             return e.getPartie(codePartie);
@@ -62,8 +62,8 @@ public class PartieComponent {
     }
 
 
-    public void deletePartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
+    public void deletePartieFromEnseignant(String uidEnseignant, Long codePartie) throws Exception {
+        Enseignant e = enseignantRepository.findByUid(uidEnseignant)
                 .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id Enseignant"));
         e.removePartie(codePartie);
         enseignantRepository.save(e);

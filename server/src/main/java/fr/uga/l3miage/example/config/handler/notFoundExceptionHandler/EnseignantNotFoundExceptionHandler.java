@@ -48,7 +48,7 @@ public class EnseignantNotFoundExceptionHandler {
                 .httpStatus(ex.getHttpStatus())
                 .errorMessage(ex.getMessage())
                 .errorCode(ex.getErrorCode())
-                .idEnseignant(ex.getId())
+                .uidEnseignant(ex.getUid())
                 .build();
         log.warn(ex.getMessage());
         return ResponseEntity.status(ex.getHttpStatus()).body(response);

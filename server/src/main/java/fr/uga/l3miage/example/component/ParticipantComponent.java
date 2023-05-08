@@ -54,15 +54,15 @@ public class ParticipantComponent {
 
 
     /**
-     * @param idEnseignant l'id de l'enseignant
+     * @param uidEnseignant l'id de l'enseignant
      * @param partie la partie à laquelle appartient le participant
      * @throws EnseignantEntityNotFoundException si l'enseignant n'existe pas
      */
-    public void deleteAllParticipantsFromPartie(Long idEnseignant, Partie partie) throws EnseignantEntityNotFoundException, IsNotPartieOfEnseignantException {
+    public void deleteAllParticipantsFromPartie(String uidEnseignant, Partie partie) throws EnseignantEntityNotFoundException, IsNotPartieOfEnseignantException {
         boolean isPartieofEnseignant = false;
 
-        Enseignant enseignant = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idEnseignant), idEnseignant));
+        Enseignant enseignant = enseignantRepository.findByUid(uidEnseignant)
+                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", uidEnseignant), uidEnseignant));
 
         for (Partie p : enseignant.getParties()) {
             if (partie.getCodePartie() == p.getCodePartie()) {
@@ -71,7 +71,7 @@ public class ParticipantComponent {
         }
 
         if (!isPartieofEnseignant) {
-            throw new IsNotPartieOfEnseignantException(String.format("La partie [%s] n'appartient pas à l'enseignant [%s]", idEnseignant, partie.getCodePartie()), idEnseignant, partie.getCodePartie());
+            throw new IsNotPartieOfEnseignantException(String.format("La partie [%s] n'appartient pas à l'enseignant [%s]", uidEnseignant, partie.getCodePartie()), uidEnseignant, partie.getCodePartie());
         }
 
         List<Participant> participants = participantRepository.findAllByPartie(partie);

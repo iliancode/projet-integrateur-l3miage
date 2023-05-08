@@ -39,13 +39,13 @@ public class EnseignantController implements EnseignantEndpoint {
     }
 
     @Override
-    public void deleteEnseignantEntity(Long idEnseignant) {
-        enseignantService.deleteEnseignantById(idEnseignant);
+    public void deleteEnseignantEntity(String uidEnseignant) {
+        enseignantService.deleteEnseignantByUid(uidEnseignant);
     }
 
     @Override
-    public void updateEnseignantEntity(Long idEnseignant, CreateEnseignantRequest request) {
-        enseignantService.updateEnseignant(idEnseignant, request);
+    public void updateEnseignantEntity(String uidEnseignant, CreateEnseignantRequest request) {
+        enseignantService.updateEnseignant(uidEnseignant, request);
     }
 
 }

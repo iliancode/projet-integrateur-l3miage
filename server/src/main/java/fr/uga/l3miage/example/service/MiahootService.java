@@ -12,6 +12,7 @@ import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
+import fr.uga.l3miage.example.request.CreateFullMiahootRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -29,7 +30,6 @@ public class MiahootService {
     private final EnseignantComponent enseignantComponent;
     private final MiahootComponent miahootComponent;
     private final MiahootMapper miahootMapper;
-    private final EnseignantMapper enseignantMapper;
 
 
     @Transactional

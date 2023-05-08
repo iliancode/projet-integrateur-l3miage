@@ -34,7 +34,7 @@ public class MiahootComponent {
     public void createMiahootFromEnseignant(final String uidEnseignant, final Miahoot miahoot) throws Exception {
         try {
             Enseignant enseignant = enseignantRepository.findByUid(uidEnseignant)
-                    .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idEnseignant), "" + idEnseignant));
+                    .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", uidEnseignant), uidEnseignant));
             enseignant.getMiahoots().add(miahoot);
         } catch (Exception ex) {
             throw new Exception("Impossible de créer le Miahoot et de l'ajouter. Raison :" + ex.getMessage());
@@ -51,7 +51,7 @@ public class MiahootComponent {
     public Miahoot getMiahootOfEnseignant(String uidEnseignant, Long idMiahoot) throws MiahootEntityNotFoundException {
         try {
             Enseignant enseignant = enseignantComponent.getEnseignantByUid(uidEnseignant);
-            Miahoot miahoot =  miahootRepository.findByUid(idMiahoot)
+            Miahoot miahoot =  miahootRepository.findById(idMiahoot)
                     .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucun miahoot n'a été trouvé pour l'id [%s]", idMiahoot), idMiahoot));
             if (enseignant.getMiahoot(idMiahoot).equals(miahoot)) {
                 return miahoot;

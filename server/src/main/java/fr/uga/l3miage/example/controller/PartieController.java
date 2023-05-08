@@ -14,19 +14,19 @@ public class PartieController implements PartieEndpoint {
 
 
     @Override
-    public void addPartieToEnseignant(Long idEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
-        partieService.addPartieToEnseignant(idEnseignant,idMiahoot,createPartieRequest);
+    public void addPartieToEnseignant(String uidEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
+        partieService.addPartieToEnseignant(uidEnseignant,idMiahoot,createPartieRequest);
     }
 
 
     @Override
-    public PartieDTO getPartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        return partieService.getPartieFromEnseignant(idEnseignant,codePartie);
+    public PartieDTO getPartieFromEnseignant(String uidEnseignant, Long codePartie) throws Exception {
+        return partieService.getPartieFromEnseignant(uidEnseignant,codePartie);
     }
 
 
     @Override
-    public void deletePartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        partieService.deletePartieFromEnseignant(idEnseignant,codePartie);
+    public void deletePartieFromEnseignant(String uidEnseignant, Long codePartie) throws Exception {
+        partieService.deletePartieFromEnseignant(uidEnseignant,codePartie);
     }
 }
