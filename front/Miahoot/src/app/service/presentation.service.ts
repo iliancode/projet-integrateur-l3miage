@@ -31,16 +31,20 @@ export class PresentationService {
 
   constructor(private http : HttpClient) {}
 
-  private urlServeurApi = '/enseignants/';
+  private urlServeurApi = '/api/enseignants';
 
 
-  async getEnseignant(mail : String) : Promise<Enseignant> {
-    return firstValueFrom(this.http.get<Enseignant>(`${this.urlServeurApi}/${mail}`));
+  async getEnseignant(uid : String) : Promise<Enseignant> {
+    console.log(firstValueFrom(this.http.get<Enseignant>(`${this.urlServeurApi}/${uid}`)))
+    return firstValueFrom(this.http.get<Enseignant>(`${this.urlServeurApi}/${uid}/`));
   }
 
-  async getMiahootsOfEnseignant(mail: string): Promise<Miahoot[]> {
-    const enseignant = await this.getEnseignant(mail);
-    const url = `${this.urlServeurApi}/${mail}/miahoots`;
+  async getMiahootsOfEnseignant(uid: string): Promise<Miahoot[]> {
+    console.log('ici')
+    const enseignant = await this.getEnseignant(uid);
+    console.log('la')
+    const url = `${this.urlServeurApi}/${uid}/miahoots/`;
+    console.log(`${this.urlServeurApi}/${uid}/miahoots/`);
     return firstValueFrom(this.http.get<Miahoot[]>(url));
   }
 

@@ -5,7 +5,7 @@ import {Miahoot} from "../service/interfaces";
 import {DsService, Enseignant} from "../service/ds.service";
 import {Auth, authState, User} from "@angular/fire/auth";
 import {AuthService} from "../service/auth.service";
-import {Observable} from "rxjs";
+import {firstValueFrom, Observable} from "rxjs";
 @Component({
   selector: 'app-concepteur',
   templateUrl: './concepteur.component.html',
@@ -15,9 +15,11 @@ import {Observable} from "rxjs";
 export class ConcepteurComponent {
 private email : string | null | undefined ;
 
-
-  constructor(public router : Router, public ds:DsService, public auth :Auth) {
-
+  uid = '';
+  constructor(public router : Router, public ds:DsService, public auth :AuthService) {
+    const u =  firstValueFrom(this.auth.currentUser).then(user=>{
+     this.uid = user?.uid ?? '';
+    }) ;
   }
 
 
@@ -42,7 +44,7 @@ private email : string | null | undefined ;
       })
   }
 
-  postMiahoot(id: number, miahoot: string) {
+  postMiahoot(uid: String, miahoot: string) {
     let jsonmiahoot = JSON.parse(miahoot);
     //json to Miahoot object
     let miahootObj: Miahoot = {
@@ -51,7 +53,7 @@ private email : string | null | undefined ;
     }
 
 
-    this.ds.postM(id, miahootObj);
+    this.ds.postM(uid, miahootObj);
   }
 
 
