@@ -30,7 +30,7 @@ public class MiahootController implements MiahootEndpoint {
     }
 
     @Override
-    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
+    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) {
         miahootService.deleteMiahootOfEnseignant(idEnseignant,idMiahoot);
     }
 }

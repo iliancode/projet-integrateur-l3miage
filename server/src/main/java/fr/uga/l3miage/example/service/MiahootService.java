@@ -1,5 +1,6 @@
 package fr.uga.l3miage.example.service;
 
+import fr.uga.l3miage.example.component.EnseignantComponent;
 import fr.uga.l3miage.example.component.MiahootComponent;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.MiahootEntityNotFoundRestException;
@@ -9,7 +10,9 @@ import fr.uga.l3miage.example.exception.technical.entityNotFoundException.Enseig
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
+import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
+import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.MiahootDTO;
 import fr.uga.l3miage.example.response.QuestionDTO;
@@ -24,10 +27,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class MiahootService {
-
+    private final EnseignantComponent enseignantComponent;
     private final MiahootComponent miahootComponent;
     private final MiahootMapper miahootMapper;
-    private final EnseignantMapper enseignantMapper;
 
 
     @Transactional
@@ -53,13 +55,13 @@ public class MiahootService {
     }
 
 
-    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws  Exception {
+    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) {
         try {
-            miahootComponent.deleteMiahootOfEnseignant(idEnseignant, idMiahoot);
-        } catch (EnseignantEntityNotFoundException e) {
-            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), idEnseignant, e);
-        } catch (TestEntityNotFoundRestException e) {
-            throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
+            Enseignant enseignant = enseignantComponent.getEnseignantById(idEnseignant);
+            Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(idEnseignant, idMiahoot);
+            miahootComponent.deleteMiahootOfEnseignant(enseignant, miahoot);
+        } catch (EnseignantEntityNotFoundException | MiahootEntityNotFoundException e) {
+            throw new MiahootEntityNotFoundRestException(e.getMessage(), idMiahoot, e);
         }
     }
 

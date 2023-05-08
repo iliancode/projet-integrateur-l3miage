@@ -61,18 +61,9 @@ public class MiahootComponent {
         }
     }
 
-    public void deleteMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) throws Exception {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour l'id [%s]", idEnseignant), "" + idEnseignant));
-
-        Miahoot m = miahootRepository.findById(idMiahoot)
-                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le mail [%s]", idMiahoot), "erreur"));
-
-        if (e.containsMiahoot(idMiahoot)) {
-            e.removeMiahoot(m);
-            enseignantRepository.save(e);
-            miahootRepository.delete(m);
-        }
+    public void deleteMiahootOfEnseignant(final Enseignant enseignant, final Miahoot miahoot) {
+        enseignant.getMiahoots().remove(miahoot);
+        miahootRepository.delete(miahoot);
     }
 
 }
