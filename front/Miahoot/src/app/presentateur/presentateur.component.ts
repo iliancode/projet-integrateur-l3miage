@@ -4,29 +4,9 @@ import {PresentationService} from "../service/presentation.service";
 import {BehaviorSubject, firstValueFrom, Observable} from "rxjs";
 import {Auth, authState, User} from "@angular/fire/auth";
 import {AuthService} from "../service/auth.service";
+import {Enseignant, Miahoot, Question} from "../service/interfaces";
 
-interface Reponse {
-  id?: string;
-  label: string;
-  estValide: boolean;
-}
 
-interface Question {
-  id?: string;
-  label: string;
-  reponses: Reponse[];
-}
-
-interface Miahoot {
-  id?: string;
-  nom: string;
-  questions: Question[];
-}
-interface Enseignant {
-  pseudo : String,
-  mail : String,
-  mdp : String
-}
 
 @Component({
   selector: 'app-presentateur',

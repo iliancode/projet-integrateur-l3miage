@@ -21,7 +21,12 @@
       <p> which operation you want to make ? <br></p>
       <!-- il faudra faire un ngFor pour chaque miahoot existant pour l'enseignant connecté
        et il faudra recuperer le nom des miahoot pour les afficher à la place de miahoot name-->
-      <button mat-button [matMenuTriggerFor]="menu"  id="Miahoot-1">Miahoot name</button>
+
+      <div *ngIf="miahoots ">
+        <div *ngFor="let miahoot of miahoots">
+          <button mat-button [matMenuTriggerFor]="menu" id="Miahoot-1">{{miahoot.nom}}</button>
+        </div>
+      </div>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="supprimeMiahoot(1)"> Supprimer </button>
         <button mat-menu-item> Modifier </button>

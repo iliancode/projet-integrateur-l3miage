@@ -1,29 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
+import {Enseignant, Miahoot} from "./interfaces";
 
-interface Reponse {
-  id?: string;
-  label: string;
-  estValide: boolean;
-}
-
-interface Question {
-  id?: string;
-  label: string;
-  reponses: Reponse[];
-}
-
-interface Miahoot {
-  id?: string;
-  nom: string;
-  questions: Question[];
-}
-interface Enseignant {
-  pseudo : String,
-  mail : String,
-  mdp : String
-}
 @Injectable({
   providedIn: 'root'
 })
