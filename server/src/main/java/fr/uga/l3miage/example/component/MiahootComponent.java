@@ -80,6 +80,7 @@ public class MiahootComponent {
         Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(uidEnseignant, idMiahoot);
         enseignant.getMiahoots().remove(miahoot);
         enseignant.getMiahoots().add(newMiahoot);
+        miahootRepository.delete(miahoot);
         miahootRepository.save(newMiahoot);
     }
 }
