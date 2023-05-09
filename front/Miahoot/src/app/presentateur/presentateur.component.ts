@@ -76,14 +76,12 @@ export class PresentateurComponent implements OnInit{
   let uid = '';
     console.log(miahootSelected, code.value);
 
-    //create a new "partie" in the firebase database
-    //with the code and the miahoot selected
-    //and the user who created the game
+
+
     const u =  firstValueFrom(this.auth.currentUser).then(user=>{
       uid =user?.uid??'';
       let x = this.ds.getMiahootById(uid, parseInt(miahootSelected));
       console.log('ici: ')
-      console.log(JSON.stringify(x))
       const docRef = doc(this.us.getFirestore(), `parties/${code.value}/` );
 
       const newCollectionMiahoots = doc(this.us.getFirestore(), `parties/${code.value}/miahoots/miahoot` );
