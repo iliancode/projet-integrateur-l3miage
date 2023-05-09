@@ -109,9 +109,14 @@ readonly obsMiahoots: Observable<Miahoot[]>;
     if(U !== null){
       console.log("user not null")
       console.log(""+U.uid)
-      this.http.delete<Miahoot>(`/api/enseignants/${U.uid}/miahoots/${idMiahoot}`)
-    }else{
-      throw "erreur lors de la suppression du Miahoot"
+      this.http.delete<Miahoot>(`/api/enseignants/${U.uid}/miahoots/${idMiahoot}`).subscribe(
+        (res) => {
+          console.log("DELETE request successful:", res);
+        },
+        (err) => {
+          console.error("Error deleting Miahoot:", err);
+          throw "Erreur lors de la suppression du Miahoot";
+        })
     }
   }
 
