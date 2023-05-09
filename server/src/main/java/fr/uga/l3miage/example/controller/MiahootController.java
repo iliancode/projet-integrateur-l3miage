@@ -36,7 +36,7 @@ public class MiahootController implements MiahootEndpoint {
     }
 
     @Override
-    public void createMiahootOfEnseignant(String uidEnseignant, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
+    public void createMiahootOfEnseignant(String uidEnseignant, CreateFullMiahootRequest createFullMiahootRequest) {
         miahootService.createMiahootOfEnseignant(uidEnseignant, createFullMiahootRequest);
 
     }

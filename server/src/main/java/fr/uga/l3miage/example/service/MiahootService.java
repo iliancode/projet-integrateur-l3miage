@@ -34,7 +34,6 @@ public class MiahootService {
 
     @Transactional
     public void createMiahootFromEnseignant(final String uidEnseignant, final CreateMiahootRequest createMiahootRequest) throws Exception {
-
         Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
         miahootComponent.createMiahootFromEnseignant(uidEnseignant, newMiahoot);
     }
@@ -65,7 +64,12 @@ public class MiahootService {
         }
     }
 
-    public void createMiahootOfEnseignant(String uidEnseignant, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
-        miahootComponent.createMiahootOfEnseignant(uidEnseignant, createFullMiahootRequest);
+    public void createMiahootOfEnseignant(final String uidEnseignant, final CreateFullMiahootRequest createFullMiahootRequest) {
+        try {
+            Miahoot newMiahoot = miahootMapper.toEntity(createFullMiahootRequest);
+            miahootComponent.createMiahootOfEnseignant(uidEnseignant, newMiahoot);
+        } catch (EnseignantEntityNotFoundException e) {
+            throw new EnseignantEntityNotFoundRestException(String.format("Le miahoot n'a pas pu être créé car l'enseignant [%s] n'existe pas", uidEnseignant), uidEnseignant, e);
+        }
     }
 }
