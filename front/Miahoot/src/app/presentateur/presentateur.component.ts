@@ -29,6 +29,7 @@ export class PresentateurComponent implements OnInit{
   public readonly question_courante: BehaviorSubject<Question | null>;
   indexQuestionCourante = 0;
   selectedMiahoot: any = null;
+  protected readonly onclick = onclick;
 
   constructor(private ps : PresentationService, private auth: AuthService, private us:UserService, public ds: DsService) {
     this.miahoot = this.miahoots[0];
@@ -65,45 +66,42 @@ export class PresentateurComponent implements OnInit{
 
   }
 
-  protected readonly onclick = onclick;
-
-
   createGame(){
+    let codePartieHtml = document.getElementById("codePartie");
+
     let miahoot= document.getElementsByClassName("selected") as HTMLCollectionOf<HTMLElement>;
     let miahootSelected = miahoot[0].id;
-    console.log(miahootSelected)
+
     let code = document.getElementById("codePartie") as HTMLInputElement;
-  let uid = '';
-    console.log(miahootSelected, code.value);
-
-
+    let uid = '';
 
     const u =  firstValueFrom(this.auth.currentUser).then(user=>{
       uid =user?.uid??'';
       let x = this.ds.getMiahootById(uid, parseInt(miahootSelected));
-      console.log('ici: ')
+
       const docRef = doc(this.us.getFirestore(), `parties/${code.value}/` );
 
-      const newCollectionMiahoots = doc(this.us.getFirestore(), `parties/${code.value}/miahoots/miahoot` );
+
+      //const newCollectionMiahoots = doc(this.us.getFirestore(), `parties/${code.value}/miahoots/miahoot` );
       let nomMiahoot = x.then(miahoot =>{
-        setDoc(newCollectionMiahoots, {
+
+        setDoc(docRef, {
+          //code partie
+          codePartie: code.value,
           //miahoot nom
           miahoot: miahoot
         });
+       /* setDoc(newCollectionMiahoots, {
+          //miahoot nom
+          miahoot: miahoot
+        });*/
 
         let nompartie= document.getElementById("nompartie") as HTMLInputElement;
         let tempval   = {codePartie: parseFloat(code.value), nom:nompartie.value}
-        console.log(nompartie.value);
-        console.log(uid);
-        console.log(document.getElementById("nompartie") as HTMLInputElement)
+
         this.ds.createPartie(uid, parseInt(miahootSelected), tempval);
+
       });
-
-
     });
-
   }
 }
-
-
-

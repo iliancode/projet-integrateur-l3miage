@@ -33,6 +33,7 @@ export interface Partie{
 }
 
 export interface Participant{
+  uid: string|undefined;
   id?: number;
   pseudo : string;
   partie : Partie;
