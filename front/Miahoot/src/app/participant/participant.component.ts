@@ -20,7 +20,7 @@ export class ParticipantComponent implements OnInit{
   reactiveForm !: FormGroup;
   participantPartie : any[] = []
   message="";
-  participant : Participant;
+  participant !: Participant;
 
 
   constructor(public as: AuthService, private router: Router,public ds:DsService,private us : UserService) {
