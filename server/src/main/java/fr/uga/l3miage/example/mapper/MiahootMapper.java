@@ -1,9 +1,11 @@
 package fr.uga.l3miage.example.mapper;
 
 import fr.uga.l3miage.example.models.Miahoot;
+import fr.uga.l3miage.example.models.TestEntity;
 import fr.uga.l3miage.example.request.CreateFullMiahootRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.MiahootDTO;
+import fr.uga.l3miage.example.response.Test;
 import lombok.NonNull;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -19,6 +21,9 @@ public interface MiahootMapper {
 
     MiahootDTO toDto(Miahoot miahoot);
     List<MiahootDTO> toDto(List<Miahoot> miahoots);
+
+    void mergeMiahootEntity(@MappingTarget @NonNull Miahoot ActualMiahoot, CreateFullMiahootRequest request);
+
 
 
 }
