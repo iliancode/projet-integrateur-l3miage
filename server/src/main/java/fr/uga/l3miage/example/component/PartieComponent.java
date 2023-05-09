@@ -34,7 +34,7 @@ public class PartieComponent {
             newPartie.setMiahoot(m);
             e.addPartie(newPartie);
             partieRepository.save(newPartie);
-            enseignantRepository.save(e);
+//            enseignantRepository.save(e);
         }
     }
 

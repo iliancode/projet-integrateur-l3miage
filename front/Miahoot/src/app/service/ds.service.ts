@@ -5,6 +5,7 @@ import {BehaviorSubject, combineLatest, EMPTY, firstValueFrom, lastValueFrom, Ob
 import {Auth, authState, User} from "@angular/fire/auth";
 import {AuthService} from "./auth.service";
 import {Firestore} from "@angular/fire/firestore";
+import {Partie} from "./interfaces";
 
 
 
@@ -64,7 +65,7 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   getMiahootById(uid: String, id: number):Promise<Miahoot>{
 
     let url = "http://localhost:8080/api/enseignants/";
-    url += uid + "/miahoot" + id
+    url += uid + "/miahoots/" + id
     let reponse =  lastValueFrom(this.http.get<any>(url)).then((value) => {
         return value;
       }
@@ -163,5 +164,11 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   //envoyer user
   envoyerUser(): string[]{
     return [this.mail, this.pseudo, this.mdp];
+  }
+
+  async createPartie(uidEnseignant: string, idMiahoot: number, body :any): Promise<void> {
+    let url = "http://localhost:8080/api/enseignants/"
+    url += uidEnseignant + "/miahoots/" + idMiahoot + "/parties"
+    let reponse = await lastValueFrom(this.http.post(url, body));
   }
 }

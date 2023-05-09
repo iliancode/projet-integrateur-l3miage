@@ -28,10 +28,15 @@
             <button (click)="onButtonClick(miahoot)"  id="{{miahoot.id}}" [ngClass]="{'selected': selectedMiahoot === miahoot }">{{miahoot.nom}}</button>
           </div>
 
-        <input type="text" name="codePartie" id="codePartie" placeholder="exemple: 3546">
-        <button (click)="createGame()">create game</button>
+
 
         </div>
+        <div class="box">
+          <label for="nompartie"><input type="text" id="nompartie" placeholder="nom de la partie : L3 Miage Quizz"></label>
+          <label for="codePartie"> <input type="text" name="codePartie" id="codePartie" placeholder="exemple: 3546"></label>
+          <button (click)="createGame()">create game</button>
+        </div>
+
       </section>
 
 <!--
