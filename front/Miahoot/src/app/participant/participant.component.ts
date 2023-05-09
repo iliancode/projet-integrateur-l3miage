@@ -118,11 +118,15 @@ export class ParticipantComponent implements OnInit{
   }
 
   async verificationCodePartie(codeP : number): Promise<boolean>{
+    console.log("CODE P :"+codeP.toString())
     let estPresent : boolean = false;
-    const querySnapshot = await getDocs(collection(this.us.getFirestore(), "parties/32000/miahoots/miahoot"));
+    const querySnapshot = await getDocs(collection(this.us.getFirestore(), "partie"));
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ");
+      if(doc.id == codeP.toString()){
+        estPresent = true;
+      }
     });
     return estPresent;
   }
