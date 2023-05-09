@@ -54,4 +54,8 @@ public class Question {
             this.reponses.remove(reponse);
         }
     }
+
+    public long getId() {
+        return this.id;
+    }
 }

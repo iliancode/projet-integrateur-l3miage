@@ -137,8 +137,8 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   }
 
   async postM( uid:String,  miahoot: Miahoot){
-    let url = "http://localhost:8080/api/"
-    url += uid + "/miahoot"
+    let url = "http://localhost:8080/api/enseignants/"
+    url += uid + "/miahootjson"
     let reponse =  await lastValueFrom(this.http.post(url, miahoot));
     console.log(reponse)
   }
