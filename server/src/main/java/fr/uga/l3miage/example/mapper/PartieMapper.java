@@ -10,7 +10,7 @@ import java.util.Optional;
 @Mapper(uses = MiahootMapper.class)
 public interface PartieMapper {
 
-
+    Partie toPartie(CreatePartieRequest request);
     PartieDTO toDto(Partie testEntity);
     Partie toEntity(CreatePartieRequest request);
 }
