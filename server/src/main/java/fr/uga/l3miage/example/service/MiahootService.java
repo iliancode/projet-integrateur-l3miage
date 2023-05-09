@@ -76,7 +76,6 @@ public class MiahootService {
 
     public void updateFullMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot, final CreateFullMiahootRequest request) {
         try {
-            Miahoot newMiahoot = miahootMapper.toEntity(request);
             miahootComponent.updateFullMiahootOfEnseignant(uidEnseignant, idMiahoot, request);
         } catch (MiahootEntityNotFoundException e) {
             throw new MiahootEntityNotFoundRestException(e.getMessage(), idMiahoot, e);
