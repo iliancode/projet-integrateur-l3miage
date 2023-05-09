@@ -4,9 +4,10 @@
   <link rel="participant.component.scss" href="style.css">
 </head>
 <body>
-  <button (click)="signInAnonymously()"> anonyme</button>
 
-  <div class="entrerCodePartie" >
+  <button *ngIf="! islogged" (click)="signInAnonymously()"> anonyme</button>
+
+  <div *ngIf="islogged" class="entrerCodePartie" >
     <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
       <!--renseignement du code de la partie et du pseudo-->
       <div class="inline">

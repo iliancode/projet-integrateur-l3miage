@@ -18,6 +18,7 @@ import {firstValueFrom} from "rxjs";
 })
 export class ParticipantComponent implements OnInit{
 
+  islogged: boolean = false
   pseudo = ""
   reactiveForm !: FormGroup;
   participantPartie : any[] = []
@@ -81,8 +82,10 @@ export class ParticipantComponent implements OnInit{
 
   constructor(public as: AuthService, private router: Router,public ds:DsService,private us : UserService) {
   }
+
   // a modifier car il faut voir comment gerer le pseudo ...
   signInAnonymously(){
+      this.islogged = true
       this.as.anonymousLogin()
   }
   //pour le deplacement vers la partie
@@ -100,6 +103,8 @@ export class ParticipantComponent implements OnInit{
 
 
 }
+
+
 
   onSubmit(){
     if(this.reactiveForm.valid){
@@ -171,6 +176,8 @@ export class ParticipantComponent implements OnInit{
 
     }) ;
   } **/
+
+
 
 
 }
