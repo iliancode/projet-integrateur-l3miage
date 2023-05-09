@@ -4,11 +4,13 @@ import fr.uga.l3miage.example.response.QuestionDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.validation.constraints.Null;
 import java.util.Collection;
 import java.util.List;
 
+@Getter
 @Data
 @Builder
 public class CreateFullMiahootRequest {
@@ -16,10 +18,9 @@ public class CreateFullMiahootRequest {
     @Null
     private Long id;
 
-    @Schema(description = "description de l'objet miahoot", example = "description miahoot")
+    @Schema(description = "description de l'objet miahoot", example = "Quizz Web")
     private String nom;
 
-    @Schema(description = "Liste de questions du miahoot")
-    private List<QuestionDTO> questions;
+    private List<CreateQuestionWithReponseRequest> questions;
 
 }
