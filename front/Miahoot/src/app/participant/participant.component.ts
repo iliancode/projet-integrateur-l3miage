@@ -3,9 +3,11 @@ import {AuthService} from "../service/auth.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DsService} from "../service/ds.service";
-import {Enseignant, Miahoot, Participant, Partie} from "../service/interfaces";
+import {Enseignant, Miahoot, Participant, Partie, Question} from "../service/interfaces";
 import {doc, setDoc} from "firebase/firestore";
 import {UserService} from "../service/user.service";
+import {user} from "@angular/fire/auth";
+import {firstValueFrom} from "rxjs";
 
 
 
@@ -20,7 +22,61 @@ export class ParticipantComponent implements OnInit{
   reactiveForm !: FormGroup;
   participantPartie : any[] = []
   message="";
-  participant !: Participant;
+
+
+  miahootP : Miahoot = {
+    "id": 1,
+    "nom": "Quizz Web",
+    "questions": [
+      {
+        "id": 1,
+        "label": "Qu'est-ce qu'un \"URL\" ?",
+        "reponses": [
+          {
+            "id": 1,
+            "label": "Un identifiant unique pour une page web",
+            "estValide": true
+          },
+          {
+            "id": 2,
+            "label": "Un souley",
+            "estValide": false
+          },
+          {
+            "id": 3,
+            "label": "Iliany",
+            "estValide": false
+          },
+          {
+            "id": 4,
+            "label": "quoicoubeh",
+            "estValide": false
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "label": "Qu'est-ce qu'un Bg ?",
+        "reponses": []
+      },
+      {
+        "id": 3,
+        "label": "1+1 ? ?",
+        "reponses": []
+      }
+    ]
+  };
+  partieP : Partie = {
+    codePartie: 0,
+    nom: "miahooot",
+    miahoot: this.miahootP
+  }
+
+  p : Participant = {
+    pseudo : 'lyna',
+    uid : 'jnfjsd234',
+    partie : this.partieP
+  }
 
 
   constructor(public as: AuthService, private router: Router,public ds:DsService,private us : UserService) {
@@ -40,18 +96,29 @@ export class ParticipantComponent implements OnInit{
     this.reactiveForm = new FormGroup({
       pseudoParticipant : new FormControl(null,[Validators.required]),
       codePartie : new FormControl(null,[Validators.required])
-    })
-  }
+    });
+
+
+}
 
   onSubmit(){
     if(this.reactiveForm.valid){
       this.participantPartie.push(this.reactiveForm.value);
-      console.log(this.reactiveForm);
-      console.log(this.reactiveForm.get('codePartie')?.value);
       this.message=""
 
-      //ajouterParticipantDansPartie(participant,this.reactiveForm.get('codePartie')?.value)
-            //Post le pseudo et le code partie du participant
+      let x : string | undefined ='';
+      const u =  firstValueFrom(this.as.currentUser).then(user=>{
+
+        this.partieP.codePartie = this.reactiveForm.get('codePartie')?.value;
+        this.p.uid = user?.uid ?? 'CC';
+        this.p.pseudo = this.reactiveForm.get('pseudoParticipant')?.value;
+        this.p.partie = this.partieP;
+        x = user?.uid;
+        this.ajouterParticipantDansPartie(this.p)
+      }) ;
+
+
+
 
 
 
@@ -77,9 +144,16 @@ export class ParticipantComponent implements OnInit{
     } **/
   }
 
-  ajouterParticipantDansPartie(p : Participant, codeP : number ): void{
-    const docRef = doc(this.us.getFirestore(), "enseignants", ); // on utilise l'email comme ID du document
-    setDoc(docRef, p)
+  ajouterParticipantDansPartie(p : Participant ): void{
+
+
+    const docRef = doc(this.us.getFirestore(), `participant/${p.uid??'vache'}`); // on utilise l'email comme ID du document
+    setDoc(docRef, {
+      pseudo: p.pseudo,
+      partie : p.partie,
+      uid : p.uid,
+
+    })
       .then(() => {
         console.log("Participant enregistré avec succès sur Firestore !");
       })
@@ -88,6 +162,16 @@ export class ParticipantComponent implements OnInit{
       });
 
   }
+  /**initiliaserParticipant(p : Participant) : void {
+    const u =  firstValueFrom(this.as.currentUser).then(user=>{
+      this.partieP.codePartie = this.reactiveForm.get('codePartie')?.value;
+      this.p.uid = user?.uid ?? 'CC';
+      this.p.partie = this.partieP;
+
+
+    }) ;
+  } **/
 
 
 }
+

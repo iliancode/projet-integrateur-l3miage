@@ -77,14 +77,14 @@ export class CreationComponent implements OnInit{
 
 
 
-    postMiahoot(miahoot: string) {
-      let jsonmiahoot = JSON.parse(miahoot);
-      //json to Miahoot object
-      let miahootObj: Miahoot = {
-        nom: jsonmiahoot.nom,
-        questions: jsonmiahoot.questions
-      }
-      this.ds.createMiahoot(miahootObj)
+  postMiahoot(miahoot: string) {
+    let jsonmiahoot = JSON.parse(miahoot);
+    //json to Miahoot object
+    let miahootObj: Miahoot = {
+      nom: jsonmiahoot.nom,
+      questions: jsonmiahoot.questions
+    }
+    this.ds.createMiahoot(miahootObj)
   }
 
 
