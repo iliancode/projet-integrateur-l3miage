@@ -67,7 +67,7 @@ export class PresentateurComponent implements OnInit{
   }
 
   createGame(){
-    let codePartieHtml = document.getElementById("codePartie");
+    let nomPartie = document.getElementById("nompartie") as HTMLInputElement;
 
     let miahoot= document.getElementsByClassName("selected") as HTMLCollectionOf<HTMLElement>;
     let miahootSelected = miahoot[0].id;
@@ -86,8 +86,11 @@ export class PresentateurComponent implements OnInit{
       let nomMiahoot = x.then(miahoot =>{
 
         setDoc(docRef, {
+          questionCourante: 0,
           //code partie
           codePartie: code.value,
+          //nom partie
+          nomPartie: nomPartie.value,
           //miahoot nom
           miahoot: miahoot
         });
