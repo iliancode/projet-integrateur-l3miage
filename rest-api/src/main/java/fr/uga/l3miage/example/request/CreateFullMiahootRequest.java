@@ -5,13 +5,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.Null;
 import java.util.Collection;
 import java.util.List;
 
 @Data
 @Builder
 public class CreateFullMiahootRequest {
-    @Schema(description = "id du miahoot", example = "1")
+    @Schema(description = "id du miahoot", hidden = true)
+    @Null
     private Long id;
 
     @Schema(description = "description de l'objet miahoot", example = "description miahoot")
