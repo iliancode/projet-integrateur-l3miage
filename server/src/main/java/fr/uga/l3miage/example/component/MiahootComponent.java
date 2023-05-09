@@ -28,7 +28,7 @@ public class MiahootComponent {
     private final EnseignantComponent enseignantComponent;
     private final EnseignantRepository enseignantRepository;
     private final MiahootRepository miahootRepository;
-    private final QuestionMapper questionMapper;
+    private final MiahootComponent miahootComponent;
 
 
     public void createMiahootFromEnseignant(final String uidEnseignant, final Miahoot miahoot) throws Exception {
@@ -70,6 +70,15 @@ public class MiahootComponent {
 
     public void createMiahootOfEnseignant(final String uidEnseignant, final Miahoot newMiahoot) throws EnseignantEntityNotFoundException {
         Enseignant enseignant = enseignantComponent.getEnseignantByUid(uidEnseignant);
+        enseignant.getMiahoots().add(newMiahoot);
+        miahootRepository.save(newMiahoot);
+    }
+
+
+    public void updateFullMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot, final Miahoot newMiahoot) throws EnseignantEntityNotFoundException, MiahootEntityNotFoundException {
+        Enseignant enseignant = enseignantComponent.getEnseignantByUid(uidEnseignant);
+        Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(uidEnseignant, idMiahoot);
+        enseignant.getMiahoots().remove(miahoot);
         enseignant.getMiahoots().add(newMiahoot);
         miahootRepository.save(newMiahoot);
     }
