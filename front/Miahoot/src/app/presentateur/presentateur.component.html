@@ -19,15 +19,22 @@
          <h1>Welcome</h1>
         <p> choose which one you want to present ? <br>
             </p>
-        <div *ngIf="miahoots ">
-        <div *ngFor="let miahoot of miahoots">
-          <button>{{miahoot.nom}}</button>
-        </div>
+        <div *ngIf="liste_miahoots | async as M"
+
+        >
+
+          <div id="listemiahoot" *ngFor="let miahoot of M; index as indice ">
+
+            <button (click)="onButtonClick(miahoot)"  id="{{miahoot.id}}" [ngClass]="{'selected': selectedMiahoot === miahoot }">{{miahoot.nom}}</button>
+          </div>
+
+        <input type="text" name="codePartie" id="codePartie" placeholder="exemple: 3546">
+        <button (click)="createGame()">create game</button>
+
         </div>
       </section>
 
-
-
+<!--
      <div *ngIf="question_courante | async as Q;">
        <h2>{{ Q.label }}</h2>
        <div *ngFor="let reponse of Q.reponses">
@@ -35,7 +42,7 @@
        </div>
        <button (click)="questionSuivante()">Question suivante</button>
      </div>
-
+-->
    </header>
   </div>
 

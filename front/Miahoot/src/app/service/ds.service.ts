@@ -61,7 +61,16 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   }
 
 
+  getMiahootById(uid: String, id: number):Promise<Miahoot>{
 
+    let url = "http://localhost:8080/api/enseignants/";
+    url += uid + "/miahoot" + id
+    let reponse =  lastValueFrom(this.http.get<any>(url)).then((value) => {
+        return value;
+      }
+    );
+    return  reponse;
+  }
 
   async createMiahoot(M: Miahoot): Promise<Miahoot> {
     const U = await firstValueFrom(this.auth.currentUser);
@@ -144,6 +153,7 @@ readonly obsMiahoots: Observable<Miahoot[]>;
     this.pseudo = pseudo;
     this.mdp = mdp;
   }
+
 
   //envoyer user
   envoyerUser(): string[]{

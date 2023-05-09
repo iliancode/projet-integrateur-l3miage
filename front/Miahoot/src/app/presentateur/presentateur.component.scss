@@ -133,20 +133,19 @@ body {
     line-height: 1.5;
     margin: 20px auto;
   }
-  .header-content button{
+  .header-content button {
     width: 140px;
     margin:20px 10px;
     color: #591BC5;
     font-size: 17px;
     border:1px solid #EFEEF5;
     font-weight: 500;
-    background: #EFEEF5;
     border-radius: 20px;
     padding: 10px;
     cursor:pointer;
     transition: .3s;
   }
-  .header-content button:hover{
+  .header-content button:hover {
     border-radius: 0;
   }
   /* Animate Background*/
@@ -163,7 +162,7 @@ body {
   }
   @keyframes cube {
     from {
-      transform: scale(0) rotate(0deg) 
+      transform: scale(0) rotate(0deg)
       translate(-50%, -50%);
     opacity: 1;
   }
@@ -172,3 +171,12 @@ body {
     opacity: 0;
   }
 }
+
+  #listemiahoot{
+    display: inline;
+  }
+
+  .selected{
+    background-color: #957ace;
+    text: #FFFFFF;
+  }

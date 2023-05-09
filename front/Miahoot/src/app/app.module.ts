@@ -35,6 +35,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { LoginComponent } from './authent/login/login.component';
 import { RegisterComponent } from './authent/register/register.component';
 import { CreationComponent } from './creation/creation.component'
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { CreationComponent } from './creation/creation.component'
         MatCardModule,
         AngularFireModule.initializeApp(environment.firebase),
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatButtonToggleModule
     ],
   providers: [],
   bootstrap: [AppComponent]
