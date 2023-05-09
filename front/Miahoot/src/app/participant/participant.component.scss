@@ -1,37 +1,87 @@
-body{
-  background-color: #4e54c8;
-  text-align: center;
+
+body {
+  background: linear-gradient(#141e30, #243b55);
 }
 input{
-  border-radius: 5px;
-  height: 50px;
-  width: 200px;
-}
-h1{
-  font-size: 35px;
-}
-.entrerCodePartie{
-margin: auto;
-  height: 50%;
-  width: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-}
-.accesMiahoot{
-  display: flex;
-  text-align: right;
-  margin: auto;
-  height: 50%;
-  width: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-}
-button{
-  height: 55px;
-  width: 200px;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+  @media only screen and (max-width: 600px) {
+
+    width: 100%;
+    padding: 5px 0;
+    font-size: 14px;
+    margin-bottom: 15px
+  }
 }
 
+h1{
+  font-size: 35px;
+  @media only screen and (max-width: 600px) {
+    font-size: 35px;
+  }
+}
+.entrerCodePartie{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,.5);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
+  @media only screen and (max-width: 600px) {
+    width: 250px;
+    padding: 20px;
+    box-shadow: 0 7px 13px rgba(0,0,0,.6);
+    border-radius: 10px;
+  }
+}
+.submit{
+  height: 55px;
+  width: 100%;
+  margin-top : 1%;
+  border-radius: 5px;
+  border-style: none;
+  @media only screen and (max-width: 600px) {
+    height: 27px;
+    width: 100%;
+    margin-top : 1%;
+    font-size: 14px
+  }
+}
+.submit:hover{
+  background-color: #ffc300ff;
+  box-shadow: 0px 15px 20px rgba(255, 195, 0, 0.4);
+
+  color: #fff;
+  transform: translateY(-7px);
+  @media only screen and (max-width: 600px) {
+    box-shadow: 0px 7px 10px rgba(255, 195, 0, 0.4);
+  }
+
+}
+::placeholder{
+  color: white;
+  font-size: 19px;
+  @media only screen and (max-width: 600px) {
+    font-size: 13px
+  }
+}
+.messageSubmit{
+  color : orange;
+  margin-top:5%;
+  text-align: center;
+  @media only screen and (max-width: 600px) {
+    margin-top:2%;
+    font-size: 13px;
+  }
+}

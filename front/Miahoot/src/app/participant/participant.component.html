@@ -1,21 +1,31 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="participant.component.scss" href="style.css">
+  <link href="style.css" rel="participant.component.scss">
 </head>
 <body>
-  <button (click)="signInAnonymously()"> anonyme</button>
 
-  <div class="entrerCodePartie" style="">
-    <h1> Entrez le code de la partie </h1>
-    <div class="accesMiahoot">
-    <input type="text" name="codePartie" id="codePartie">
+<button (click)="signInAnonymously()" *ngIf="! islogged"> anonyme</button>
+
+<div *ngIf="islogged" class="entrerCodePartie" >
+  <form (ngSubmit)="onSubmit()" [formGroup]="reactiveForm">
+    <!--renseignement du code de la partie et du pseudo-->
+    <div class="inline">
+      <input formControlName="codePartie" name="codePartie" placeholder="Entrez le code de la partie" type="text">
+    </div><br>
+    <div class="inline">
+      <input formControlName="pseudoParticipant" id="pseudoParticipant" name="pseudoParticipant" placeholder="Entrez votre pseudo" type="text">
+    </div><br>
+
+    <button class="submit" type="submit">Commencer la partie ! </button>
+  </form>
+
+  <p class ="messageSubmit" >
+    {{ message }}
+  </p>
 
 
-      <button>Commencer la partie</button>
-    </div>
-
-  </div>
+</div>
 
 </body>
 </html>

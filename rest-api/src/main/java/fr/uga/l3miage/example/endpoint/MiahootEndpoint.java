@@ -30,7 +30,7 @@ public interface MiahootEndpoint {
     @Error400Custom
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("enseignants/{uidEnseignant}/miahoots")
-    public void createEntityMiahootFromEnseignant(@PathVariable("uidEnseignant") String uidEnseignant, @RequestBody CreateMiahootRequest request) throws Exception;
+    void createEntityMiahootFromEnseignant(@PathVariable("uidEnseignant") String uidEnseignant, @RequestBody CreateMiahootRequest request) throws Exception;
 
 
     @Operation(description = "Récupération de tous les miahoots d'un enseignant")

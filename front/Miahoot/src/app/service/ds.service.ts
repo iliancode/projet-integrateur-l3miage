@@ -39,13 +39,12 @@ export interface Miahoot {
 export class DsService {
 
 
-private bsAskUpdate = new BehaviorSubject<void>(undefined);
 readonly obsMiahoots: Observable<Miahoot[]>;
   public  user: Observable<User | null> = EMPTY;
-
   mail = '';
   mdp = '';
   pseudo = '';
+private bsAskUpdate = new BehaviorSubject<void>(undefined);
 
   constructor(private http: HttpClient, private auth: AuthService,  fireS: Firestore) {
     this.obsMiahoots = combineLatest([this.bsAskUpdate, auth.currentUser]).pipe(
@@ -166,4 +165,6 @@ readonly obsMiahoots: Observable<Miahoot[]>;
     url += uidEnseignant + "/miahoots/" + idMiahoot + "/parties"
     let reponse = await lastValueFrom(this.http.post(url, body));
   }
+
+  //get partie
 }
