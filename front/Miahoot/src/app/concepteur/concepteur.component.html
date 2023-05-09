@@ -1,5 +1,3 @@
-<p>concepteur works!</p>
-
 <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
 
 <!-- Background & animion & navbar & title -->
@@ -14,16 +12,18 @@
     </div>
 <!-- header -->
    <header>
+
     <!-- title & content -->
     <section class="header-content">
       <h1>Welcome</h1>
       <p> which operation you want to make ? <br></p>
       <!-- il faudra faire un ngFor pour chaque miahoot existant pour l'enseignant connecté
        et il faudra recuperer le nom des miahoot pour les afficher à la place de miahoot name-->
-      <button mat-button [matMenuTriggerFor]="menu"  id="Miahoot-1">Miahoot name</button>
 
-      <div class="carte-miahoot">
-        <p>Le miahoot</p>
+      <div *ngIf="miahoots ">
+        <div *ngFor="let miahoot of miahoots">
+          <button mat-button [matMenuTriggerFor]="menu" id="Miahoot-1">{{miahoot.nom}}</button>
+        </div>
       </div>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="supprimeMiahoot(1)"> Supprimer </button>
@@ -34,16 +34,16 @@
   </header>
 </div>
 
-<!-- Drag and drop pour création du miahoot déplacé dans creation Mihaoot-->
-<!--
 <div id="inputmiahoot">
   <form action="">
     <input type="jsoninput" id="miahoot" #miahoot style="width: 300px; height: 300px;" />
-    <button type="submit" (click)="postMiahoot(1, miahoot.value)">Submit</button>
+    <button type="submit" (click)="postMiahoot(uid, miahoot.value)">Submit</button>
   </form>
 
 </div>
-<input type="file" id="input">
--->
 
+
+<button mat-menu-item (click)="supprimeMiahoot(1)"> Supprimer </button>
+
+<input type="file" id="input">
 

@@ -14,23 +14,23 @@ import java.util.List;
 public class ReponseController implements ReponseEndpoint {
     private final ReponseService reponseService;
 
-   /* @Override
+    @Override
     public void addReponseToQuestionOfMiahoot(Long idEnseignant, Long idMiahoot, Long idQuestion, CreateReponseRequest createReponseRequest) throws Exception {
         reponseService.addReponseToQuestionOfMiahoot(idEnseignant,idMiahoot,idQuestion,createReponseRequest);
-    }*/
+    }
 
-    /*@Override
+    @Override
     public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
         return reponseService.getAllReponsesOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion);
     }
-*/
-    /*@Override
+
+    @Override
     public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
         return reponseService.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion,idReponse);
-    }*/
+    }
 
-    /*@Override
+    @Override
     public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
         reponseService.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant,idMiahoot,idQuestion,idReponse);
-    }*/
+    }
 }

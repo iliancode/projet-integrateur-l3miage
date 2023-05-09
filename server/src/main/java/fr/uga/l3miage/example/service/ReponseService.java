@@ -1,10 +1,20 @@
 package fr.uga.l3miage.example.service;
 
+import fr.uga.l3miage.example.component.EnseignantComponent;
+import fr.uga.l3miage.example.component.MiahootComponent;
+import fr.uga.l3miage.example.component.QuestionComponent;
 import fr.uga.l3miage.example.component.ReponseComponent;
+import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.ParticipantEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.ReponseEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ReponseEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.QuestionEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.ReponseEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.ReponseMapper;
+import fr.uga.l3miage.example.models.Enseignant;
+import fr.uga.l3miage.example.models.Miahoot;
+import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.models.Reponse;
 import fr.uga.l3miage.example.request.CreateReponseRequest;
 import fr.uga.l3miage.example.response.ReponseDTO;
@@ -17,7 +27,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ReponseService {
-
+    private final EnseignantComponent enseignantComponent;
+    private final MiahootComponent miahootComponent;
+    private final QuestionComponent questionComponent;
     private final ReponseComponent reponseComponent;
     private final ReponseMapper reponseMapper;
 
@@ -38,11 +50,23 @@ public class ReponseService {
     }
 
 
-    public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
+    /**
+     * Efface une reponse d'une question d'un miahoot d'un enseignant
+     * @param idEnseignant
+     * @param idMiahoot
+     * @param idQuestion
+     * @param idReponse
+     */
+    public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
         try{
-            reponseComponent.deleteReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
-        }catch (Exception ex){
-            throw new Exception("Erreur lors de la suppression de la reponse");
+            // verifie que c'est la reponse de la question du miahoot de l'enseignant
+            reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
+            reponseComponent.deleteReponse(idReponse);
+        }catch (ReponseEntityNotFoundRestException e){
+            throw new ReponseEntityNotDeletedRestException(e.getMessage());
         }
     }
+
+/*
+    public void updateEntityReponse(final Long idEnseignant, final Long idMiahoot, final Long )*/
 }

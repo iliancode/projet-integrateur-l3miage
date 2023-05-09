@@ -18,7 +18,7 @@ export interface Miahoot {
 
 
 export interface Enseignant {
-  id?: number;
+  uid: string|undefined;
   mail: string;
   mdp: string;
   pseudo: string;

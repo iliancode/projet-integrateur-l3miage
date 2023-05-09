@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from "@angular/common/http";
-import {BehaviorSubject, combineLatest, firstValueFrom, lastValueFrom, Observable, switchMap} from 'rxjs';
+import {BehaviorSubject, combineLatest, EMPTY, firstValueFrom, lastValueFrom, Observable, switchMap} from 'rxjs';
 //import {Miahoot, Enseignant} from "./interfaces";
-import {Auth} from "@angular/fire/auth";
+import {Auth, authState, User} from "@angular/fire/auth";
 import {AuthService} from "./auth.service";
-import {Participant, Partie} from "./interfaces";
+import {Firestore} from "@angular/fire/firestore";
 
 
 
 export interface Enseignant {
+  uid?: string;
   pseudo: string;
   mail: string;
   mdp: string;
@@ -39,9 +40,13 @@ export class DsService {
 
 private bsAskUpdate = new BehaviorSubject<void>(undefined);
 readonly obsMiahoots: Observable<Miahoot[]>;
+  public  user: Observable<User | null> = EMPTY;
 
+  mail = '';
+  mdp = '';
+  pseudo = '';
 
-  constructor(private http: HttpClient, private auth: AuthService) {
+  constructor(private http: HttpClient, private auth: AuthService,  fireS: Firestore) {
     this.obsMiahoots = combineLatest([this.bsAskUpdate, auth.currentUser]).pipe(
       switchMap( async ([_, U]) => {
         if (U === null) {
@@ -51,10 +56,21 @@ readonly obsMiahoots: Observable<Miahoot[]>;
         return miahoots;
       })
     )
+
+
   }
 
 
+  getMiahootById(uid: String, id: number):Promise<Miahoot>{
 
+    let url = "http://localhost:8080/api/enseignants/";
+    url += uid + "/miahoot" + id
+    let reponse =  lastValueFrom(this.http.get<any>(url)).then((value) => {
+        return value;
+      }
+    );
+    return  reponse;
+  }
 
   async createMiahoot(M: Miahoot): Promise<Miahoot> {
     const U = await firstValueFrom(this.auth.currentUser);
@@ -91,21 +107,13 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   async deleteMiahoot(idMiahoot:  number){
     const U = await firstValueFrom(this.auth.currentUser);
     if(U !== null){
+      console.log("user not null")
+      console.log(""+U.uid)
       this.http.delete<Miahoot>(`/api/enseignants/${U.uid}/miahoots/${idMiahoot}`)
+    }else{
+      throw "erreur lors de la suppression du Miahoot"
     }
-    throw "erreur lors de la suppression du Miahoot"
   }
-
-  /**
-   *
-
-  let update = await lastValueFrom(this.http.put<any>(this.url + "/2",this.body))
-  console.log(update)
-
-  let recup2 = await lastValueFrom(this.http.get<any>(this.url + "/2"))
-  console.log(recup2)
-
-   */
 
 
   async getGeneral(endpoint: string, recherche: string) {
@@ -128,18 +136,27 @@ readonly obsMiahoots: Observable<Miahoot[]>;
     console.log(reponse)
   }
 
-  async postM( id:number,  miahoot: Miahoot){
-    let url = "http://localhost:8080/api/enseignants/"
-    url += id + "/miahoot"
+  async postM( uid:String,  miahoot: Miahoot){
+    let url = "http://localhost:8080/api/"
+    url += uid + "/miahoot"
     let reponse =  await lastValueFrom(this.http.post(url, miahoot));
     console.log(reponse)
   }
 
-  //ajout d'un participant à une partie
-  async postP( codePartie:number,  partie: Partie){
-    let url = "/api/parties/"
-    url += codePartie + "/participants"
-    let reponse =  await lastValueFrom(this.http.post(url, partie));
-    console.log(reponse)
+
+
+  //recp user
+
+  recupUser(mail: string , pseudo:string, mdp:string ): void{
+
+    this.mail = mail;
+    this.pseudo = pseudo;
+    this.mdp = mdp;
+  }
+
+
+  //envoyer user
+  envoyerUser(): string[]{
+    return [this.mail, this.pseudo, this.mdp];
   }
 }

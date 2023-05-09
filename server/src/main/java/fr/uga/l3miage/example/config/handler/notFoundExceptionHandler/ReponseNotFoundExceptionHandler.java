@@ -25,7 +25,7 @@ public class ReponseNotFoundExceptionHandler {
                 .httpStatus(ex.getHttpStatus())
                 .errorMessage(ex.getMessage())
                 .errorCode(ex.getErrorCode())
-                .label(ex.getLabel())
+                .id(ex.getId())
                 .build();
         log.warn(ex.getMessage());
         return ResponseEntity.status(ex.getHttpStatus()).body(response);

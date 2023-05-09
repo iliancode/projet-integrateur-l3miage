@@ -6,14 +6,16 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 
 @Data
 @Builder
 @Schema(description = "Correspond à la requête permettant de créer une entité participant")
 public class CreateEnseignantRequest {
 
-    @Schema(description = "id de l'objet participant", example = "1")
-    private Long id;
+    @Schema(description = "id de l'objet participant", example = "TUGY23436GERFERG")
+    @NotBlank
+    private String uid;
 
     @Schema(description = "description de l'objet participant", example = "enseignant1")
     @NotBlank

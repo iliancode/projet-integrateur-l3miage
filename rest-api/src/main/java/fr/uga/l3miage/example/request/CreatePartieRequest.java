@@ -5,16 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 
 @Data
 @Builder
 @Schema(description = "Correspond à la requête permettant de créer une entité partie")
 public class CreatePartieRequest {
 
-    @Schema(description = "description d'un entier", example = "1")
+    @Schema(description = "description d'un entier", hidden = true)
+    @Null
     private Long codePartie;
 
-    @Schema(description = "description d'un nom", example = "quizz vache")
+    @Schema(description = "description d'un nom", example = "Quizz Web L3 MIAGE groupe 1")
     @NotBlank
     private String nom;
 

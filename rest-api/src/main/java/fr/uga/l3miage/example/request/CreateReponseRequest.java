@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 @Data
 @Builder
@@ -15,15 +17,15 @@ import javax.validation.constraints.NotBlank;
 @Schema(description = "Correspond à la requête permettant de créer une entité reponse")
 public class CreateReponseRequest {
 
-    @Schema(description = "id de l'objet reponse", example = "1")
-    @NotBlank
+    @Schema(description = "id de l'objet reponse", hidden = true)
+    @Null
     private Long id;
 
-    @Schema(description = "description de l'objet reponse", example = "description reponse")
+    @Schema(description = "description de l'objet reponse", example = "Un identifiant unique pour une page web")
     @NotBlank
     private String label;
 
-    @Schema(description = "description d'un bool", example = "false")
-    @NotBlank
+    @Schema(description = "description d'un bool", example = "true")
+    @NotNull
     private Boolean estValide;
 }
