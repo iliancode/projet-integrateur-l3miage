@@ -20,7 +20,8 @@ import java.util.List;
 
 @Tag(name = "Endpoints des Questions")
 @CrossOrigin
-@RestController("api/")
+@RestController
+@RequestMapping("api/")
 public interface QuestionEndpoint {
 
     @Operation(description = "Ajout d'une question à un miahoot d'un enseignant")
