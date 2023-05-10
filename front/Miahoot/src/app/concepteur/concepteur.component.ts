@@ -14,11 +14,11 @@ import {PresentationService} from "../service/presentation.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConcepteurComponent implements OnInit{
-private email : string | null | undefined ;
-
   uid = '';
   miahoots: Miahoot[] = [];
   miahoot : Miahoot;
+private email : string | null | undefined ;
+
   constructor(public router : Router, public ds:DsService, public auth :AuthService, public ps:PresentationService) {
     this.miahoot = this.miahoots[0];
 

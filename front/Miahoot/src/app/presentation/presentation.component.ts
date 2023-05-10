@@ -6,9 +6,12 @@ import {BehaviorSubject, firstValueFrom, Subscription} from "rxjs";
 import {user} from "@angular/fire/auth";
 import {Reponse} from "../service/interfaces";
 import {ActivatedRoute} from "@angular/router";
-import {getDocs, query, where} from "@angular/fire/firestore";
-import {collection, doc} from "firebase/firestore";
+import {getDocs, onSnapshot, query, updateDoc, where} from "@angular/fire/firestore";
+import {collection, doc, setDoc} from "firebase/firestore";
 import {db} from "../../environments/test";
+import {getDatabase, set} from "@angular/fire/database";
+import {ref} from "@angular/fire/storage";
+//import {AngularFirestore} from "@angular/fire/compat/firestore";
 
 @Component({
   selector: 'app-presentation',
@@ -16,80 +19,22 @@ import {db} from "../../environments/test";
   styleUrls: ['./presentation.component.scss']
 })
 export class PresentationComponent implements OnInit {
+
   commencePartie : boolean = false
   estPresentateur : boolean = false
   indexQuestionCourante = 0;
   reponsesUtilisateur: number[] = [];
   public readonly question_courante: BehaviorSubject<Question | null>;
-  /*miahootCourant : Miahoot = {
-    "id": 1,
-    "nom": "Quizz Web",
-    "questions": [
-      {
-        "id": 1,
-        "label": "Qu'est-ce qu'un \"URL\" ?",
-        "reponses": [
-          {
-            "id": 1,
-            "label": "Un identifiant unique pour une page web",
-            "estValide": true
-          },
-          {
-            "id": 2,
-            "label": "Un souley",
-            "estValide": false
-          },
-          {
-            "id": 3,
-            "label": "Iliany",
-            "estValide": false
-          },
-          {
-            "id": 4,
-            "label": "quoicoubeh",
-            "estValide": false
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "label": "Qu'est-ce qu'un Bg ?",
-        "reponses": [{
-          "id": 1,
-          "label": "BG TRUE",
-          "estValide": true
-        },
-          {
-            "id": 2,
-            "label": "BG FALSE",
-            "estValide": false
-          },]
-      },
-      {
-        "id": 3,
-        "label": "1+1 ? ?",
-        "reponses": [
-          {
-            "id": 1,
-            "label": "2",
-            "estValide": true
-          },
-          {
-            "id": 2,
-            "label": "11",
-            "estValide": false
-          },
-        ]
-      }
-    ]
-  };*/
+
   showCorrectAnswer = false;
   public routeSub: Subscription | undefined = undefined;
   codePartie ='';
   miahootPartie !: Miahoot ;
-  constructor(private auth :  AuthService, private ds :DsService, private us:UserService, private route: ActivatedRoute) {
+  //dbb:any;
+  constructor(private auth :  AuthService, private ds :DsService, private us:UserService, private route: ActivatedRoute,
+              /*private firestore: AngularFirestore*/) {
     this.question_courante = new BehaviorSubject<Question | null>(null,);
-
+    //this.dbb = firestore;
   }
 
   async ngOnInit(){
@@ -110,7 +55,6 @@ export class PresentationComponent implements OnInit {
 
     await this.isEnseignant();
     this.question_courante.next(this.miahootPartie.questions[this.indexQuestionCourante]);
-
   }
 
   async isEnseignant(){
@@ -129,11 +73,18 @@ export class PresentationComponent implements OnInit {
     this.commencePartie = true
   }
 
-  questionSuivante() {
+  async questionSuivante() {
     this.indexQuestionCourante++;
     if (this.indexQuestionCourante < this.miahootPartie.questions.length) {
       this.question_courante.next(this.miahootPartie.questions[this.indexQuestionCourante]);
     }
+    console.log('oui')
+    updateDoc(doc(db, "parties", this.codePartie), {
+      questionCourante: this.indexQuestionCourante
+    });
+
+    //incremente questionCourante dans firebase
+
   }
 
   afficherReponse(reponse: string) {
