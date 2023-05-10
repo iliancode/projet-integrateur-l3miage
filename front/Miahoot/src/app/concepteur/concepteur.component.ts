@@ -20,6 +20,7 @@ private email : string | null | undefined ;
   uid = '';
   miahoots: Miahoot[] = [];
   miahoot : Miahoot;
+  idMiahootCourant! : number
   constructor(public router : Router, public ds:DsService, public auth :AuthService, public ps:PresentationService, private sms: SelectedMiahootService) {
     this.miahoot = this.miahoots[0];
 
@@ -29,8 +30,9 @@ private email : string | null | undefined ;
   }
 
   selectMiahoot(id: number){
-    this.sms.setSelectedMiahootId(id);
-    console.log("id miahoot : "+ id);
+    const vraiId = this.gestionIdMiahoot(id)?? 0
+    this.sms.setSelectedMiahootId(vraiId);
+    console.log("id miahoot : "+ vraiId);
     this.router.navigateByUrl("/modifier")
   }
 
@@ -51,20 +53,20 @@ private email : string | null | undefined ;
     })
       .catch(()=>console.warn("probleme avec la recup de l' utilisateur "))
   }
-  // supprime dans la vue html et dans l'api
 
 
   // supprime dans la vue html et dans l'api
   supprimeMiahoot(id : number) {
-    this.ds.deleteMiahoot(id)
+    const vraiId = this.gestionIdMiahoot(id-1)?? 0
+    this.ds.deleteMiahoot(vraiId)
       .then(()=>{
         console.log("supprimé de la bd api")
-        const del = document.getElementById("" + id)
+        /*const del = document.getElementById("" + id)
         if(del !== null){
           del.remove()
         }else{
           console.warn("l element n existe pas dans l html")
-        }
+        }*/
       })
   }
 
@@ -78,6 +80,11 @@ private email : string | null | undefined ;
 
 
     this.ds.postM(uid, miahootObj);
+  }
+
+  // renvoi le "vrai" id du miahoot
+  gestionIdMiahoot(idAffichage : number){
+    return this.miahoots[idAffichage].id
   }
 
 
