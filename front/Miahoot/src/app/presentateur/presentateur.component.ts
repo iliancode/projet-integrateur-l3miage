@@ -86,7 +86,6 @@ export class PresentateurComponent implements OnInit{
 
           const docRef = doc(this.us.getFirestore(), `parties/${code.value}/` );
 
-
           //const newCollectionMiahoots = doc(this.us.getFirestore(), `parties/${code.value}/miahoots/miahoot` );
           let nomMiahoot = x.then(miahoot =>{
 
