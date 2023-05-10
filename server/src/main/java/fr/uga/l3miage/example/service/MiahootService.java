@@ -74,10 +74,10 @@ public class MiahootService {
     }
 
 
-    public void updateFullMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot, final CreateFullMiahootRequest request) {
+    public void updateFullMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot, final MiahootDTO request) {
         try {
             miahootComponent.updateFullMiahootOfEnseignant(uidEnseignant, idMiahoot, request);
-        } catch (MiahootEntityNotFoundException e) {
+        } catch (EnseignantEntityNotFoundException | MiahootEntityNotFoundException e) {
             throw new MiahootEntityNotFoundRestException(e.getMessage(), idMiahoot, e);
         }
     }

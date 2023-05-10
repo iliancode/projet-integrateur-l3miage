@@ -22,7 +22,7 @@ public interface MiahootMapper {
     MiahootDTO toDto(Miahoot miahoot);
     List<MiahootDTO> toDto(List<Miahoot> miahoots);
 
-    void mergeMiahootEntity(@MappingTarget @NonNull Miahoot ActualMiahoot, CreateFullMiahootRequest request);
+    void mergeMiahootEntity(@MappingTarget @NonNull Miahoot actualMiahoot, MiahootDTO request);
 
 
 

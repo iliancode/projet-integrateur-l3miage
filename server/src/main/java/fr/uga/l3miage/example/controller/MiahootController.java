@@ -42,7 +42,7 @@ public class MiahootController implements MiahootEndpoint {
     }
 
     @Override
-    public void updateFullMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot, final CreateFullMiahootRequest request) {
+    public void updateFullMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot, final MiahootDTO request) {
         miahootService.updateFullMiahootOfEnseignant(uidEnseignant, idMiahoot, request);
     }
 }

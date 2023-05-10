@@ -75,10 +75,10 @@ public interface MiahootEndpoint {
     @Operation(description = "Mise à jour d'une entité Miahoot ainsi que ses Questions et ses Réponses")
     @ApiResponse(responseCode = "202", description = "L'entité à bien été mis à jour")
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'est pas trouvée",
-            content = @Content(schema = @Schema(implementation = MiahootNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+            content = @Content(schema = @Schema(implementation = MiahootDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @Error400Custom
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping("enseignants/{uidEnseignant}/miahoots/{idMiahoot}")
-    void updateFullMiahootOfEnseignant(@PathVariable("uidEnseignant") final String uidEnseignant, @PathVariable("idMiahoot") final Long idMiahoot, @Valid @RequestBody final CreateFullMiahootRequest request);
+    void updateFullMiahootOfEnseignant(@PathVariable("uidEnseignant") final String uidEnseignant, @PathVariable("idMiahoot") final Long idMiahoot, @Valid @RequestBody final MiahootDTO request);
 
 }
