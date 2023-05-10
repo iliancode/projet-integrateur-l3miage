@@ -10,6 +10,8 @@ import {UserService} from "../service/user.service";
 import {DsService} from "../service/ds.service";
 import {addDoc, getDocs} from "@angular/fire/firestore";
 import {db} from "../../environments/test";
+import {increment} from "@angular/fire/database";
+//import Chart from 'chart.js/auto';
 
 
 
@@ -76,9 +78,21 @@ export class PresentateurComponent implements OnInit{
     let code = document.getElementById("codePartie") as HTMLInputElement;
     let uid = '';
 
-    const w =  this.verificationCodePartie(parseInt(code.value)).then(estPresent => {
+
+     const w =  this.verificationCodePartie(parseInt(code.value)).then(estPresent => {
       console.log(estPresent);
       if (estPresent == false) {
+
+        this.miahoot.questions.forEach((question,index) => {
+          this.miahoot.questions[index].reponses.forEach((reponse) => {
+            const partieRef = doc(db, "parties", code.value);
+            const questionRef= doc(partieRef,'questions', question.id!.toString());
+            const reponseRef = doc(questionRef, 'reponses', reponse.id!.toString());
+            setDoc(reponseRef, {participantVote: []}, {merge: true});
+
+          });
+
+        });
 
         //si le code partie n'existe pas encore
         const u =  firstValueFrom(this.auth.currentUser).then(user=>{

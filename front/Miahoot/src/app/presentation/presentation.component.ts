@@ -6,15 +6,15 @@ import {BehaviorSubject, firstValueFrom, Observable, Subscription} from "rxjs";
 import {user} from "@angular/fire/auth";
 import {Reponse} from "../service/interfaces";
 import {ActivatedRoute} from "@angular/router";
-import {addDoc, getDocs, onSnapshot, query, updateDoc, where} from "@angular/fire/firestore";
+import {addDoc, arrayUnion, getDocs, onSnapshot, query, updateDoc, where} from "@angular/fire/firestore";
 import {collection, doc, getFirestore, setDoc} from "firebase/firestore";
 import {db} from "../../environments/test";
-import {getDatabase, set} from "@angular/fire/database";
+import {getDatabase, increment, set} from "@angular/fire/database";
 import {ref} from "@angular/fire/storage";
 import {AngularFireList} from "@angular/fire/compat/database";
 import {IndexQuestionService} from "../service/index-question.service";
 //import {AngularFirestore} from "@angular/fire/compat/firestore";
-
+import 'firebase/firestore';
 @Component({
   selector: 'app-presentation',
   templateUrl: './presentation.component.html',
@@ -30,6 +30,7 @@ export class PresentationComponent implements OnInit {
   public readonly question_courante: BehaviorSubject<Question | null>;
   selectedReponse: any = null;
 
+  uid = '';
   showCorrectAnswer = false;
   public routeSub: Subscription | undefined = undefined;
   codePartie ='';
@@ -54,6 +55,9 @@ export class PresentationComponent implements OnInit {
     this.routeSub = this.route.params.subscribe(params => {
       this.codePartie = params['codePartie'];
     });
+    const u =  firstValueFrom(this.auth.currentUser).then(user=>{
+      this.uid = user?.uid!;
+    }) ;
     const q = query(collection(db, `parties`), where("codePartie", "==", this.codePartie));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -145,15 +149,26 @@ export class PresentationComponent implements OnInit {
     let reponse= document.getElementsByClassName("selected") as HTMLCollectionOf<HTMLElement>;
     let reponseSelected = reponse[0].id;
 
+
+    this.miahootPartie.questions.forEach((question) => {
+      const partieRef = doc(db, "parties", this.codePartie);
+      const questionRef= doc(partieRef,'questions', question.id!.toString());
+       const reponseRef = doc(questionRef, 'reponses', reponseSelected);
+      updateDoc(reponseRef, {
+        nbVotes: arrayUnion(this.uid)
+      });
+      });
+
+/*
     const u =  firstValueFrom(this.auth.currentUser).then(user=>{
-      const collParticipant = collection(this.us.getFirestore(), `parties/${this.codePartie}/${this.miahootPartie.questions[this.currentIndex].id }/participants/${parseInt(reponseSelected)}` );
+      const collParticipant = collection(this.us.getFirestore(), `parties/${this.codePartie}/questions/question/${this.miahootPartie.questions[this.currentIndex].id }/participants/${parseInt(reponseSelected)}` );
       addDoc(collParticipant, {
         uid: user?.uid??'',
 
       });
 
 
-    }) ;
+    }) ;*/
     document.getElementById('buttonConfirm')!.setAttribute('hidden', 'false');
 
   }

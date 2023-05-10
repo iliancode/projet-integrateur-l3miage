@@ -3,4 +3,12 @@ zefzee
 
 EN DUR BELEK : 0000000012567899
 
+<p>code partie selon le param du lien : {{codePartie}}</p>
 
+<div *ngIf="liste_reponses | async as lr">
+  <div *ngFor="let reponse of lr ; index as i">
+    <p>Graphique de la question  {{ reponse.idQuestion }} : {{ reponse.labelQuestion }} </p>
+    <p>La réponse : {{ reponse.labelReponse }} a obtenue  {{ reponse.nbVotes }} votes !</p>
+
+  </div>
+</div>

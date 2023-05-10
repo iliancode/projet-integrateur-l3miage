@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -7,9 +7,17 @@ import { BehaviorSubject} from "rxjs";
 export class IndexQuestionService {
   private currentQuestionSubject = new BehaviorSubject<any>(null)
   public currentQuestion$ = this.currentQuestionSubject.asObservable();
+  private listReponses = new BehaviorSubject<any>(null)
+  public currentReponses = this.listReponses.asObservable();
 
-  constructor() { }
+  constructor() {
 
+  }
+
+  public setNewReponse (reponse : any){
+    this.listReponses.next(reponse);
+    //this.tab.push(reponse);
+  }
 
   public setCurrentQuestion (index : any){
     this.currentQuestionSubject.next(index);
