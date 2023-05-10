@@ -1,22 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AuthService} from "../service/auth.service";
 import {DsService, Enseignant, Miahoot, Question} from "../service/ds.service";
 import {UserService} from "../service/user.service";
-import {BehaviorSubject, firstValueFrom, Subscription} from "rxjs";
+import {BehaviorSubject, firstValueFrom, Observable, Subscription} from "rxjs";
 import {user} from "@angular/fire/auth";
 import {Reponse} from "../service/interfaces";
 import {ActivatedRoute} from "@angular/router";
 import {getDocs, onSnapshot, query, updateDoc, where} from "@angular/fire/firestore";
-import {collection, doc, setDoc} from "firebase/firestore";
+import {collection, doc, getFirestore, setDoc} from "firebase/firestore";
 import {db} from "../../environments/test";
 import {getDatabase, set} from "@angular/fire/database";
 import {ref} from "@angular/fire/storage";
+import {AngularFireList} from "@angular/fire/compat/database";
+import {IndexQuestionService} from "../service/index-question.service";
 //import {AngularFirestore} from "@angular/fire/compat/firestore";
 
 @Component({
   selector: 'app-presentation',
   templateUrl: './presentation.component.html',
-  styleUrls: ['./presentation.component.scss']
+  styleUrls: ['./presentation.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PresentationComponent implements OnInit {
 
@@ -30,20 +33,26 @@ export class PresentationComponent implements OnInit {
   public routeSub: Subscription | undefined = undefined;
   codePartie ='';
   miahootPartie !: Miahoot ;
+  indexRecup = 0;
+  public currentIndex:any ;
   //dbb:any;
   constructor(private auth :  AuthService, private ds :DsService, private us:UserService, private route: ActivatedRoute,
-              /*private firestore: AngularFirestore*/) {
+              private indexQuestionService:IndexQuestionService , private cdr: ChangeDetectorRef){
     this.question_courante = new BehaviorSubject<Question | null>(null,);
+    this.indexQuestionService.currentQuestion$.subscribe((index) => {
+      this.currentIndex = index;
+      console.log("index courant: ", this.currentIndex)
+      this.cdr.markForCheck();
+    });
     //this.dbb = firestore;
+
+
   }
 
   async ngOnInit(){
     this.routeSub = this.route.params.subscribe(params => {
-      console.log(params) //log the entire params object
-      console.log(params['codePartie']) //log the value of id
       this.codePartie = params['codePartie'];
     });
-    console.log("ici")
     const q = query(collection(db, `parties`), where("codePartie", "==", this.codePartie));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -52,12 +61,14 @@ export class PresentationComponent implements OnInit {
       this.miahootPartie = doc.get('miahoot');
     });
 
-
     await this.isEnseignant();
+
     this.question_courante.next(this.miahootPartie.questions[this.indexQuestionCourante]);
 
     const unsub = onSnapshot(doc(db, "parties", this.codePartie), (doc) => {
-      console.log("Miahoot modifié: ", doc.data());
+      console.log("Miahoot modifié: ", doc.get('indexQuestionCourante'));
+      this.indexRecup = doc.get('indexQuestionCourante');
+      this.indexQuestionService.setCurrentQuestion(this.indexRecup);
     });
   }
 
@@ -78,13 +89,18 @@ export class PresentationComponent implements OnInit {
   }
 
   async questionSuivante() {
+
     this.indexQuestionCourante++;
-    if (this.indexQuestionCourante < this.miahootPartie.questions.length) {
-      this.question_courante.next(this.miahootPartie.questions[this.indexQuestionCourante]);
-    }
-    console.log('oui')
+
+    console.log('question courante : ' + this.question_courante.getValue()?.label);
+
     updateDoc(doc(db, "parties", this.codePartie), {
-      questionCourante: this.indexQuestionCourante
+      indexQuestionCourante: this.indexQuestionCourante
+    }).then(() => {
+      console.log("Document successfully updated!");
+      if (this.indexQuestionCourante < this.miahootPartie.questions.length) {
+        this.question_courante.next(this.miahootPartie.questions[this.indexRecup]);
+      }
     });
 
 

@@ -28,7 +28,7 @@
 
     <div *ngIf="question_courante | async as Q;">
       <div class="myDiv">
-        <h2>{{ Q.label }}</h2>
+        <h2  >{{  miahootPartie.questions[indexRecup].label }}</h2>
       </div>
       <div  class="reponses">
         <div *ngFor="let reponse of Q.reponses; index as i" class="test" > <br/>
@@ -59,19 +59,20 @@ il faut les elements suivants :
 -->
   <div *ngIf="!estPresentateur" >
     <!--ici la liste de boutons choix -->
-    <div *ngIf="question_courante | async as Q;">
+    <div *ngIf="miahootPartie.questions[currentIndex] ">
       <div class="myDiv">
         <h3> VUE PARTICIPANT</h3>
-        <h2>{{ Q.label }}</h2>
+        <h2 >{{ miahootPartie.questions[currentIndex].label }}</h2>
       </div>
       <br/>
 
-      <div  class="reponses">
-        <div *ngFor="let reponse of Q.reponses" class="test">
+
+      <div  class="reponses" id="lesReponses">
+        <div *ngFor="let reponse of miahootPartie.questions[currentIndex].reponses" class="test">
           <button (click)="toggleReponse(reponse)" [ngClass]="{'selected': reponsesUtilisateur.includes(reponse.id ?? 0)}" class="box" mat-raised-button>{{ reponse.label }}</button>
         </div>
       </div>
-      <button (click)="confirmerChoix()" mat-raised-button> Confirmer mes choix </button>
+      <button (click)="confirmerChoix()" id="buttonConfirme" mat-raised-button> Confirmer mes choix </button>
     </div>
   </div>
 </div>

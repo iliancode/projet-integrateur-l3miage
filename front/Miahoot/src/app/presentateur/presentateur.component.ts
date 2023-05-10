@@ -91,7 +91,7 @@ export class PresentateurComponent implements OnInit{
           let nomMiahoot = x.then(miahoot =>{
 
             setDoc(docRef, {
-              questionCourante: 0,
+              indexQuestionCourante: 0,
               //code partie
               codePartie: code.value,
               //nom partie
