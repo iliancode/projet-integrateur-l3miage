@@ -1,0 +1,11 @@
+
+
+<textarea class="tailleTxt"
+          matInput
+          #jsonMiahoot
+          placeholder="Coller votre nouvelle version de ce miahoot ici"
+          [value]="miahootEdit">
+</textarea>
+<button mat-button class="submitButton" (click)="majMiahoot(miahootId,jsonMiahoot.value)">
+  Envoyer les modifications
+</button>
