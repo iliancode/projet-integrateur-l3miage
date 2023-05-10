@@ -1,33 +1,33 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="participant.component.scss" href="style.css">
+  <link href="style.css" rel="participant.component.scss">
 </head>
 <body>
-  <div class="center">
-    <button  class="anonyme"*ngIf="! islogged" (click)="signInAnonymously()">  Connexion anonyme</button>
 
-  </div>
+<div class="center">
+  <button class="anonyme" (click)="signInAnonymously()" *ngIf="! islogged"> Connexion anonyme</button>
+</div>
 
-  <div *ngIf="islogged" class="entrerCodePartie" >
-    <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
-      <!--renseignement du code de la partie et du pseudo-->
-      <div class="inline">
-        <input type="text" name="codePartie" formControlName="codePartie" placeholder="Entrez le code de la partie">
-      </div><br>
-      <div class="inline">
-        <input type="text" name="pseudoParticipant" formControlName="pseudoParticipant" placeholder="Entrez votre pseudo">
-      </div><br>
+<div *ngIf="islogged" class="entrerCodePartie" >
+<form (ngSubmit)="onSubmit()" [formGroup]="reactiveForm">
+  <!--renseignement du code de la partie et du pseudo-->
+  <div class="inline">
+    <input formControlName="codePartie" name="codePartie" placeholder="Entrez le code de la partie" type="text">
+  </div><br>
+  <div class="inline">
+    <input formControlName="pseudoParticipant" id="pseudoParticipant" name="pseudoParticipant" placeholder="Entrez votre pseudo" type="text">
+  </div><br>
 
-      <a href="./presentation"><button type="submit" class="submit">Commencer la partie ! </button></a>
-    </form>
+  <button class="submit" type="submit">Commencer la partie ! </button>
+</form>
 
-    <p class ="messageSubmit" >
-      {{ message }}
-    </p>
+<p class ="messageSubmit" >
+  {{ message }}
+</p>
 
 
-  </div>
+</div>
 
 </body>
 </html>

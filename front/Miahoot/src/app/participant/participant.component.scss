@@ -3,7 +3,7 @@ body {
   /* Définir l'image de fond avec une seule répétition */
   //https://i.pinimg.com/736x/3d/ec/1e/3dec1eaa2d6c317ce54099c92bda5b8b.jpg
 //https://static.vecteezy.com/system/resources/previews/003/106/462/original/abstract-colorful-background-free-vector.jpg
-  background: url("https://i.pinimg.com/736x/3d/ec/1e/3dec1eaa2d6c317ce54099c92bda5b8b.jpg") no-repeat;
+  background: url("https://static.vecteezy.com/system/resources/previews/003/106/462/original/abstract-colorful-background-free-vector.jpg") no-repeat;
   /* Définir le mode de positionnement */
   background-position: center;
   /* Définir le mode de redimensionnement */
@@ -12,7 +12,7 @@ body {
   background-color: #000e28;
 
   @media only screen and (max-width: 600px) {
-    background: url("https://i.pinimg.com/736x/3d/ec/1e/3dec1eaa2d6c317ce54099c92bda5b8b.jpg") no-repeat;
+    background: url("https://static.vecteezy.com/system/resources/previews/003/106/462/original/abstract-colorful-background-free-vector.jpg") no-repeat;
     background-size: cover;
   }
 }
@@ -101,7 +101,8 @@ h1{
 }
 
 .anonyme{
-  background-color: #3d53c8;
+
+  background-color: #ef3c97;
   color: white;
   border-style: none;
   width: 70%;
@@ -123,13 +124,13 @@ h1{
   }
 }
 .anonyme:hover{
-  background: #90e0ef;
+  background: #ed1693;
   color: #fff;
   border-radius: 50px;
-  box-shadow: 0 0 2px #90e0ef,
-  0 0 25px #90e0ef,
-  0 0 50px #90e0ef,
-  0 0 100px #90e0ef;
+  box-shadow: 0 0 2px #ed1693,
+  0 0 25px #ed1693,
+  0 0 50px #ed1693,
+  0 0 100px #ed1693;
 
   transform:scale(1.05);
 }
