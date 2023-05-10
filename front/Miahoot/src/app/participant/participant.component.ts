@@ -106,9 +106,9 @@ export class ParticipantComponent implements OnInit{
           uid: p.uid,
 
         }).then(() => {
+          window.location.href = '/presentation/'+codeP;
           console.log("Participant enregistré avec succès sur Firestore !");
         })
-        console.log("Participant enregistré avec succès sur Firestore !");
       } else {
         alert("le code partie n'existe pas veuillez entrer un code valide");
         console.log("Le code partie n'existe pas :p ");
@@ -119,16 +119,16 @@ export class ParticipantComponent implements OnInit{
   async verificationCodePartie(codeP : number): Promise<boolean>{
 
 
-console.log("CODE P :"+codeP.toString())
-let estPresent : boolean = false;
-const querySnapshot = await getDocs(collection(this.us.getFirestore(), "parties"));
-querySnapshot.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-  console.log(doc.id, " => ");
-  if(doc.id == codeP.toString()){
-    estPresent = true;
+    console.log("CODE P :"+codeP.toString())
+    let estPresent : boolean = false;
+    const querySnapshot = await getDocs(collection(this.us.getFirestore(), "parties"));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ");
+      if(doc.id == codeP.toString()){
+        estPresent = true;
+      }
+    });
+    return estPresent;
   }
-});
-return estPresent;
-}
 }

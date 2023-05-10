@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'connexion', component: ConnexionComponent},
   {path: 'concepteur', component: ConcepteurComponent},
   {path: 'presentateur', component: PresentateurComponent},
-  {path: 'presentation', component: PresentationComponent},
+  {path: 'presentation/:codePartie', component: PresentationComponent},
   {path: "creation", component: CreationComponent},
   {path: '**',component: AccueilComponent}
 ]
