@@ -28,6 +28,7 @@ export class PresentationComponent implements OnInit {
   indexQuestionCourante = 0;
   reponsesUtilisateur: number[] = [];
   public readonly question_courante: BehaviorSubject<Question | null>;
+  selectedReponse: any = null;
 
   showCorrectAnswer = false;
   public routeSub: Subscription | undefined = undefined;
@@ -123,12 +124,18 @@ export class PresentationComponent implements OnInit {
     }
   }
 
+  onButtonClick(reponse: Reponse){
+    this.selectedReponse = reponse;
+    document.getElementById('buttonConfirm')!.attributes.removeNamedItem('hidden');
+
+  }
+
   confirmerChoix() {
-    const resp = this.reponsesUtilisateur.indexOf
-    console.log(this.reponsesUtilisateur);
+    let reponse= document.getElementsByClassName("selected") as HTMLCollectionOf<HTMLElement>;
+    let reponseSelected = reponse[0].id;
 
     const u =  firstValueFrom(this.auth.currentUser).then(user=>{
-      const collParticipant = collection(this.us.getFirestore(), `parties/${this.codePartie}/${this.miahootPartie.questions[this.indexQuestionCourante].id }/participants/${this.reponsesUtilisateur}` );
+      const collParticipant = collection(this.us.getFirestore(), `parties/${this.codePartie}/${this.miahootPartie.questions[this.currentIndex].id }/participants/${parseInt(reponseSelected)}` );
       addDoc(collParticipant, {
         uid: user?.uid??'',
 
@@ -136,7 +143,7 @@ export class PresentationComponent implements OnInit {
 
 
     }) ;
-
+    document.getElementById('buttonConfirm')!.setAttribute('hidden', 'false');
 
   }
 

@@ -69,10 +69,10 @@ il faut les elements suivants :
 
       <div  class="reponses" id="lesReponses">
         <div *ngFor="let reponse of miahootPartie.questions[currentIndex].reponses" class="test">
-          <button (click)="toggleReponse(reponse)" [ngClass]="{'selected': reponsesUtilisateur.includes(reponse.id ?? 0)}" class="box" mat-raised-button>{{ reponse.label }}</button>
+          <button (click)="onButtonClick(reponse)" [ngClass]="{'selected': selectedReponse === reponse }" class="box" id="{{reponse.id}}" mat-raised-button>{{ reponse.label }}</button>
         </div>
       </div>
-      <button (click)="confirmerChoix()" id="buttonConfirme" mat-raised-button> Confirmer mes choix </button>
+      <button (click)="confirmerChoix()" hidden="true" id="buttonConfirm" mat-raised-button> Confirmer mes choix </button>
     </div>
   </div>
 </div>

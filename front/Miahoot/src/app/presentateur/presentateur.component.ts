@@ -100,12 +100,7 @@ export class PresentateurComponent implements OnInit{
               });
             });*/
 
-            miahoot.questions.forEach((question, index )=> {
-              const collParticipant = collection(this.us.getFirestore(), `parties/${code.value}/${question.id }/participants/${question.reponses[index].id}` );
-              addDoc(collParticipant, {
 
-              });
-            }, );
 
             setDoc(docRef, {
 
