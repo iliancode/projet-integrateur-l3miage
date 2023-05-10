@@ -1,6 +1,20 @@
 
 body {
-  background: linear-gradient(#141e30, #243b55);
+  /* Définir l'image de fond avec une seule répétition */
+  //https://i.pinimg.com/736x/3d/ec/1e/3dec1eaa2d6c317ce54099c92bda5b8b.jpg
+//https://static.vecteezy.com/system/resources/previews/003/106/462/original/abstract-colorful-background-free-vector.jpg
+  background: url("https://i.pinimg.com/736x/3d/ec/1e/3dec1eaa2d6c317ce54099c92bda5b8b.jpg") no-repeat;
+  /* Définir le mode de positionnement */
+  background-position: center;
+  /* Définir le mode de redimensionnement */
+  background-size: cover;
+  /* Définir la couleur de fond en cas d'échec de chargement de l'image */
+  background-color: #000e28;
+
+  @media only screen and (max-width: 600px) {
+    background: url("https://i.pinimg.com/736x/3d/ec/1e/3dec1eaa2d6c317ce54099c92bda5b8b.jpg") no-repeat;
+    background-size: cover;
+  }
 }
 input{
   width: 100%;
@@ -84,5 +98,51 @@ h1{
     margin-top:2%;
     font-size: 13px;
   }
+}
+
+.anonyme{
+  background-color: #3d53c8;
+  color: white;
+  border-style: none;
+  width: 70%;
+  height: 100%;
+  font-weight: bold;
+  font-size: 25px;
+  cursor: pointer;
+  transition: .6s;
+  border-radius: 50px;
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+    transition: .6s;
+    border-radius: 50px;
+  }
+}
+.anonyme:hover{
+  background: #90e0ef;
+  color: #fff;
+  border-radius: 50px;
+  box-shadow: 0 0 2px #90e0ef,
+  0 0 25px #90e0ef,
+  0 0 50px #90e0ef,
+  0 0 100px #90e0ef;
+
+  transform:scale(1.05);
+}
+
+.center{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+  height: 18%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 

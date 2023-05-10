@@ -11,9 +11,11 @@
   <div>
     <mat-card class="leftCard">
       <mat-card-header>
-        <mat-card-title> Enseignant </mat-card-title>
+       <div class="titreEnseignant">
+         <h1> Enseignant </h1>
+       </div>
       </mat-card-header>
-      <img mat-card-image class="imageCard" src="https://img.freepik.com/free-vector/student-guy-studying-internet-watching-online-lecture-computer-talking-math-tutor-through-video-call-cartoon-illustration_74855-14524.jpg?w=740&t=st=1682541499~exp=1682542099~hmac=a8ce9576ab5aef6eff8c6ea7931d678fc501aa93e9a4df68a03d65a420d48dcd" alt="Image enseignant"/>
+      <img mat-card-image class="imageCardEnseignant" src="https://img.freepik.com/vecteurs-libre/personnes-qui-utilisent-ordinateurs-etudient-ecole-ligne_1262-20670.jpg?w=900&t=st=1683706845~exp=1683707445~hmac=65c68b418c9f203cb6947febb336f9c8249bb02d6c29e838e9b2faa6df2eb44e" alt="Image enseignant"/>
       <mat-card-content>
         <p>
           En cliquant sur le boutton ci-dessous
@@ -21,7 +23,8 @@
           en tant qu'enseignant suite à
           une connexion via un login.
         </p>
-        <a href="/login"><button class="EnsButton"  mat-raised-button>Se connecter en tant qu'enseignant</button>
+        <a href="/login">
+          <button class="enseignantBtn" >Se connecter en tant qu'enseignant</button>
         </a>
       </mat-card-content>
     </mat-card>
@@ -29,17 +32,20 @@
   <div>
     <mat-card class="rightCard">
       <mat-card-header>
-        <mat-card-title> Participant </mat-card-title>
+        <div class="titreParticipant">
+          <h1> Participant </h1>
+        </div>
       </mat-card-header>
-      <img mat-card-image class="imageCard" src="https://img.freepik.com/free-vector/learning-concept-illustration_114360-3896.jpg?w=360&t=st=1682541412~exp=1682542012~hmac=73a1f4ae316fe61ee9a8a75d8754e2fbd585fdcf604e5047ca513a45ce6d0839" alt="Image etudiant"/>
+      <img mat-card-image class="imageCardParticipant" src="https://img.freepik.com/vecteurs-libre/etudiants-diplomes-plats-manteau-casquette-tenant-rouleau-papier-diplome-universitaire-heureux-jeunes-robe-academique-baccalaureat-celebrant-obtention-du-diplome-universite_88138-929.jpg?w=826&t=st=1683707150~exp=1683707750~hmac=b5db832ad4f70b8a5fcc66b0dd70988308636513078673062e7ac2085418f837" alt="Image etudiant"/>
       <mat-card-content>
         <p>
           En cliquant sur le boutton ci-dessous
           vous pourrez participer à une partie
           en entrant le code correspondant à celle-ci.
         </p>
+
         <a href="/participant" >
-          <button class="partButton" mat-raised-button>Participer à une partie</button>
+          <button class="participantBtn" >Participer à une partie</button>
         </a>
       </mat-card-content>
     </mat-card>

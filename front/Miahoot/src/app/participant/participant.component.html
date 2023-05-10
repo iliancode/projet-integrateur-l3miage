@@ -4,8 +4,10 @@
   <link rel="participant.component.scss" href="style.css">
 </head>
 <body>
+  <div class="center">
+    <button  class="anonyme"*ngIf="! islogged" (click)="signInAnonymously()">  Connexion anonyme</button>
 
-  <button *ngIf="! islogged" (click)="signInAnonymously()"> anonyme</button>
+  </div>
 
   <div *ngIf="islogged" class="entrerCodePartie" >
     <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
@@ -17,7 +19,7 @@
         <input type="text" name="pseudoParticipant" formControlName="pseudoParticipant" placeholder="Entrez votre pseudo">
       </div><br>
 
-      <button type="submit" class="submit">Commencer la partie ! </button>
+      <a href="/presentation"><button type="submit" class="submit">Commencer la partie ! </button></a>
     </form>
 
     <p class ="messageSubmit" >

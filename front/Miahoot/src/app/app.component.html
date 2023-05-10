@@ -1,10 +1,15 @@
-<mat-toolbar>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sigmar&display=swap" rel="stylesheet">
+</head>
+<mat-toolbar class="toolbar">
 
   <!-- --------------------------------------------------------------- -->
   <!-- when you click on the logo, go back to index -->
 
 
-  <img class="logoMiahoot" src="https://seeklogo.com/images/M/m-design-logo-09A5D82F03-seeklogo.com.png">
+
   <!-- boutton de menu pour parametres et autres
   <button mat-icon-button class="menu-icon" [matMenuTriggerFor]="Menu">
     <mat-icon>menu</mat-icon>
@@ -16,7 +21,8 @@
     </ng-template>
   </mat-menu>
   -->
-  <span>{{title}}</span>
+
+  <span class="miahoot">M!AHOOT</span>
   <!-- espacement -->
   <span class="spacer"></span>
   <ng-container *ngIf = "authS.currentUser| async as USER">
