@@ -55,6 +55,10 @@ export class PresentationComponent implements OnInit {
 
     await this.isEnseignant();
     this.question_courante.next(this.miahootPartie.questions[this.indexQuestionCourante]);
+
+    const unsub = onSnapshot(doc(db, "parties", this.codePartie), (doc) => {
+      console.log("Miahoot modifié: ", doc.data());
+    });
   }
 
   async isEnseignant(){
@@ -83,7 +87,6 @@ export class PresentationComponent implements OnInit {
       questionCourante: this.indexQuestionCourante
     });
 
-    //incremente questionCourante dans firebase
 
   }
 
