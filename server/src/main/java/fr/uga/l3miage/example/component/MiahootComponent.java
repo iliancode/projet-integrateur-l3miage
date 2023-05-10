@@ -1,20 +1,15 @@
 package fr.uga.l3miage.example.component;
 
-import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.MiahootEntityNotFoundRestException;
-import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ReponseEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
-import fr.uga.l3miage.example.mapper.QuestionMapper;
 import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
-import fr.uga.l3miage.example.models.Question;
 import fr.uga.l3miage.example.repository.EnseignantRepository;
 import fr.uga.l3miage.example.repository.MiahootRepository;
-import fr.uga.l3miage.example.repository.QuestionRepository;
 import fr.uga.l3miage.example.request.CreateFullMiahootRequest;
-import fr.uga.l3miage.example.response.QuestionDTO;
+import fr.uga.l3miage.example.response.MiahootDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -28,7 +23,7 @@ public class MiahootComponent {
     private final EnseignantComponent enseignantComponent;
     private final EnseignantRepository enseignantRepository;
     private final MiahootRepository miahootRepository;
-    private final QuestionMapper questionMapper;
+    private final MiahootMapper miahootMapper;
 
 
     public void createMiahootFromEnseignant(final String uidEnseignant, final Miahoot miahoot) throws Exception {
@@ -72,5 +67,13 @@ public class MiahootComponent {
         Enseignant enseignant = enseignantComponent.getEnseignantByUid(uidEnseignant);
         enseignant.getMiahoots().add(newMiahoot);
         miahootRepository.save(newMiahoot);
+    }
+
+
+    public void updateFullMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot, final MiahootDTO request) throws EnseignantEntityNotFoundException ,MiahootEntityNotFoundException {
+        Miahoot miahoot = getMiahootOfEnseignant(uidEnseignant, idMiahoot);
+        //Miahoot newMiahoot = miahootMapper.toEntity(request);
+        miahootMapper.mergeMiahootEntity(miahoot, request);
+        miahootRepository.save(miahoot);
     }
 }

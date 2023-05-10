@@ -2,7 +2,6 @@ package fr.uga.l3miage.example.endpoint;
 
 import fr.uga.l3miage.example.annotations.Error400Custom;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.EnseignantNotFoundErrorResponse;
-import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.*;
 import fr.uga.l3miage.example.response.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,17 +31,16 @@ public interface EnseignantEndpoint {
     void createEntityEnseignant(@Valid @RequestBody CreateEnseignantRequest request);
 
 
-    @Operation(description = "Récupération d'une entité Enseignant par son email")
+    @Operation(description = "Récupération d'une entité Enseignant par son uid")
     @ApiResponse(responseCode = "200", description = "L'entité Enseignant a bien été récupérée.",
     content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_STREAM_JSON_VALUE))
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'est pas trouvée",
            content = @Content(schema = @Schema(implementation = EnseignantNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{uidEnseignant}")
-    EnseignantDTO getEntityEnseignantByUid(@PathVariable("uidEnseignant") String uidEnseignant) throws Exception;
+    EnseignantDTO getEntityEnseignantByUid(@PathVariable("uidEnseignant") String uidEnseignant);
 
 
-    //get all enseignants
     @Operation(description = "Récupération de toutes les entités enseignant en bd")
     @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités enseignant",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
@@ -51,9 +49,8 @@ public interface EnseignantEndpoint {
     List<EnseignantDTO> getAllEnseignants();
 
 
-    //delete enseignant by mail
     @Operation(description = "Suppression d'une entité enseignant en bd")
-    @ApiResponse(responseCode = "200", description = "si isInError est à false alors l'element est renvoyé et supprimé")
+    @ApiResponse(responseCode = "200", description = "si l'element est bien supprimé")
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
@@ -61,6 +58,7 @@ public interface EnseignantEndpoint {
     void deleteEnseignantEntity(@PathVariable("uidEnseignant") String uidEnseignant);
 
 
+    // OPTIONNEL
     @Operation(description = "Modification d'une entité enseignant en bd")
     @ApiResponse(responseCode = "202", description = "l'entité a bien été modifiée")
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être modifiée",

@@ -4,6 +4,7 @@ import fr.uga.l3miage.example.endpoint.MiahootEndpoint;
 import fr.uga.l3miage.example.request.CreateFullMiahootRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.MiahootDTO;
+import fr.uga.l3miage.example.response.Test;
 import fr.uga.l3miage.example.service.MiahootService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,10 @@ public class MiahootController implements MiahootEndpoint {
     @Override
     public void createMiahootOfEnseignant(String uidEnseignant, CreateFullMiahootRequest createFullMiahootRequest) {
         miahootService.createMiahootOfEnseignant(uidEnseignant, createFullMiahootRequest);
+    }
 
+    @Override
+    public void updateFullMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot, final MiahootDTO request) {
+        miahootService.updateFullMiahootOfEnseignant(uidEnseignant, idMiahoot, request);
     }
 }

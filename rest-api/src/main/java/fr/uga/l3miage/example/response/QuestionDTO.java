@@ -15,8 +15,10 @@ import java.util.List;
 @Setter
 @Schema(description = "correspond au DTO de l'entité Question")
 public class QuestionDTO{
+    @Schema(description = "id de la question", example = "1")
     private Long id;
 
+    @Schema(description = "description de l'objet question", example = "Qu'est-ce qu'un \"URL\" ?")
     @NotBlank
     private String label;
     //@NotNull
