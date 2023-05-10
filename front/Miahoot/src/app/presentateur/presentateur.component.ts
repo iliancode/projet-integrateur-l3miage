@@ -9,6 +9,7 @@ import {collection, doc, setDoc} from "firebase/firestore";
 import {UserService} from "../service/user.service";
 import {DsService} from "../service/ds.service";
 import {addDoc, getDocs} from "@angular/fire/firestore";
+import {db} from "../../environments/test";
 
 
 
@@ -85,11 +86,29 @@ export class PresentateurComponent implements OnInit{
           let x = this.ds.getMiahootById(uid, parseInt(miahootSelected));
 
           const docRef = doc(this.us.getFirestore(), `parties/${code.value}/` );
-
+          const collQuestion = collection(this.us.getFirestore(), `parties/${code.value}/questions` );
           //const newCollectionMiahoots = doc(this.us.getFirestore(), `parties/${code.value}/miahoots/miahoot` );
           let nomMiahoot = x.then(miahoot =>{
 
+            /*addDoc(collQuestion, {
+              question: miahoot.questions
+            });*/
+           /* miahoot.questions.forEach(question => {
+              const collReponse = collection(this.us.getFirestore(), `parties/${code.value}/${question.id }`);
+              addDoc(collReponse, {
+                reponse: question.reponses
+              });
+            });*/
+
+            miahoot.questions.forEach((question, index )=> {
+              const collParticipant = collection(this.us.getFirestore(), `parties/${code.value}/${question.id }/participants/${question.reponses[index].id}` );
+              addDoc(collParticipant, {
+
+              });
+            }, );
+
             setDoc(docRef, {
+
               indexQuestionCourante: 0,
               //code partie
               codePartie: code.value,
@@ -99,6 +118,7 @@ export class PresentateurComponent implements OnInit{
               miahoot: miahoot
             }).then(
               () => {
+
                 let nompartie= document.getElementById("nompartie") as HTMLInputElement;
                 let tempval   = {codePartie: parseFloat(code.value), nom:nompartie.value}
 

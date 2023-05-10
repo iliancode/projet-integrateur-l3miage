@@ -6,7 +6,7 @@ import {BehaviorSubject, firstValueFrom, Observable, Subscription} from "rxjs";
 import {user} from "@angular/fire/auth";
 import {Reponse} from "../service/interfaces";
 import {ActivatedRoute} from "@angular/router";
-import {getDocs, onSnapshot, query, updateDoc, where} from "@angular/fire/firestore";
+import {addDoc, getDocs, onSnapshot, query, updateDoc, where} from "@angular/fire/firestore";
 import {collection, doc, getFirestore, setDoc} from "firebase/firestore";
 import {db} from "../../environments/test";
 import {getDatabase, set} from "@angular/fire/database";
@@ -126,6 +126,18 @@ export class PresentationComponent implements OnInit {
   confirmerChoix() {
     const resp = this.reponsesUtilisateur.indexOf
     console.log(this.reponsesUtilisateur);
+
+    const u =  firstValueFrom(this.auth.currentUser).then(user=>{
+      const collParticipant = collection(this.us.getFirestore(), `parties/${this.codePartie}/${this.miahootPartie.questions[this.indexQuestionCourante].id }/participants/${this.reponsesUtilisateur}` );
+      addDoc(collParticipant, {
+        uid: user?.uid??'',
+
+      });
+
+
+    }) ;
+
+
   }
 
 
