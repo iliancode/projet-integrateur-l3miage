@@ -57,7 +57,7 @@ private email : string | null | undefined ;
 
   // supprime dans la vue html et dans l'api
   supprimeMiahoot(id : number) {
-    const vraiId = this.gestionIdMiahoot(id-1)?? 0
+    const vraiId = this.gestionIdMiahoot(id)?? 0
     this.ds.deleteMiahoot(vraiId)
       .then(()=>{
         console.log("supprimé de la bd api")

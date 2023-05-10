@@ -29,8 +29,8 @@
         <div *ngFor="let miahoot of miahoots; index as i ">
           <button mat-button [matMenuTriggerFor]="menu" id="Miahoot-{{i+1}}">{{miahoot.nom}}</button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="supprimeMiahoot(i+1)"> Supprimer </button>
-            <button mat-menu-item (click)="selectMiahoot(i+1)"> Modifier </button>
+            <button mat-menu-item (click)="supprimeMiahoot(i)"> Supprimer </button>
+            <button mat-menu-item (click)="selectMiahoot(i)"> Modifier </button>
           </mat-menu>
         </div>
       </div>

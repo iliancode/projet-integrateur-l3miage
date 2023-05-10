@@ -46,7 +46,7 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   mail = '';
   mdp = '';
   pseudo = '';
-private bsAskUpdate = new BehaviorSubject<void>(undefined);
+
 
   constructor(private http: HttpClient, private auth: AuthService,  fireS: Firestore) {
     this.obsMiahoots = combineLatest([this.bsAskUpdate, auth.currentUser]).pipe(
@@ -179,7 +179,14 @@ private bsAskUpdate = new BehaviorSubject<void>(undefined);
       console.log("user not null")
       console.log(""+U.uid)
       this.http.patch<Miahoot>
-      (`/api/enseignants/${U.uid}/miahoots/${idMiahoot}`,updatedMiahoot)
+      (`/api/enseignants/${U.uid}/miahoots/${idMiahoot}`,updatedMiahoot).subscribe(
+        (res) => {
+          console.log("UPDATE request successful:", res);
+        },
+        (err) => {
+          console.error("Error updating Miahoot:", err);
+          throw "Erreur lors de la maj du Miahoot";
+        })
     }else{
       console.warn("user not found")
     }
