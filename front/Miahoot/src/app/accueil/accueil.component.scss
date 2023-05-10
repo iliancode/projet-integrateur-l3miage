@@ -2,7 +2,10 @@
 .card-container{
   width: 100%;
   padding: 4%;
-
+  @media only screen and (max-width: 600px) {
+    padding: 1%;
+    display: inline;
+  }
 }
 button{
 
@@ -15,15 +18,27 @@ button{
   width: 100%;
   border-radius: 10px;
   color: white;
+  @media only screen and (max-width: 600px) {
+    padding: 1%;
+    font-size: 14px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
 
 }
 .titreEnseignant{
   color: #f72585;
   font-size: 25px;
+  @media only screen and (max-width: 600px) {
+    font-size: 17px;
+  }
 }
 .titreParticipant{
   color: #aacc00;
   font-size: 25px;
+  @media only screen and (max-width: 600px) {
+    font-size: 17px;
+  }
 }
 .enseignantBtn{
   background-color: #f72585;
@@ -43,6 +58,13 @@ a{
   display: flex;
   justify-content: center;
   align-items: center;
+  @media only screen and (max-width: 600px) {
+    width: 80%;
+    margin: 0px 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
 }
 
@@ -54,21 +76,31 @@ a{
   display: flex;
   justify-content: center;
   align-items: center;
+  @media only screen and (max-width: 600px) {
+    width: 80%;
+    margin-left:  35px;
+    margin-top: 15px;
+  }
 
 }
 .rightCard img{
   margin-bottom: 3%;
   margin-top: 3%;
   border-radius: 20px;
+  @media only screen and (max-width: 600px) {
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
+
 }
 .leftCard img{
   margin-bottom: 3%;
   margin-top: 3%;
   border-radius: 20px;
-}
-
-.partButton{
-  background-color: lightblue;
+  @media only screen and (max-width: 600px) {
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
 }
 
 .imageCardEnseignant{
@@ -76,12 +108,22 @@ a{
   height: 350px;
   text-align: center;
   padding: 2%;
+  @media only screen and (max-width: 600px) {
+    width: 180px;
+    height: 95px;
+    padding: 1%;
+  }
 }
 .imageCardParticipant{
   width: 450px;
   height: 350px;
   text-align: center;
   padding: 2%;
+  @media only screen and (max-width: 600px) {
+    width: 180px;
+    height: 95px;
+    padding: 1%;
+  }
 }
 
 // animated background
