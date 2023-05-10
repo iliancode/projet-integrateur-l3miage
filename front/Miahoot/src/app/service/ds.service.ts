@@ -39,12 +39,14 @@ export interface Miahoot {
 export class DsService {
 
 
+private bsAskUpdate = new BehaviorSubject<void>(undefined);
 readonly obsMiahoots: Observable<Miahoot[]>;
   public  user: Observable<User | null> = EMPTY;
+
   mail = '';
   mdp = '';
   pseudo = '';
-private bsAskUpdate = new BehaviorSubject<void>(undefined);
+
 
   constructor(private http: HttpClient, private auth: AuthService,  fireS: Firestore) {
     this.obsMiahoots = combineLatest([this.bsAskUpdate, auth.currentUser]).pipe(
@@ -65,11 +67,7 @@ private bsAskUpdate = new BehaviorSubject<void>(undefined);
 
     let url = "http://localhost:8080/api/enseignants/";
     url += uid + "/miahoots/" + id
-    let reponse =  lastValueFrom(this.http.get<any>(url)).then((value) => {
-        return value;
-      }
-    );
-    return  reponse;
+    return  lastValueFrom(this.http.get<any>(url));
   }
 
   async createMiahoot(M: Miahoot): Promise<Miahoot> {
@@ -173,4 +171,63 @@ private bsAskUpdate = new BehaviorSubject<void>(undefined);
   }
 
   //get partie
+
+
+  async updateMiahoot(idMiahoot: number, updatedMiahoot: Miahoot){
+    // V1 update à verifier
+    const U = await firstValueFrom(this.auth.currentUser);
+    if(U !== null){
+      console.log("user not null")
+      console.log(""+U.uid)
+      this.http.patch<Miahoot>
+      (`/api/enseignants/${U.uid}/miahoots/${idMiahoot}`,updatedMiahoot).subscribe(
+        (res) => {
+          console.log("UPDATE request successful:", res);
+        },
+        (err) => {
+          console.error("Error updating Miahoot:", err);
+          throw "Erreur lors de la maj du Miahoot";
+        })
+    }else{
+      console.warn("user not found")
+    }
+  }
+
+  // convertie un json en miahoot
+
+  jsonToMiahoot(json : string): Miahoot{
+    const miahoot: Miahoot = JSON.parse(json, (key, value): Miahoot => {
+    if (key === 'reponses') {
+      return value.map((reponse: Reponse) => ({
+        id: reponse.id,
+        label: reponse.label,
+        estValide: reponse.estValide,
+      }));
+    } else if (key === 'questions') {
+      return value.map((question: Question) => ({
+        id: question.id,
+        label: question.label,
+        reponses: question.reponses.map((reponse: Reponse) => ({
+          id: reponse.id,
+          label: reponse.label,
+          estValide: reponse.estValide,
+        })),
+      }));
+    } else {
+      return value
+    }
+  });
+    console.log(miahoot.nom)
+    miahoot.questions.forEach((q)=> {console.log(q.label)})
+    miahoot.questions.forEach((q)=>{
+      q.reponses.forEach((r)=>{
+        console.log(r.label)
+        console.log(r.estValide)
+      })
+    })
+    return miahoot
+  }
+
+
+
 }

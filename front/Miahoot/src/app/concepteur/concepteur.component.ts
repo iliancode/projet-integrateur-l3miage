@@ -7,6 +7,7 @@ import {Auth, authState, User} from "@angular/fire/auth";
 import {AuthService} from "../service/auth.service";
 import {firstValueFrom, Observable} from "rxjs";
 import {PresentationService} from "../service/presentation.service";
+import {SelectedMiahootService} from "../service/selected-miahoot.service";
 @Component({
   selector: 'app-concepteur',
   templateUrl: './concepteur.component.html',
@@ -14,12 +15,13 @@ import {PresentationService} from "../service/presentation.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConcepteurComponent implements OnInit{
+private email : string | null | undefined ;
+
   uid = '';
   miahoots: Miahoot[] = [];
   miahoot : Miahoot;
-private email : string | null | undefined ;
-
-  constructor(public router : Router, public ds:DsService, public auth :AuthService, public ps:PresentationService) {
+  idMiahootCourant! : number
+  constructor(public router : Router, public ds:DsService, public auth :AuthService, public ps:PresentationService, private sms: SelectedMiahootService) {
     this.miahoot = this.miahoots[0];
 
     const u =  firstValueFrom(this.auth.currentUser).then(user=>{
@@ -27,6 +29,12 @@ private email : string | null | undefined ;
     }) ;
   }
 
+  selectMiahoot(id: number){
+    const vraiId = this.gestionIdMiahoot(id)?? 0
+    this.sms.setSelectedMiahootId(vraiId);
+    console.log("id miahoot : "+ vraiId);
+    this.router.navigateByUrl("/modifier")
+  }
 
 
   ngOnInit(): void {
@@ -39,24 +47,26 @@ private email : string | null | undefined ;
           console.log(this.miahoots);
           console.log(this.miahoot);
 
-        });
+        })
+        .catch(()=>console.warn("probleme avec le get des miahoots"))
 
-    }) ;
+    })
+      .catch(()=>console.warn("probleme avec la recup de l' utilisateur "))
   }
-  // supprime dans la vue html et dans l'api
 
 
   // supprime dans la vue html et dans l'api
   supprimeMiahoot(id : number) {
-    this.ds.deleteMiahoot(id)
+    const vraiId = this.gestionIdMiahoot(id)?? 0
+    this.ds.deleteMiahoot(vraiId)
       .then(()=>{
         console.log("supprimé de la bd api")
-        const del = document.getElementById("" + id)
+        /*const del = document.getElementById("" + id)
         if(del !== null){
           del.remove()
         }else{
           console.warn("l element n existe pas dans l html")
-        }
+        }*/
       })
   }
 
@@ -70,6 +80,11 @@ private email : string | null | undefined ;
 
 
     this.ds.postM(uid, miahootObj);
+  }
+
+  // renvoi le "vrai" id du miahoot
+  gestionIdMiahoot(idAffichage : number){
+    return this.miahoots[idAffichage].id
   }
 
 

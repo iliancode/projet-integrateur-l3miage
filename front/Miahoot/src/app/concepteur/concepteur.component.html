@@ -21,11 +21,16 @@
        et il faudra recuperer le nom des miahoot pour les afficher à la place de miahoot name-->
 
       <div *ngIf="miahoots ">
+        <!-- maj sur gestion id : v0 on utilise un index
+         ce qui est vrm pas pratique si on supprimeplusieur miahoots car l'id sera desynchro
+         but de la maj : on va récuperer l'id en sélectionant le miahoot
+         tq on aura un attribut idMiahootCourant qui se mettra à jour en fonction
+         du miahoot selectionné ! -->
         <div *ngFor="let miahoot of miahoots; index as i ">
           <button mat-button [matMenuTriggerFor]="menu" id="Miahoot-{{i+1}}">{{miahoot.nom}}</button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="supprimeMiahoot(i+1)"> Supprimer </button>
-            <button mat-menu-item> Modifier </button>
+            <button mat-menu-item (click)="supprimeMiahoot(i)"> Supprimer </button>
+            <button mat-menu-item (click)="selectMiahoot(i)"> Modifier </button>
           </mat-menu>
         </div>
       </div>

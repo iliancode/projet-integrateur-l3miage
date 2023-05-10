@@ -20,10 +20,11 @@ export class PresentationService {
 
   async getMiahootsOfEnseignant(uid: string): Promise<Miahoot[]> {
     console.log('ici')
-    const enseignant = await this.getEnseignant(uid);
+   // const enseignant = await this.getEnseignant(uid);
     console.log('la')
+
     const url = `${this.urlServeurApi}/${uid}/miahoots/`;
-    console.log(`${this.urlServeurApi}/${uid}/miahoots/`);
+    console.log("quentin")
     return firstValueFrom(this.http.get<Miahoot[]>(url));
   }
 

@@ -15,11 +15,10 @@ import java.util.List;
 public interface EnseignantMapper {
 
     Enseignant toEntity(CreateEnseignantRequest request);
-    Enseignant toEnseignant(CreateEnseignantRequest request);
+
     EnseignantDTO toDto(Enseignant enseignant);
+    List<EnseignantDTO> toDto(List<Enseignant> enseignants);
 
     void mergeEnseignantEntity(@MappingTarget @NonNull Enseignant ancientEnseignant, CreateEnseignantRequest request);
-
-    List<EnseignantDTO> toDto(List<Enseignant> enseignants);
 
 }
