@@ -36,6 +36,7 @@ import { LoginComponent } from './authent/login/login.component';
 import { RegisterComponent } from './authent/register/register.component';
 import { CreationComponent } from './creation/creation.component'
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import { ResultatComponent } from './resultat/resultat.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     PresentationComponent,
     LoginComponent,
     RegisterComponent,
-    CreationComponent
+    CreationComponent,
+    ResultatComponent
   ],
     imports: [
         HttpClientModule,

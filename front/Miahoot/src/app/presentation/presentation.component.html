@@ -30,7 +30,7 @@
       <div class="myDiv">
         <h2  >{{  miahootPartie.questions[indexRecup].label }}</h2>
       </div>
-      <div  class="reponses">
+      <div  class="reponses" id="repprof">
         <div *ngFor="let reponse of Q.reponses; index as i" class="test" > <br/>
           <div class="box" id="box-{{i+1}}"><p>{{ reponse.label }}</p></div>
           <br/>

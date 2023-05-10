@@ -91,9 +91,19 @@ export class PresentationComponent implements OnInit {
 
   async questionSuivante() {
 
+    console.log("this.miahootPartie.questions.length " + this.miahootPartie.questions.length);
+    console.log("indexQuestionCourante " + this.indexQuestionCourante)
     this.indexQuestionCourante++;
-
+    console.log("indexQuestionCourante++ " + this.indexQuestionCourante)
     console.log('question courante : ' + this.question_courante.getValue()?.label);
+
+
+    if(this.miahootPartie.questions.length <= this.indexQuestionCourante){
+      window.location.href = '/resultats/' + this.codePartie;
+      console.log("ya plus de question bozo");
+
+    }else {
+
 
     updateDoc(doc(db, "parties", this.codePartie), {
       indexQuestionCourante: this.indexQuestionCourante
@@ -103,6 +113,7 @@ export class PresentationComponent implements OnInit {
         this.question_courante.next(this.miahootPartie.questions[this.indexRecup]);
       }
     });
+    }
 
 
   }

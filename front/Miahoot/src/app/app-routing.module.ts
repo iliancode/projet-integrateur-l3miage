@@ -11,6 +11,7 @@ import { LoginComponent } from './authent/login/login.component';
 import { RegisterComponent } from './authent/register/register.component';
 import {ParticipantComponent} from "./participant/participant.component";
 import {CreationComponent} from "./creation/creation.component";
+import {ResultatComponent} from "./resultat/resultat.component";
 
 const routes: Routes = [
   {path: '', component: AccueilComponent},
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'concepteur', component: ConcepteurComponent},
   {path: 'presentateur', component: PresentateurComponent},
   {path: 'presentation/:codePartie', component: PresentationComponent},
+  {path: 'resultats/:codePartie', component: ResultatComponent},
   {path: "creation", component: CreationComponent},
   {path: '**',component: AccueilComponent}
 ]
