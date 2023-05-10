@@ -6,16 +6,16 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public class EnseignantEntityNotFoundRestException extends RuntimeException {
-    private final Long id;
+    private final String uid;
 
-    public EnseignantEntityNotFoundRestException(String message, Long id) {
+    public EnseignantEntityNotFoundRestException(String message, String uid) {
         super(message);
-        this.id = id;
+        this.uid = uid;
     }
 
-    public EnseignantEntityNotFoundRestException(String message, Long id, Throwable cause) {
+    public EnseignantEntityNotFoundRestException(String message, String uid, Throwable cause) {
         super(message, cause);
-        this.id = id;
+        this.uid = uid;
     }
 
     public HttpStatus getHttpStatus() {

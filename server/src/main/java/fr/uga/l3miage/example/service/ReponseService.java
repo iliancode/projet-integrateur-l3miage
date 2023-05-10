@@ -34,39 +34,41 @@ public class ReponseService {
     private final ReponseMapper reponseMapper;
 
 
-    public void addReponseToQuestionOfMiahoot(final Long idEnseignant, final Long idMiahoot, final Long idQuestion, final CreateReponseRequest createReponseRequest) throws Exception {
+    public void addReponseToQuestionOfMiahoot(final String uidEnseignant, final Long idMiahoot, final Long idQuestion, final CreateReponseRequest createReponseRequest) throws Exception {
         Reponse newReponse = reponseMapper.toEntity(createReponseRequest);
-        reponseComponent.addReponseToQuestionOfMiahoot(idEnseignant, idMiahoot, idQuestion, newReponse);
+        reponseComponent.addReponseToQuestionOfMiahoot(uidEnseignant, idMiahoot, idQuestion, newReponse);
     }
 
 
-    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
-        return reponseMapper.toDto(reponseComponent.getAllReponsesOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion));
+    public List<ReponseDTO> getAllReponsesOfQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion) throws Exception {
+        return reponseMapper.toDto(reponseComponent.getAllReponsesOfQuestionOfMiahootOfEnseignant(uidEnseignant, idMiahoot, idQuestion));
     }
 
 
-    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) throws Exception {
-        return reponseMapper.toDto(reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse));
+    public ReponseDTO getReponseOfQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
+        try {
+            return reponseMapper.toDto(reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(uidEnseignant, idMiahoot, idQuestion, idReponse));
+        } catch (ReponseEntityNotFoundException e) {
+            throw new ReponseEntityNotFoundRestException(e.getMessage(), idReponse, e);
+        }
     }
 
 
     /**
      * Efface une reponse d'une question d'un miahoot d'un enseignant
-     * @param idEnseignant
+     * @param uidEnseignant
      * @param idMiahoot
      * @param idQuestion
      * @param idReponse
      */
-    public void deleteReponseOfQuestionOfMiahootOfEnseignant(Long idEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
-        try{
-            // verifie que c'est la reponse de la question du miahoot de l'enseignant
-            reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(idEnseignant, idMiahoot, idQuestion, idReponse);
-            reponseComponent.deleteReponse(idReponse);
-        }catch (ReponseEntityNotFoundRestException e){
-            throw new ReponseEntityNotDeletedRestException(e.getMessage());
+    public void deleteReponseOfQuestionOfMiahootOfEnseignant(String uidEnseignant, Long idMiahoot, Long idQuestion, Long idReponse) {
+        try {
+            Question question = questionComponent.getQuestionOfMiahootOfEnseignant(uidEnseignant, idMiahoot, idQuestion);
+            Reponse reponse = reponseComponent.getReponseOfQuestionOfMiahootOfEnseignant(uidEnseignant, idMiahoot, idQuestion, idReponse);
+            reponseComponent.deleteReponseOfQuestion(question, reponse);
+        } catch (QuestionEntityNotFoundException | ReponseEntityNotFoundException e) {
+            throw new ReponseEntityNotDeletedRestException(e.getMessage(), e);
         }
     }
 
-/*
-    public void updateEntityReponse(final Long idEnseignant, final Long idMiahoot, final Long )*/
 }

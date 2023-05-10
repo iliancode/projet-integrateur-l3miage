@@ -33,7 +33,7 @@ public class ParticipantController implements ParticipantEndpoint {
 
 
     @Override
-    public void deleteAllParticipantsOfPartie(Long idEnseignant, Long codePartie) {
-        participantService.deleteAllParticipantsFromPartie(idEnseignant, codePartie);
+    public void deleteAllParticipantsOfPartie(String uidEnseignant, Long codePartie) {
+        participantService.deleteAllParticipantsFromPartie(uidEnseignant, codePartie);
     }
 }

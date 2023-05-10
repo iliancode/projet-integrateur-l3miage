@@ -25,25 +25,25 @@ public class PartieService {
     private final PartieMapper partieMapper;
 
 
-    public void addPartieToEnseignant(Long idEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
+    public void addPartieToEnseignant(String uidEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
         try {
-            Partie newPartie = partieMapper.toEntity(createPartieRequest);
-            partieComponent.addPartieToEnseignant(idEnseignant, idMiahoot, newPartie);
+            Partie newPartie = partieMapper.toPartie(createPartieRequest);
+            partieComponent.addPartieToEnseignant(uidEnseignant, idMiahoot, newPartie);
         } catch (EnseignantEntityNotFoundException e) {
-            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),idEnseignant,e);
+            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),uidEnseignant,e);
         } catch (MiahootEntityNotFoundException e) {
             throw new MiahootEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),idMiahoot,e);
         }
     }
 
-    public PartieDTO getPartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
-        return partieMapper.toDto(partieComponent.getPartieFromEnseignant(idEnseignant, codePartie));
+    public PartieDTO getPartieFromEnseignant(String uidEnseignant, Long codePartie) throws Exception {
+        return partieMapper.toDto(partieComponent.getPartieFromEnseignant(uidEnseignant, codePartie));
     }
 
     @Transactional
-    public void deletePartieFromEnseignant(Long idEnseignant, Long codePartie) throws Exception {
+    public void deletePartieFromEnseignant(String uidEnseignant, Long codePartie) throws Exception {
         try{
-            partieComponent.deletePartieFromEnseignant(idEnseignant, codePartie);
+            partieComponent.deletePartieFromEnseignant(uidEnseignant, codePartie);
         }catch (Exception ex) {
             throw new Exception("Erreur lors de la suppression de la partie");
         }

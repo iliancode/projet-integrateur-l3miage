@@ -1,4 +1,3 @@
-<p>presentation works!</p>
 <!-- ici on s'occupe de la partie présentateur
 (affiche la questions et les choix de reponses)
  il faut utiliser un ngIf pour que seul
@@ -9,23 +8,75 @@
  - un element de completion type image, video, son ...
  - un timer ou un bouton pour passer à la question suivante -->
 
-<div ngIf="user">
-  <label> ici on place la question ?</label>
-  <!-- ici les choix, il va falloir se mettre d'accord sur le mise en forme-->
-  <button mat-raised-button>
-    ici soit on affiche les resultats soit on passe à la suite ça depend du sujet
+<div class="twelve">
+  <h1>{{miahootPartie.nom}}</h1>
+</div>
+<br/>
+<br/>
+<div *ngIf="! commencePartie">
+  <button (click)="partieEnCours()"
+          [ngModel]="commencePartie"
+          mat-raised-button> commencer la partie
   </button>
 </div>
 
 
-<!-- ici on fait la vue du participant
+
+
+<div *ngIf="commencePartie">
+  <div *ngIf="estPresentateur">
+
+    <div *ngIf="question_courante | async as Q;">
+      <div class="myDiv">
+        <h2  >{{  miahootPartie.questions[indexRecup].label }}</h2>
+      </div>
+      <div  class="reponses">
+        <div *ngFor="let reponse of Q.reponses; index as i" class="test" > <br/>
+          <div class="box" id="box-{{i+1}}"><p>{{ reponse.label }}</p></div>
+          <br/>
+          <div [ngClass]="{ valid :reponse.estValide}">
+            <div *ngIf="showCorrectAnswer && reponse.estValide ">   </div>
+            <dialog id="popup">
+              <h2>La bonne réponse est : {{ reponse.label }} </h2>
+            </dialog>
+          </div>
+        </div>
+      </div>
+
+      <!-- <button mat-raised-button (click)="showCorrectAnswer = !showCorrectAnswer">Bonne réponse</button> -->
+      <button mat-raised-button onclick="document.getElementById('popup').show()">Bonne réponse</button>
+
+      <button (click)="questionSuivante()" mat-raised-button>Question suivante</button>
+    </div>
+  </div>
+
+
+  <!-- ici on fait la vue du participant
 (avec des boutons correspondants aux reponses possibles)
 il faut les elements suivants :
 - les reponses
 - un bouton de comfirmation
 -->
-<div ngIf="unlogged">
-  <!--ici la liste de boutons choix -->
-  <button mat-raised-button> Confirmer mes choix </button>
+  <div *ngIf="!estPresentateur" >
+    <!--ici la liste de boutons choix -->
+    <div *ngIf="miahootPartie.questions[currentIndex] ">
+      <div class="myDiv">
+        <h3> VUE PARTICIPANT</h3>
+        <h2 >{{ miahootPartie.questions[currentIndex].label }}</h2>
+      </div>
+      <br/>
+
+
+      <div  class="reponses" id="lesReponses">
+        <div *ngFor="let reponse of miahootPartie.questions[currentIndex].reponses" class="test">
+          <button (click)="toggleReponse(reponse)" [ngClass]="{'selected': reponsesUtilisateur.includes(reponse.id ?? 0)}" class="box" mat-raised-button>{{ reponse.label }}</button>
+        </div>
+      </div>
+      <button (click)="confirmerChoix()" id="buttonConfirme" mat-raised-button> Confirmer mes choix </button>
+    </div>
+  </div>
 </div>
+
+
+
 

@@ -1,5 +1,9 @@
 package fr.uga.l3miage.example.component;
 
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.MiahootEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.ReponseEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
+import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.TestEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
@@ -21,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class MiahootComponent {
+    private final EnseignantComponent enseignantComponent;
     private final EnseignantRepository enseignantRepository;
     private final MiahootRepository miahootRepository;
     private final QuestionMapper questionMapper;
@@ -29,7 +34,7 @@ public class MiahootComponent {
     public void createMiahootFromEnseignant(final String uidEnseignant, final Miahoot miahoot) throws Exception {
         try {
             Enseignant enseignant = enseignantRepository.findByUid(uidEnseignant)
-                    .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", uidEnseignant), "" + uidEnseignant));
+                    .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", uidEnseignant), uidEnseignant));
             enseignant.getMiahoots().add(miahoot);
         } catch (Exception ex) {
             throw new Exception("Impossible de créer le Miahoot et de l'ajouter. Raison :" + ex.getMessage());
@@ -43,34 +48,29 @@ public class MiahootComponent {
         return e.getMiahoots();
     }
 
-    public Miahoot getMiahootOfEnseignant(String uidEnseignant, Long idMiahoot) throws Exception {
-        Enseignant e = enseignantRepository.findByUid(uidEnseignant)
-                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour l'id "));
-        return e.getMiahoot(idMiahoot);
-    }
-
-    public void deleteMiahootOfEnseignant(final Long idEnseignant, final Long idMiahoot) throws Exception {
-        Enseignant e = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour l'id [%s]", idEnseignant), "" + idEnseignant));
-
-        Miahoot m = miahootRepository.findById(idMiahoot)
-                .orElseThrow(() -> new TestEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le mail [%s]", idMiahoot), "erreur"));
-
-        if (e.containsMiahoot(idMiahoot)) {
-            e.removeMiahoot(m);
-            enseignantRepository.save(e);
-            miahootRepository.delete(m);
+    public Miahoot getMiahootOfEnseignant(String uidEnseignant, Long idMiahoot) throws MiahootEntityNotFoundException {
+        try {
+            Enseignant enseignant = enseignantComponent.getEnseignantByUid(uidEnseignant);
+            Miahoot miahoot =  miahootRepository.findById(idMiahoot)
+                    .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucun miahoot n'a été trouvé pour l'id [%s]", idMiahoot), idMiahoot));
+            if (enseignant.getMiahoot(idMiahoot).equals(miahoot)) {
+                return miahoot;
+            } else {
+                throw new MiahootEntityNotFoundException(String.format("Le miahoot [%s] n'appartient pas à l'enseignant [%s]", idMiahoot, uidEnseignant), idMiahoot);
+            }
+        } catch (EnseignantEntityNotFoundException e) {
+            throw new MiahootEntityNotFoundException(e.getMessage(), idMiahoot, e);
         }
     }
 
-    public void createMiahootOfEnseignant(String uidEnseignant, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
-        Enseignant e = enseignantRepository.findByUid(uidEnseignant)
-                .orElseThrow(() -> new Exception("Aucune entité n'a été trouvé pour le mail "));
-        Miahoot miahoot = new Miahoot();
-        miahoot.setNom(createFullMiahootRequest.getNom());
-        miahoot.setQuestions(questionMapper.toQuestionList( createFullMiahootRequest.getQuestions()));
-        e.getMiahoots().add(miahoot);
-        miahootRepository.save(miahoot);
+    public void deleteMiahootOfEnseignant(final Enseignant enseignant, final Miahoot miahoot) {
+        enseignant.getMiahoots().remove(miahoot);
+        miahootRepository.delete(miahoot);
+    }
 
+    public void createMiahootOfEnseignant(final String uidEnseignant, final Miahoot newMiahoot) throws EnseignantEntityNotFoundException {
+        Enseignant enseignant = enseignantComponent.getEnseignantByUid(uidEnseignant);
+        enseignant.getMiahoots().add(newMiahoot);
+        miahootRepository.save(newMiahoot);
     }
 }

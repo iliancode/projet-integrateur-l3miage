@@ -58,6 +58,6 @@ public interface ParticipantEndpoint {
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si les entités n'ont pas pu être supprimées",
             content = @Content(schema = @Schema(implementation = ParticipantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("enseignants/{idEnseignant}/parties/{codePartie}/participants")
-    void deleteAllParticipantsOfPartie(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("codePartie") Long codePartie);
+    @DeleteMapping("enseignants/{uidEnseignant}/parties/{codePartie}/participants")
+    void deleteAllParticipantsOfPartie(@PathVariable("uidEnseignant") String uidEnseignant, @PathVariable("codePartie") Long codePartie);
 }

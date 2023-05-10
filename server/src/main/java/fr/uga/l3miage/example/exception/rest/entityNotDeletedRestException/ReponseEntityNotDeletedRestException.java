@@ -15,6 +15,6 @@ public class ReponseEntityNotDeletedRestException extends RuntimeException {
     public ReponseEntityNotDeletedRestException(String message, Throwable cause) {super(message, cause); }
     public HttpStatus getHttpStatus() {return HttpStatus.NOT_FOUND;}
 
-    public ErrorCode getErrorCode(){return ErrorCode.TEST_ENTITY_NOT_DELETED_ERROR;}
+    public ErrorCode getErrorCode(){return ErrorCode.REPONSE_ENTITY_NOT_DELETED_ERROR;}
 }
 

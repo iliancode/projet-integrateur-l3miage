@@ -1,12 +1,16 @@
 package fr.uga.l3miage.example.service;
 
+import fr.uga.l3miage.example.component.EnseignantComponent;
 import fr.uga.l3miage.example.component.MiahootComponent;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.EnseignantEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.MiahootEntityNotFoundRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotFoundRestException.TestEntityNotFoundRestException;
+import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.entityNotFoundException.EnseignantEntityNotFoundException;
 import fr.uga.l3miage.example.mapper.EnseignantMapper;
 import fr.uga.l3miage.example.mapper.MiahootMapper;
 import fr.uga.l3miage.example.mapper.QuestionMapper;
+import fr.uga.l3miage.example.models.Enseignant;
 import fr.uga.l3miage.example.models.Miahoot;
 import fr.uga.l3miage.example.request.CreateFullMiahootRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
@@ -23,15 +27,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class MiahootService {
-
+    private final EnseignantComponent enseignantComponent;
     private final MiahootComponent miahootComponent;
     private final MiahootMapper miahootMapper;
-    private final EnseignantMapper enseignantMapper;
 
 
     @Transactional
     public void createMiahootFromEnseignant(final String uidEnseignant, final CreateMiahootRequest createMiahootRequest) throws Exception {
-
         Miahoot newMiahoot = miahootMapper.toEntity(createMiahootRequest);
         miahootComponent.createMiahootFromEnseignant(uidEnseignant, newMiahoot);
     }
@@ -42,29 +44,32 @@ public class MiahootService {
     }
 
 
-    public MiahootDTO getMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot) throws Exception {
+    public MiahootDTO getMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot) {
         try {
             Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(uidEnseignant, idMiahoot);
             return miahootMapper.toDto(miahoot);
-        } catch (EnseignantEntityNotFoundException e) {
-            throw new Exception(String.format("Impossible de charger l'entité enseignant. Raison : [%s"));
-        } catch (TestEntityNotFoundRestException e) {
-            throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
+        } catch (MiahootEntityNotFoundException e) {
+            throw new MiahootEntityNotFoundRestException(e.getMessage(), idMiahoot, e);
         }
     }
 
 
-    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws  Exception {
+    public void deleteMiahootOfEnseignant(String uidEnseignant, Long idMiahoot) {
         try {
-            miahootComponent.deleteMiahootOfEnseignant(idEnseignant, idMiahoot);
-        } catch (EnseignantEntityNotFoundException e) {
-            throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité enseignant. Raison : [%s]", e.getMessage()), idEnseignant, e);
-        } catch (TestEntityNotFoundRestException e) {
-            throw new TestEntityNotFoundRestException(String.format("Impossible de charger l'entité Miahoot. Raison : [%s]", e.getMessage()), "erreur", e);
+            Enseignant enseignant = enseignantComponent.getEnseignantByUid(uidEnseignant);
+            Miahoot miahoot = miahootComponent.getMiahootOfEnseignant(uidEnseignant, idMiahoot);
+            miahootComponent.deleteMiahootOfEnseignant(enseignant, miahoot);
+        } catch (EnseignantEntityNotFoundException | MiahootEntityNotFoundException e) {
+            throw new MiahootEntityNotFoundRestException(e.getMessage(), idMiahoot, e);
         }
     }
 
-    public void createMiahootOfEnseignant(String uidEnseignant, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
-        miahootComponent.createMiahootOfEnseignant(uidEnseignant, createFullMiahootRequest);
+    public void createMiahootOfEnseignant(final String uidEnseignant, final CreateFullMiahootRequest createFullMiahootRequest) {
+        try {
+            Miahoot newMiahoot = miahootMapper.toEntity(createFullMiahootRequest);
+            miahootComponent.createMiahootOfEnseignant(uidEnseignant, newMiahoot);
+        } catch (EnseignantEntityNotFoundException e) {
+            throw new EnseignantEntityNotFoundRestException(String.format("Le miahoot n'a pas pu être créé car l'enseignant [%s] n'existe pas", uidEnseignant), uidEnseignant, e);
+        }
     }
 }

@@ -23,16 +23,16 @@ public interface PartieEndpoint {
     @ApiResponse(responseCode = "202", description = "la partie a bien été ajoutée")
     @Error400Custom
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("enseignants/{idEnseignant}/miahoots/{idMiahoot}/parties")
-    void addPartieToEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @RequestBody CreatePartieRequest createPartieRequest);
+    @PostMapping("enseignants/{uidEnseignant}/miahoots/{idMiahoot}/parties")
+    void addPartieToEnseignant(@PathVariable("uidEnseignant") String uidEnseignant, @PathVariable("idMiahoot") Long idMiahoot, @RequestBody CreatePartieRequest createPartieRequest);
 
 
     @Operation(description = "Récupération une partie d'un enseignant")
     @ApiResponse(responseCode = "200", description = "Renvoie une liste d'entités partie",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("enseignants/{idEnseignant}/parties/{codePartie}")
-    PartieDTO getPartieFromEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("codePartie") Long codePartie) throws Exception;
+    @GetMapping("enseignants/{uidEnseignant}/parties/{codePartie}")
+    PartieDTO getPartieFromEnseignant(@PathVariable("uidEnseignant") String uidEnseignant, @PathVariable("codePartie") Long codePartie) throws Exception;
 
 
     @Operation(description = "Suppression d'une partie d'un enseignant")
@@ -40,6 +40,6 @@ public interface PartieEndpoint {
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'a pu être supprimée",
             content = @Content(schema = @Schema(implementation = EnseignantDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("enseignants/{idEnseignant}/parties/{codePartie}")
-    void deletePartieFromEnseignant(@PathVariable("idEnseignant") Long idEnseignant, @PathVariable("codePartie") Long codePartie) throws Exception;
+    @DeleteMapping("enseignants/{uidEnseignant}/parties/{codePartie}")
+    void deletePartieFromEnseignant(@PathVariable("uidEnseignant") String uidEnseignant, @PathVariable("codePartie") Long codePartie) throws Exception;
 }

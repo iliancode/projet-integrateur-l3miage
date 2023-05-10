@@ -23,15 +23,20 @@
 
         >
 
-          <div id="listemiahoot" *ngFor="let miahoot of M; index as indice ">
+          <div *ngFor="let miahoot of M; index as indice " id="listemiahoot">
 
-            <button (click)="onButtonClick(miahoot)"  id="{{miahoot.id}}" [ngClass]="{'selected': selectedMiahoot === miahoot }">{{miahoot.nom}}</button>
+            <button (click)="onButtonClick(miahoot)"  [ngClass]="{'selected': selectedMiahoot === miahoot }" id="{{miahoot.id}}">{{miahoot.nom}}</button>
           </div>
 
-        <input type="text" name="codePartie" id="codePartie" placeholder="exemple: 3546">
-        <button (click)="createGame()">create game</button>
+
 
         </div>
+        <div class="box">
+          <label for="nompartie"><input id="nompartie" placeholder="nom de la partie : L3 Miage Quizz" type="text"></label>
+          <label for="codePartie"> <input id="codePartie" name="codePartie" placeholder="exemple: 3546" type="text"></label>
+          <button (click)="createGame()"  >create game</button>
+        </div>
+
       </section>
 
 <!--

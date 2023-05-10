@@ -31,12 +31,12 @@ public class MiahootController implements MiahootEndpoint {
     }
 
     @Override
-    public void deleteMiahootOfEnseignant(Long idEnseignant, Long idMiahoot) throws Exception {
-        miahootService.deleteMiahootOfEnseignant(idEnseignant,idMiahoot);
+    public void deleteMiahootOfEnseignant(String uidEnseignant, Long idMiahoot) {
+        miahootService.deleteMiahootOfEnseignant(uidEnseignant,idMiahoot);
     }
 
     @Override
-    public void createMiahootOfEnseignant(String uidEnseignant, CreateFullMiahootRequest createFullMiahootRequest) throws Exception {
+    public void createMiahootOfEnseignant(String uidEnseignant, CreateFullMiahootRequest createFullMiahootRequest) {
         miahootService.createMiahootOfEnseignant(uidEnseignant, createFullMiahootRequest);
 
     }

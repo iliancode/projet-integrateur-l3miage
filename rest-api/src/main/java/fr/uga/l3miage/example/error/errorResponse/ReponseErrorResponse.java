@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import fr.uga.l3miage.example.error.*;
 import fr.uga.l3miage.example.error.alreadyUseErrorResponse.DescriptionAlreadyUseErrorResponse;
-import fr.uga.l3miage.example.error.alreadyUseErrorResponse.MailAlreadyUseErrorResponse;
-import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.EnseignantEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.ReponseEntityNotDeletedErrorResponse;
 import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.TestEntityNotDeletedErrorResponse;
-import fr.uga.l3miage.example.error.notFoundErrorResponse.EnseignantNotFoundErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.ReponseNotFoundErrorResponse;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -35,24 +34,23 @@ import org.springframework.http.HttpStatus;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "errorCode", visible = true,
         defaultImpl = ErrorResponse.class)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = MailAlreadyUseErrorResponse.class),
-        @JsonSubTypes.Type(value = EnseignantEntityNotDeletedErrorResponse.class),
-        @JsonSubTypes.Type(value = EnseignantNotFoundErrorResponse.class)
+        @JsonSubTypes.Type(value = ReponseEntityNotDeletedErrorResponse.class),
+        @JsonSubTypes.Type(value = ReponseNotFoundErrorResponse.class)
 })
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Data
-public abstract class EnseignantErrorResponse {
-    @Schema(description = "endpoint appelé", example = "/enseignants")
+public abstract class ReponseErrorResponse {
+    @Schema(description = "endpoint appelé", example = "/reponses")
     private final String uri;
     @Schema(description = "code http de la réponse", example = "404")
     private final HttpStatus httpStatus;
-    @Schema(description = "code de l'erreur", example="ENSEIGNANT_IS_NOT_FOUND")
+    @Schema(description = "code de l'erreur", example="REPONSE_IS_NOT_FOUND")
     private final ErrorCode errorCode;
     @Schema(description = "message d'erreur")
     private final String errorMessage;
 
-    protected EnseignantErrorResponse(final ErrorCode errorCode){
+    protected ReponseErrorResponse(final ErrorCode errorCode){
         this(null,null,errorCode,null);
     }
 }

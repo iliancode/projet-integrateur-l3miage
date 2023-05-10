@@ -1,3 +1,6 @@
+import {getFirestore} from "@angular/fire/firestore";
+import {initializeApp} from "@angular/fire/app";
+
 export const environment = {
   firebase: {
     projectId: 'projet-integrateur-d6e79',
@@ -8,4 +11,7 @@ export const environment = {
     messagingSenderId: '241941493244',
   },
   apiUrl: "http://localhost:8080"
+
+
 };
+

@@ -4,10 +4,11 @@ import {PresentationService} from "../service/presentation.service";
 import {BehaviorSubject, firstValueFrom, Observable} from "rxjs";
 import {Auth, authState, User} from "@angular/fire/auth";
 import {AuthService} from "../service/auth.service";
-import {Enseignant, Miahoot, Question} from "../service/interfaces";
-import {doc, setDoc} from "firebase/firestore";
+import {Enseignant, Miahoot, Partie, Question} from "../service/interfaces";
+import {collection, doc, setDoc} from "firebase/firestore";
 import {UserService} from "../service/user.service";
 import {DsService} from "../service/ds.service";
+import {addDoc, getDocs} from "@angular/fire/firestore";
 
 
 
@@ -19,6 +20,7 @@ import {DsService} from "../service/ds.service";
 })
 export class PresentateurComponent implements OnInit{
 
+  db = this.us.getFirestore();
 
   enseignant : Enseignant = <Enseignant>{pseudo: 'adil', mail:'lpb@gmail.com', mdp : 'trop fort'};
   miahoots: Miahoot[] = [];
@@ -27,6 +29,7 @@ export class PresentateurComponent implements OnInit{
   public readonly question_courante: BehaviorSubject<Question | null>;
   indexQuestionCourante = 0;
   selectedMiahoot: any = null;
+  protected readonly onclick = onclick;
 
   constructor(private ps : PresentationService, private auth: AuthService, private us:UserService, public ds: DsService) {
     this.miahoot = this.miahoots[0];
@@ -63,76 +66,84 @@ export class PresentateurComponent implements OnInit{
 
   }
 
-  protected readonly onclick = onclick;
-
-
   createGame(){
+    let nomPartie = document.getElementById("nompartie") as HTMLInputElement;
+
     let miahoot= document.getElementsByClassName("selected") as HTMLCollectionOf<HTMLElement>;
     let miahootSelected = miahoot[0].id;
+
     let code = document.getElementById("codePartie") as HTMLInputElement;
-  let uid = '';
-    console.log(miahootSelected, code.value);
+    let uid = '';
 
-    //create a new "partie" in the firebase database
-    //with the code and the miahoot selected
-    //and the user who created the game
-    const u =  firstValueFrom(this.auth.currentUser).then(user=>{
-      uid =user?.uid??'vache';
-    });
-    let x = this.ds.getMiahootById(uid, parseInt(miahootSelected));
+    const w =  this.verificationCodePartie(parseInt(code.value)).then(estPresent => {
+      console.log(estPresent);
+      if (estPresent == false) {
 
-    const docRef = doc(this.us.getFirestore(), `partie/${code.value}/` );
+        //si le code partie n'existe pas encore
+        const u =  firstValueFrom(this.auth.currentUser).then(user=>{
+          uid =user?.uid??'';
+          let x = this.ds.getMiahootById(uid, parseInt(miahootSelected));
 
-    setDoc(docRef,
-      {
-        code: code.value
-  }
+          const docRef = doc(this.us.getFirestore(), `parties/${code.value}/` );
 
-    ).then(() => {
-      console.log("Partie enregistrée avec succès sur Firestore !");
+          //const newCollectionMiahoots = doc(this.us.getFirestore(), `parties/${code.value}/miahoots/miahoot` );
+          let nomMiahoot = x.then(miahoot =>{
+
+            setDoc(docRef, {
+              indexQuestionCourante: 0,
+              //code partie
+              codePartie: code.value,
+              //nom partie
+              nomPartie: nomPartie.value,
+              //miahoot nom
+              miahoot: miahoot
+            }).then(
+              () => {
+                let nompartie= document.getElementById("nompartie") as HTMLInputElement;
+                let tempval   = {codePartie: parseFloat(code.value), nom:nompartie.value}
+
+                this.ds.createPartie(uid, parseInt(miahootSelected), tempval);
+
+
+
+                window.location.href = '/presentation/'+code.value;
+
+
+
+              }
+            );
+            /* setDoc(newCollectionMiahoots, {
+               //miahoot nom
+               miahoot: miahoot
+             });*/
+
+
+          });
+        });
+
+      } else {
+
+
+        //si le code partie existe deja
+        alert("le code partie existe deja , veuillez en choisir un autre");
+        console.log("Le code partie existe deja :p ");
+      }
     })
-  .catch((error) => {
-      console.error("Erreur lors de l'enregistrement de la partie sur Firestore : ", error);
-    });
+
   }
-    /*const docRef = doc(this.us.getFirestore(), `enseignants/${e.uid??'vache'}`); // on utilise l'email comme ID du document
-    setDoc(docRef, {
-      pseudo: e.pseudo,
-      mail: e.mail,
-      mdp: e.mdp,
-    })
-      .then(() => {
-        console.log("Enseignant enregistré avec succès sur Firestore !");
-      })
-      .catch((error) => {
-        console.error("Erreur lors de l'enregistrement de l'enseignant sur Firestore : ", error);
-      });
-
-    this.ds.postE(e)
-      .then(enseignant => console.log(enseignant))
-      .catch(erreur =>console.log("pas d'enseignant trouve avec cet email"));
-    console.log("ici")
-    */
+  async verificationCodePartie(codeP : number): Promise<boolean>{
 
 
-
+    console.log("CODE P :"+codeP.toString())
+    let estPresent : boolean = false;
+    const querySnapshot = await getDocs(collection(this.us.getFirestore(), "parties"));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ");
+      if(doc.id == codeP.toString()){
+        estPresent = true;
+      }
+    });
+    return estPresent;
+  }
 }
-
-/**
-  async ngOnInit() {
-
-    this.ds.getEnseignant("adil@gmail.com")
-      .then(enseignant => console.log(enseignant))
-      .catch(erreur =>console.log("pas d'enseignant trouve avec cet email"));
-
-
-    this.ds.createEnseignant(this.enseignant)
-      .then(enseignant => console.log(enseignant))
-      .catch(erreur =>console.log("Le post marche passssss"));
-
-    this.miahoots = await this.ds.getMiahootsOfEnseignant('adil@gmail.com');
-  console.log(this.miahoots);
-
-  }
-     **/
-

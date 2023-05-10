@@ -57,21 +57,21 @@ public class EnseignantService {
     }
 
     /**
-     * @param idEnseignant de l'entité Participant à supprimer
+     * @param uidEnseignant de l'entité Participant à supprimer
      */
     @Transactional
-    public void deleteEnseignantById(Long idEnseignant) {
+    public void deleteEnseignantByUid(final String uidEnseignant) {
         try {
-            enseignantComponent.deleteEnseignantById(idEnseignant);
+            enseignantComponent.deleteEnseignantByUid(uidEnseignant);
         } catch (EnseignantEntityNotFoundException ex) {
             throw new EnseignantEntityNotDeletedRestException(ex.getMessage());
         }
     }
 
 
-    public void updateEnseignant (final Long idEnseignant, final CreateEnseignantRequest request) {
+    public void updateEnseignant (final String uidEnseignant, final CreateEnseignantRequest request) {
         try{
-            enseignantComponent.updateEnseignantById(idEnseignant, request);
+            enseignantComponent.updateEnseignantByUid(uidEnseignant, request);
         }catch (EnseignantEntityNotFoundException ex) {
             throw new EnseignantEntityNotDeletedRestException(ex.getMessage());
         } catch (MailAlreadyExistException ex) {

@@ -1,6 +1,5 @@
 package fr.uga.l3miage.example.component;
 
-//import fr.uga.l3miage.example.mapper.EnseignantMapper;
 
 import fr.uga.l3miage.example.exception.technical.MiahootEntityNotFoundException;
 import fr.uga.l3miage.example.exception.technical.alreadyExistException.MailAlreadyExistException;
@@ -23,12 +22,6 @@ import java.util.List;
 public class EnseignantComponent {
     private final EnseignantRepository enseignantRepository;
     private final EnseignantMapper enseignantMapper;
-    private final MiahootRepository miahootRepository;
-    private final QuestionRepository questionRepository;
-    private final ReponseRepository reponseRepository;
-
-    private final QuestionMapper questionMapper;
-    private final PartieRepository partieRepository;
 
 
     public void createEnseignant(final Enseignant enseignant) throws MailAlreadyExistException {
@@ -40,12 +33,9 @@ public class EnseignantComponent {
     }
 
 
-    public Enseignant getEnseignantByUid(final String uid) throws Exception {
-
-        Enseignant enseignant = enseignantRepository.findByUid(uid)
-                .orElseThrow(() -> new Exception("L'entité à supprimer n'a pas été trouvée " + uid));
-
-        return enseignant;
+    public Enseignant getEnseignantByUid(final String uid) throws EnseignantEntityNotFoundException {
+        return enseignantRepository.findByUid(uid)
+                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("L'enseignant [%s] n'a pas été trouvée", uid), uid));
     }
 
 
@@ -54,17 +44,17 @@ public class EnseignantComponent {
     }
 
 
-    public void deleteEnseignantById(final Long idEnseignant) throws EnseignantEntityNotFoundException {
-        enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idEnseignant), idEnseignant));
+    public void deleteEnseignantByUid(final String uidEnseignant) throws EnseignantEntityNotFoundException {
+        enseignantRepository.findByUid(uidEnseignant)
+                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", uidEnseignant), uidEnseignant));
 
-        enseignantRepository.deleteById(idEnseignant);
+        enseignantRepository.deleteByUid(uidEnseignant);
     }
 
 
-    public void updateEnseignantById(final Long idEnseignant, final CreateEnseignantRequest enseignant) throws EnseignantEntityNotFoundException, MailAlreadyExistException {
-        Enseignant actuelEnseignant = enseignantRepository.findById(idEnseignant)
-                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", idEnseignant), idEnseignant));
+    public void updateEnseignantByUid(final String uidEnseignant, final CreateEnseignantRequest enseignant) throws EnseignantEntityNotFoundException, MailAlreadyExistException {
+        Enseignant actuelEnseignant = enseignantRepository.findByUid(uidEnseignant)
+                .orElseThrow(() -> new EnseignantEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour l'id [%s]", uidEnseignant), uidEnseignant));
 
         if (!actuelEnseignant.getMail().equals(enseignant.getMail()) && enseignantRepository.findByMail(enseignant.getMail()).isPresent()) {
             throw new MailAlreadyExistException(String.format("Ce mail [%s] existe deja dans la base de données", enseignant.getMail()), enseignant.getMail());

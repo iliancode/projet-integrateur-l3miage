@@ -78,10 +78,10 @@ public class ParticipantService {
      * @param idEnseignant l'id de l'enseignant
      * @param codePartie le code de la partie
      */
-    public void deleteAllParticipantsFromPartie(final Long idEnseignant, final Long codePartie) {
+    public void deleteAllParticipantsFromPartie(final String uidEnseignant, final Long codePartie) {
         try {
             Partie partie = partieComponent.getPartie(codePartie);
-            participantComponent.deleteAllParticipantsFromPartie(idEnseignant, partie);
+            participantComponent.deleteAllParticipantsFromPartie(uidEnseignant, partie);
         } catch (EnseignantEntityNotFoundException | PartieEntityNotFoundException | IsNotPartieOfEnseignantException e) {
             throw new ParticipantEntityNotDeletedRestException(e.getMessage());
         }

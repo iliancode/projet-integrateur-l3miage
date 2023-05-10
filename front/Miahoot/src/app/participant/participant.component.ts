@@ -6,14 +6,11 @@ import {DsService} from "../service/ds.service";
 import {Enseignant, Miahoot, Participant, Partie, Question} from "../service/interfaces";
 import {collection, doc, setDoc} from "firebase/firestore";
 import {UserService} from "../service/user.service";
-import {user} from "@angular/fire/auth";
 import {firstValueFrom} from "rxjs";
-import {get} from "@angular/fire/database";
-import {collectionGroup, getDoc, getDocs, where} from "@angular/fire/firestore";
-import {query} from "@angular/animations";
-import {initializeApp} from "@angular/fire/app";
-
-
+import {collectionGroup, getDoc, getDocs, getFirestore, query, where} from "@angular/fire/firestore";
+import {db} from "../../environments/test";
+import { environment } from "../../environments/environment";
+import {initializeApp, provideFirebaseApp} from "@angular/fire/app";
 
 
 @Component({
@@ -48,14 +45,14 @@ export class ParticipantComponent implements OnInit{
     partie : this.partieP
   }
 
-
+  uuid = "";
   constructor(public as: AuthService, private router: Router,public ds:DsService,private us : UserService) {
   }
 
   // a modifier car il faut voir comment gerer le pseudo ...
   signInAnonymously(){
-      this.islogged = true
-      this.as.anonymousLogin()
+    this.islogged = true
+    this.as.anonymousLogin()
   }
   //pour le deplacement vers la partie
 
@@ -71,7 +68,7 @@ export class ParticipantComponent implements OnInit{
     });
 
 
-}
+  }
 
 
 
@@ -88,6 +85,7 @@ export class ParticipantComponent implements OnInit{
         this.p.pseudo = this.reactiveForm.get('pseudoParticipant')?.value;
         this.p.partie = this.partieP;
         x = user?.uid;
+        this.uuid = x ?? '';
         this.ajouterParticipantDansPartie(this.p,this.reactiveForm.get('codePartie')?.value)
       }) ;
     }else{
@@ -96,31 +94,34 @@ export class ParticipantComponent implements OnInit{
 
   }
 
-   async ajouterParticipantDansPartie(p: Participant, codeP: number): Promise<void> {
+  async ajouterParticipantDansPartie(p: Participant, codeP: number): Promise<void> {
 
-
+    let pseudoParticipant = document.getElementById('pseudoParticipant') as HTMLInputElement;
     const w = await this.verificationCodePartie(codeP).then(estPresent => {
       console.log(estPresent);
       if (estPresent) {
-        const docRef = doc(this.us.getFirestore(), `partie/${codeP ?? 'Flop'}/participant/${p.uid ?? 'pas de uid'}`);
-       /**setDoc(docRef, {
-          pseudo: p.pseudo,
+        const docRef = doc(this.us.getFirestore(), `parties/${codeP ?? 'Flop'}/participants/${p.uid ?? 'pas de uid'}`);
+        setDoc(docRef, {
+          pseudo: pseudoParticipant.value,
           uid: p.uid,
 
         }).then(() => {
+          window.location.href = '/presentation/'+codeP;
           console.log("Participant enregistré avec succès sur Firestore !");
-        })*/
-       console.log("Participant enregistré avec succès sur Firestore !");
+        })
       } else {
+        alert("le code partie n'existe pas veuillez entrer un code valide");
         console.log("Le code partie n'existe pas :p ");
       }
     })
   }
 
   async verificationCodePartie(codeP : number): Promise<boolean>{
+
+
     console.log("CODE P :"+codeP.toString())
     let estPresent : boolean = false;
-    const querySnapshot = await getDocs(collection(this.us.getFirestore(), "partie"));
+    const querySnapshot = await getDocs(collection(this.us.getFirestore(), "parties"));
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ");
@@ -131,4 +132,3 @@ export class ParticipantComponent implements OnInit{
     return estPresent;
   }
 }
-

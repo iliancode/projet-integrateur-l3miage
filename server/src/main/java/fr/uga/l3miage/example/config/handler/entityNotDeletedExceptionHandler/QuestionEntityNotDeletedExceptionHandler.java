@@ -1,8 +1,11 @@
 package fr.uga.l3miage.example.config.handler.entityNotDeletedExceptionHandler;
 
+import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.QuestionEntityNotDeletedErrorResponse;
 import fr.uga.l3miage.example.error.errorResponse.ErrorResponse;
 import fr.uga.l3miage.example.error.entityNotDeletedErrorResponse.ReponseEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.error.errorResponse.QuestionErrorResponse;
 import fr.uga.l3miage.example.error.errorResponse.ReponseErrorResponse;
+import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.QuestionEntityNotDeletedRestException;
 import fr.uga.l3miage.example.exception.rest.entityNotDeletedRestException.ReponseEntityNotDeletedRestException;
 import fr.uga.l3miage.example.models.Reponse;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @ControllerAdvice
 @Slf4j
-public class ReponseEntityNotDeletedExceptionHandler {
-    @ExceptionHandler(ReponseEntityNotDeletedRestException.class)
-    public ResponseEntity<ReponseErrorResponse> handle(HttpServletRequest httpServletRequest, Exception exception){
-        ReponseEntityNotDeletedRestException ex = (ReponseEntityNotDeletedRestException) exception;
-        final ReponseEntityNotDeletedErrorResponse response = ReponseEntityNotDeletedErrorResponse.builder()
+public class QuestionEntityNotDeletedExceptionHandler {
+    @ExceptionHandler(QuestionEntityNotDeletedRestException.class)
+    public ResponseEntity<QuestionErrorResponse> handle(HttpServletRequest httpServletRequest, Exception exception){
+        QuestionEntityNotDeletedRestException ex = (QuestionEntityNotDeletedRestException) exception;
+        final QuestionEntityNotDeletedErrorResponse response = QuestionEntityNotDeletedErrorResponse.builder()
                 .uri(httpServletRequest.getRequestURI())
                 .httpStatus(ex.getHttpStatus())
                 .errorCode(ex.getErrorCode())
