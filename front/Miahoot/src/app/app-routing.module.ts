@@ -11,6 +11,7 @@ import { LoginComponent } from './authent/login/login.component';
 import { RegisterComponent } from './authent/register/register.component';
 import {ParticipantComponent} from "./participant/participant.component";
 import {CreationComponent} from "./creation/creation.component";
+import {ModifierComponent} from "./modifier/modifier.component";
 
 const routes: Routes = [
   {path: '', component: AccueilComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'presentateur', component: PresentateurComponent},
   {path: 'presentation', component: PresentationComponent},
   {path: "creation", component: CreationComponent},
+  {path: "modifier", component: ModifierComponent},
   {path: '**',component: AccueilComponent}
 ]
 

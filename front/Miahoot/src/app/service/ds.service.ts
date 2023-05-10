@@ -64,12 +64,9 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   getMiahootById(uid: String, id: number):Promise<Miahoot>{
 
     let url = "http://localhost:8080/api/enseignants/";
-    url += uid + "/miahoot" + id
-    let reponse =  lastValueFrom(this.http.get<any>(url)).then((value) => {
-        return value;
-      }
-    );
-    return  reponse;
+    url += uid + "/miahoots/" + id
+    return  lastValueFrom(this.http.get<any>(url));
+
   }
 
   async createMiahoot(M: Miahoot): Promise<Miahoot> {
@@ -164,4 +161,56 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   envoyerUser(): string[]{
     return [this.mail, this.pseudo, this.mdp];
   }
+
+
+  async updateMiahoot(idMiahoot: number, updatedMiahoot: Miahoot){
+    // V1 update à verifier
+    const U = await firstValueFrom(this.auth.currentUser);
+    if(U !== null){
+      console.log("user not null")
+      console.log(""+U.uid)
+      this.http.patch<Miahoot>
+      (`/api/enseignants/${U.uid}/miahoots/${idMiahoot}`,updatedMiahoot)
+    }else{
+      console.warn("user not found")
+    }
+  }
+
+  // convertie un json en miahoot
+
+  jsonToMiahoot(json : string): Miahoot{
+    const miahoot: Miahoot = JSON.parse(json, (key, value): Miahoot => {
+    if (key === 'reponses') {
+      return value.map((reponse: Reponse) => ({
+        id: reponse.id,
+        label: reponse.label,
+        estValide: reponse.estValide,
+      }));
+    } else if (key === 'questions') {
+      return value.map((question: Question) => ({
+        id: question.id,
+        label: question.label,
+        reponses: question.reponses.map((reponse: Reponse) => ({
+          id: reponse.id,
+          label: reponse.label,
+          estValide: reponse.estValide,
+        })),
+      }));
+    } else {
+      return value
+    }
+  });
+    console.log(miahoot.nom)
+    miahoot.questions.forEach((q)=> {console.log(q.label)})
+    miahoot.questions.forEach((q)=>{
+      q.reponses.forEach((r)=>{
+        console.log(r.label)
+        console.log(r.estValide)
+      })
+    })
+    return miahoot
+  }
+
+
+
 }

@@ -7,6 +7,7 @@ import {Auth, authState, User} from "@angular/fire/auth";
 import {AuthService} from "../service/auth.service";
 import {firstValueFrom, Observable} from "rxjs";
 import {PresentationService} from "../service/presentation.service";
+import {SelectedMiahootService} from "../service/selected-miahoot.service";
 @Component({
   selector: 'app-concepteur',
   templateUrl: './concepteur.component.html',
@@ -19,7 +20,7 @@ private email : string | null | undefined ;
   uid = '';
   miahoots: Miahoot[] = [];
   miahoot : Miahoot;
-  constructor(public router : Router, public ds:DsService, public auth :AuthService, public ps:PresentationService) {
+  constructor(public router : Router, public ds:DsService, public auth :AuthService, public ps:PresentationService, private sms: SelectedMiahootService) {
     this.miahoot = this.miahoots[0];
 
     const u =  firstValueFrom(this.auth.currentUser).then(user=>{
@@ -27,6 +28,11 @@ private email : string | null | undefined ;
     }) ;
   }
 
+  selectMiahoot(id: number){
+    this.sms.setSelectedMiahootId(id);
+    console.log("id miahoot : "+ id);
+    this.router.navigateByUrl("/modifier")
+  }
 
 
   ngOnInit(): void {
@@ -39,9 +45,11 @@ private email : string | null | undefined ;
           console.log(this.miahoots);
           console.log(this.miahoot);
 
-        });
+        })
+        .catch(()=>console.warn("probleme avec le get des miahoots"))
 
-    }) ;
+    })
+      .catch(()=>console.warn("probleme avec la recup de l' utilisateur "))
   }
   // supprime dans la vue html et dans l'api
 
