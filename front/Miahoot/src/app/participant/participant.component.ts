@@ -27,6 +27,7 @@ export class ParticipantComponent implements OnInit{
   participantPartie : any[] = []
   message="";
   snapCode : any;
+  messageErreur=""
 
   miahootP : Miahoot = {
     "id": 1,
@@ -108,10 +109,13 @@ export class ParticipantComponent implements OnInit{
         }).then(() => {
           window.location.href = '/presentation/'+codeP;
           console.log("Participant enregistré avec succès sur Firestore !");
+          this.messageErreur="";
         })
+        
       } else {
-        alert("le code partie n'existe pas veuillez entrer un code valide");
+        //alert("le code partie n'existe pas veuillez entrer un code valide");
         console.log("Le code partie n'existe pas :p ");
+        this.messageErreur="le code partie n'existe pas veuillez entrer un code valide"
       }
     })
   }

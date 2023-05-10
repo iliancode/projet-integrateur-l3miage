@@ -1,4 +1,12 @@
-
+.messageErreur{
+  color : orange;
+  margin-top:5%;
+  text-align: center;
+  @media only screen and (max-width: 600px) {
+    margin-top:2%;
+    font-size: 13px;
+  }
+}
 body {
   /* Définir l'image de fond avec une seule répétition */
   //https://i.pinimg.com/736x/3d/ec/1e/3dec1eaa2d6c317ce54099c92bda5b8b.jpg
