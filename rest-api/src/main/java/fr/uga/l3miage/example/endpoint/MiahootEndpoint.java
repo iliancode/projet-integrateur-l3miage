@@ -2,10 +2,13 @@ package fr.uga.l3miage.example.endpoint;
 
 import fr.uga.l3miage.example.annotations.Error400Custom;
 import fr.uga.l3miage.example.error.notFoundErrorResponse.EnseignantNotFoundErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.MiahootNotFoundErrorResponse;
+import fr.uga.l3miage.example.error.notFoundErrorResponse.TestNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateFullMiahootRequest;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.EnseignantDTO;
 import fr.uga.l3miage.example.response.MiahootDTO;
+import fr.uga.l3miage.example.response.Test;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Tag(name = "Endpoints des Miahoots")
@@ -30,7 +34,7 @@ public interface MiahootEndpoint {
     @Error400Custom
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("enseignants/{uidEnseignant}/miahoots")
-    public void createEntityMiahootFromEnseignant(@PathVariable("uidEnseignant") String uidEnseignant, @RequestBody CreateMiahootRequest request) throws Exception;
+    void createEntityMiahootFromEnseignant(@PathVariable("uidEnseignant") String uidEnseignant, @RequestBody CreateMiahootRequest request) throws Exception;
 
 
     @Operation(description = "Récupération de tous les miahoots d'un enseignant")
@@ -66,5 +70,15 @@ public interface MiahootEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("enseignants/{uidEnseignant}/miahootjson")
     void createMiahootOfEnseignant(@PathVariable("uidEnseignant") String uidEnseignant, @RequestBody CreateFullMiahootRequest createFullMiahootRequest);
+
+
+    @Operation(description = "Mise à jour d'une entité Miahoot ainsi que ses Questions et ses Réponses")
+    @ApiResponse(responseCode = "202", description = "L'entité à bien été mis à jour")
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'est pas trouvée",
+            content = @Content(schema = @Schema(implementation = MiahootDTO.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @Error400Custom
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PatchMapping("enseignants/{uidEnseignant}/miahoots/{idMiahoot}")
+    void updateFullMiahootOfEnseignant(@PathVariable("uidEnseignant") final String uidEnseignant, @PathVariable("idMiahoot") final Long idMiahoot, @Valid @RequestBody final MiahootDTO request);
 
 }

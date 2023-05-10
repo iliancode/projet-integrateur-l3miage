@@ -6,17 +6,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Getter
 @Setter
 @Schema(description = "correspond au DTO de l'entité Reponse")
 public class ReponseDTO{
+
+        @Schema(description = "id de la question", example = "1")
         private Long id;
 
+        @Schema(description = "description de l'objet reponse", example = "Un identifiant unique pour une page web")
         @NotBlank(message = "L'énonciation des réponses est obligatoire")
         private String label;
 
-        @NotBlank(message = "La validité de la réponse est obligatoire")
+        @Schema(description = "description d'un bool", example = "true")
+        @NotNull
         private Boolean estValide;
 }

@@ -67,6 +67,7 @@ public class ParticipantComponent {
         for (Partie p : enseignant.getParties()) {
             if (partie.getCodePartie() == p.getCodePartie()) {
                 isPartieofEnseignant = true;
+                break;
             }
         }
 

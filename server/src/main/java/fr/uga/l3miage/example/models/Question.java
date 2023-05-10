@@ -32,7 +32,7 @@ public class Question {
         this.reponses.add(reponse);
     }
 
-   public Reponse getReponse(long id) {
+   public Reponse getReponse(Long id) {
         for (Reponse reponse : this.reponses) {
             if (reponse.getId() == id) {
                 return reponse;
@@ -53,9 +53,5 @@ public class Question {
         for (Reponse reponse : this.reponses) {
             this.reponses.remove(reponse);
         }
-    }
-
-    public long getId() {
-        return this.id;
     }
 }

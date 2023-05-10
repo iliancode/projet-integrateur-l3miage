@@ -5,6 +5,7 @@ import {BehaviorSubject, combineLatest, EMPTY, firstValueFrom, lastValueFrom, Ob
 import {Auth, authState, User} from "@angular/fire/auth";
 import {AuthService} from "./auth.service";
 import {Firestore} from "@angular/fire/firestore";
+import {Partie} from "./interfaces";
 
 
 
@@ -45,6 +46,7 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   mail = '';
   mdp = '';
   pseudo = '';
+private bsAskUpdate = new BehaviorSubject<void>(undefined);
 
   constructor(private http: HttpClient, private auth: AuthService,  fireS: Firestore) {
     this.obsMiahoots = combineLatest([this.bsAskUpdate, auth.currentUser]).pipe(
@@ -66,7 +68,6 @@ readonly obsMiahoots: Observable<Miahoot[]>;
     let url = "http://localhost:8080/api/enseignants/";
     url += uid + "/miahoots/" + id
     return  lastValueFrom(this.http.get<any>(url));
-
   }
 
   async createMiahoot(M: Miahoot): Promise<Miahoot> {
@@ -161,6 +162,14 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   envoyerUser(): string[]{
     return [this.mail, this.pseudo, this.mdp];
   }
+
+  async createPartie(uidEnseignant: string, idMiahoot: number, body :any): Promise<void> {
+    let url = "http://localhost:8080/api/enseignants/"
+    url += uidEnseignant + "/miahoots/" + idMiahoot + "/parties"
+    let reponse = await lastValueFrom(this.http.post(url, body));
+  }
+
+  //get partie
 
 
   async updateMiahoot(idMiahoot: number, updatedMiahoot: Miahoot){

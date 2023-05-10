@@ -72,4 +72,13 @@ public class MiahootService {
             throw new EnseignantEntityNotFoundRestException(String.format("Le miahoot n'a pas pu être créé car l'enseignant [%s] n'existe pas", uidEnseignant), uidEnseignant, e);
         }
     }
+
+
+    public void updateFullMiahootOfEnseignant(final String uidEnseignant, final Long idMiahoot, final MiahootDTO request) {
+        try {
+            miahootComponent.updateFullMiahootOfEnseignant(uidEnseignant, idMiahoot, request);
+        } catch (EnseignantEntityNotFoundException | MiahootEntityNotFoundException e) {
+            throw new MiahootEntityNotFoundRestException(e.getMessage(), idMiahoot, e);
+        }
+    }
 }

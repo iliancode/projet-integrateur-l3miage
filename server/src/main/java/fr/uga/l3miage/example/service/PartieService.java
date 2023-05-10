@@ -27,7 +27,7 @@ public class PartieService {
 
     public void addPartieToEnseignant(String uidEnseignant, Long idMiahoot, CreatePartieRequest createPartieRequest) {
         try {
-            Partie newPartie = partieMapper.toEntity(createPartieRequest);
+            Partie newPartie = partieMapper.toPartie(createPartieRequest);
             partieComponent.addPartieToEnseignant(uidEnseignant, idMiahoot, newPartie);
         } catch (EnseignantEntityNotFoundException e) {
             throw new EnseignantEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",e.getMessage()),uidEnseignant,e);

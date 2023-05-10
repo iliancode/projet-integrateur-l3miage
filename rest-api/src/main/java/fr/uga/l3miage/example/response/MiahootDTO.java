@@ -15,8 +15,10 @@ import java.util.List;
 @Builder
 @Schema(description = "correspond au DTO de l'entité Miahoot")
 public class MiahootDTO{
+    @Schema(description = "id du miahoot", example = "1")
     private Long id;
 
+    @Schema(description = "description de l'objet miahoot", example = "Quizz Web")
     @NotBlank(message="Le nom du miahoot est obligatoire")
     private String nom;
 
