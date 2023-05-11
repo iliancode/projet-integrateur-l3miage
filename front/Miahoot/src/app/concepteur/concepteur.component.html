@@ -1,24 +1,23 @@
-<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
 
-<!-- Background & animion & navbar & title -->
-  <div class="container-fluid">
-<!-- Background animtion-->
-    <div class="background">
-       <div class="cube"></div>
-       <div class="cube"></div>
-       <div class="cube"></div>
-       <div class="cube"></div>
-      <div class="cube"></div>
-    </div>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+</head>
+
 <!-- header -->
-   <header>
+   <body>
 
-    <!-- title & content -->
-    <section class="header-content">
-      <h1>Welcome</h1>
-      <p> which operation you want to make ? <br></p>
+
+
+      <h1> Quelle opération souhaitez vous réaliser ?  </h1>
       <!-- il faudra faire un ngFor pour chaque miahoot existant pour l'enseignant connecté
        et il faudra recuperer le nom des miahoot pour les afficher à la place de miahoot name-->
+     <div class="header">
+       <a href="/creation" class="right "><button id="addMiahoot"  >+</button></a> <br/>
+
+     </div>
 
       <div *ngIf="miahoots ">
         <!-- maj sur gestion id : v0 on utilise un index
@@ -26,21 +25,23 @@
          but de la maj : on va récuperer l'id en sélectionant le miahoot
          tq on aura un attribut idMiahootCourant qui se mettra à jour en fonction
          du miahoot selectionné ! -->
-       <p hidden="true"> {{miahoots[0].nom}}</p>
-        <div *ngFor="let miahoot of miahoots; index as i ">
-
-          <button [matMenuTriggerFor]="menu" id="Miahoot-{{i+1}}" mat-button>{{miahoot.nom}}</button>
+        <h2 hidden="true"> {{miahoots[0].nom}}</h2>
+        <div class="contenantMiahoot">
+        <div class=""*ngFor="let miahoot of miahoots; index as i ">
+          <button class="nomMiahoot"[matMenuTriggerFor]="menu" id="Miahoot-{{i+1}}" >{{miahoot.nom}}</button>
           <mat-menu #menu="matMenu">
             <button (click)="supprimeMiahoot(i)" mat-menu-item> Supprimer </button>
             <button (click)="selectMiahoot(i)" mat-menu-item> Modifier </button>
           </mat-menu>
         </div>
+        </div>
       </div>
 
-      <a href="/creation"><button id="addMiahoot" mat-raised-button > + </button></a>
-    </section>
-  </header>
-</div>
+      <footer class="footer">
+        <a href="/enseignant"> <img src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" height="70px" width="70px"> </a>
+      </footer>
+
+   </body>
 
 <!--
 <div id="inputmiahoot">
