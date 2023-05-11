@@ -11,86 +11,84 @@
 <div class="container">
 
 
-<div class="twelve">
-
-</div>
-<br/>
-<br/>
-<div *ngIf="(!commencePartie)">
-  <div *ngIf="estPresentateur">
-  <button (click)="questionSuivante()"
-          [ngModel]="commencePartie"
-          mat-raised-button> commencer la partie
-  </button>
+  <div class="twelve">
+    <h1>{{miahootPartie.nom}}</h1>
   </div>
-</div>
-  <div *ngIf="(!estPresentateur) && (!commencePartie)" class="spinner-container white-spinner">
-    <h2>La partie va bientôt commencer...</h2>
-    <mat-progress-spinner mode="indeterminate" class="spinner-color"></mat-progress-spinner>
+  <br/>
+  <br/>
+  <div *ngIf="(!commencePartie)">
+    <div *ngIf="estPresentateur">
+      <button (click)="questionSuivante()"
+              [ngModel]="commencePartie"
+              mat-raised-button> commencer la partie
+      </button>
+    </div>
+  </div>
+  <div *ngIf="(!estPresentateur) && (!commencePartie)">
+    <h2>La partie va bientot commencer ...</h2>
   </div>
 
 
 
 
 
-<div *ngIf="commencePartie">
-  <div *ngIf="estPresentateur">
+  <div *ngIf="commencePartie">
+    <div *ngIf="estPresentateur">
 
-    <div *ngIf="question_courante | async as Q;">
-      <div class="myDiv">
-        <h2  >{{  miahootPartie.questions[indexRecup].label }}</h2>
-      </div>
-      <div  class="reponses" id="repprof">
-        <div *ngFor="let reponse of Q.reponses; index as i" class="test" > <br/>
-          <div class="box" id="box-{{i+1}}"><p>{{ reponse.label }}</p></div>
-          <br/>
-          <div [ngClass]="{ valid :reponse.estValide}">
-            <div *ngIf="showCorrectAnswer && reponse.estValide ">   </div>
-            <dialog id="popup">
-              <h3>La bonne réponse est : {{ reponse.label }} </h3>
-            </dialog>
+      <div *ngIf="question_courante | async as Q;">
+        <div class="myDiv">
+          <h2  >{{  miahootPartie.questions[indexRecup].label }}</h2>
+        </div>
+        <div  class="reponses" id="repprof">
+          <div *ngFor="let reponse of Q.reponses; index as i" class="test" > <br/>
+            <div class="box" id="box-{{i+1}}"><p>{{ reponse.label }}</p></div>
+            <br/>
+            <div [ngClass]="{ valid :reponse.estValide}">
+              <div *ngIf="showCorrectAnswer && reponse.estValide ">   </div>
+              <dialog id="popup">
+                <h2>La bonne réponse est : {{ reponse.label }} </h2>
+              </dialog>
+            </div>
           </div>
         </div>
+
+        <!-- <button mat-raised-button (click)="showCorrectAnswer = !showCorrectAnswer">Bonne réponse</button> -->
+        <button mat-raised-button onclick="document.getElementById('popup').show()">Bonne réponse</button>
+
+        <button (click)="questionSuivante()" mat-raised-button>Question suivante</button>
       </div>
-
-      <!-- <button mat-raised-button (click)="showCorrectAnswer = !showCorrectAnswer">Bonne réponse</button> -->
-      <button  class="test"mat-raised-button onclick="document.getElementById('popup').show()">Bonne réponse</button>
-
-      <button (click)="questionSuivante()" mat-raised-button>Question suivante</button>
     </div>
-  </div>
 
 
-  <!-- ici on fait la vue du participant
-(avec des boutons correspondants aux reponses possibles)
-il faut les elements suivants :
-- les reponses
-- un bouton de comfirmation
--->
-  <div *ngIf="!estPresentateur" >
-    <!--ici la liste de boutons choix -->
-    <div *ngIf="miahootPartie.questions[currentIndex] ">
-      <div class="myDiv">
-        <h2 >{{ miahootPartie.questions[currentIndex].label }}</h2>
-      </div>
-      <br/>
-
-
-      <div  class="reponses" id="lesReponses">
-        <div *ngFor="let reponse of miahootPartie.questions[currentIndex].reponses; index as i" class="test">
-          <button (click)="onButtonClick(reponse)" [ngClass]="{'selected': selectedReponse === reponse }" class="box" id="box-{{i+1}}" mat-raised-button>{{ reponse.label }}</button>
+    <!-- ici on fait la vue du participant
+  (avec des boutons correspondants aux reponses possibles)
+  il faut les elements suivants :
+  - les reponses
+  - un bouton de comfirmation
+  -->
+    <div *ngIf="!estPresentateur" >
+      <!--ici la liste de boutons choix -->
+      <div *ngIf="miahootPartie.questions[currentIndex] ">
+        <div class="myDiv">
+          <h2 >{{ miahootPartie.questions[currentIndex].label }}</h2>
         </div>
+        <br/>
+
+
+        <div  class="reponses" id="lesReponses">
+          <div *ngFor="let reponse of miahootPartie.questions[currentIndex].reponses" class="test">
+            <button (click)="onButtonClick(reponse)" [ngClass]="{'selected': selectedReponse === reponse }" class="box" id="{{reponse.id}}" mat-raised-button>{{ reponse.label }}</button>
+          </div>
+        </div>
+        <button (click)="confirmerChoix()" id="buttonConfirm" mat-raised-button> Confirmer mes choix </button>
       </div>
-      <button (click)="confirmerChoix()" id="buttonConfirm" mat-raised-button> Confirmer mes choix </button>
     </div>
   </div>
-</div>
 
-<footer class="footer">
-  <a *ngIf="!estPresentateur" href="/participant" > <img height="70px" src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" width="70px"> </a>
-  <a *ngIf="estPresentateur" href="/presentateur" > <img height="70px" src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" width="70px"> </a>
-</footer>
+  <footer class="footer">
+    <a *ngIf="!estPresentateur" href="/participant" > <img height="70px" src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" width="70px"> </a>
+    <a *ngIf="estPresentateur" href="/presentateur" > <img height="70px" src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" width="70px"> </a>
+  </footer>
 
 </div>
 </body>
-

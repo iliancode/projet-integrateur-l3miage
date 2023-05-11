@@ -66,9 +66,9 @@ export class PresentationComponent implements OnInit {
     });
 
     await this.isEnseignant();
-  if(this.indexQuestionCourante >= 0){
-    this.question_courante.next(this.miahootPartie.questions[this.indexQuestionCourante]);
-  }
+    if(this.indexQuestionCourante >= 0){
+      this.question_courante.next(this.miahootPartie.questions[this.indexQuestionCourante]);
+    }
 
     const unsub = onSnapshot(doc(db, "parties", this.codePartie), (doc) => {
       console.log("Miahoot modifié: ", doc.get('indexQuestionCourante'));
@@ -108,7 +108,7 @@ export class PresentationComponent implements OnInit {
     console.log("indexQuestionCourante " + this.indexQuestionCourante)
     this.indexQuestionCourante++;
     console.log("indexQuestionCourante++ " + this.indexQuestionCourante)
-   // console.log('question courante : ' + this.question_courante.getValue()?.label);
+    // console.log('question courante : ' + this.question_courante.getValue()?.label);
 
     if(this.indexQuestionCourante >= 0){
       if(this.miahootPartie.questions.length <= this.indexQuestionCourante){
@@ -144,22 +144,22 @@ export class PresentationComponent implements OnInit {
     this.miahootPartie.questions.forEach((question) => {
       const partieRef = doc(db, "parties", this.codePartie);
       const questionRef= doc(partieRef,'questions', question.id!.toString());
-       const reponseRef = doc(questionRef, 'reponses', reponseSelected);
+      const reponseRef = doc(questionRef, 'reponses', reponseSelected);
       updateDoc(reponseRef, {
         nbVotes: arrayUnion(this.uid)
       });
-      });
+    });
 
-/*
-    const u =  firstValueFrom(this.auth.currentUser).then(user=>{
-      const collParticipant = collection(this.us.getFirestore(), `parties/${this.codePartie}/questions/question/${this.miahootPartie.questions[this.currentIndex].id }/participants/${parseInt(reponseSelected)}` );
-      addDoc(collParticipant, {
-        uid: user?.uid??'',
+    /*
+        const u =  firstValueFrom(this.auth.currentUser).then(user=>{
+          const collParticipant = collection(this.us.getFirestore(), `parties/${this.codePartie}/questions/question/${this.miahootPartie.questions[this.currentIndex].id }/participants/${parseInt(reponseSelected)}` );
+          addDoc(collParticipant, {
+            uid: user?.uid??'',
 
-      });
+          });
 
 
-    }) ;*/
+        }) ;*/
     document.getElementById('buttonConfirm')!.setAttribute('hidden', 'false');
 
   }
