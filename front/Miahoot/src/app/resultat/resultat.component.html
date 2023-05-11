@@ -3,38 +3,27 @@
 <head>
   <title>Graphique à barres</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </head>
 <body>
+<div class="container">
+  <p>Code le partie: {{codePartie}}</p>
 
+  <div *ngIf="liste_reponses | async as lr">
+    <div *ngFor="let m of miahootPartie.questions; let indeeex = index;">
+      <div *ngFor="let l of lr">
+        <ng-template [ngIf]="indeeex == l.index">
+          <div class="question">
+            <div class="question-title">
+              À la question {{ l.idQuestion }}, {{ l.nbVotes }} personnes ont répondu {{ l.labelReponse }}
+            </div>
+          </div>
+        </ng-template>
+      </div>
 
-
-
-
-<p>resultat works!</p>
-
-
-
-<p>code partie selon le param du lien : {{codePartie}}</p>
-
-
-<div *ngIf="liste_reponses | async as lr">
-  <div *ngFor="let m of miahootPartie.questions ; index as indeeex">
-    <div *ngFor="let l of lr"  >
-      <ng-template [ngIf]="indeeex == l.index"><div>
-        a la question {{l.idQuestion}}, {{l.nbVotes}} personnes ont répondu {{l.labelReponse}}
-      </div></ng-template>
-
+      <button class="results-button" (click)="onButtonClick(indeeex)">Afficher les résultats pour la question {{ indeeex }}</button>
+      <canvas class="chart" height="100" hidden="true" id="acquisitions{{ indeeex }}"></canvas>
     </div>
-
-      <button (click)="onButtonClick(indeeex) " >Afficher resultats question {{indeeex}}</button>
-      <canvas height="100" hidden="true" id="acquisitions{{indeeex}}" ></canvas>
-
   </div>
-
-
 </div>
-o
 </body>
-
 </html>
