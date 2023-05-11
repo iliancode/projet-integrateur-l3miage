@@ -24,9 +24,10 @@
   </button>
   </div>
 </div>
-<div *ngIf="(!estPresentateur) && (!commencePartie)">
-  <h2>La partie va bientot commencer ...</h2>
-</div>
+  <div *ngIf="(!estPresentateur) && (!commencePartie)" class="spinner-container white-spinner">
+    <h2>La partie va bientôt commencer...</h2>
+    <mat-progress-spinner mode="indeterminate" class="spinner-color"></mat-progress-spinner>
+  </div>
 
 
 
