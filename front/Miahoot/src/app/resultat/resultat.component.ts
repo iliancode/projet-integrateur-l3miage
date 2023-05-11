@@ -102,7 +102,6 @@ export class ResultatComponent implements OnInit {
       { label: tabrep[3], count: tabvote[3]},
 
     ];
-    data
 
       valise = 'acquisitions' + index;
       let myElem = document.getElementById(valise);
