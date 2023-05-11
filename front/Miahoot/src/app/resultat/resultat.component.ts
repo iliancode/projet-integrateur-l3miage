@@ -1,20 +1,30 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {IndexQuestionService} from "../service/index-question.service";
-import {BehaviorSubject, EMPTY, Observable, Subscription} from "rxjs";
+import {BehaviorSubject, EMPTY, Observable, Subscription, timeout} from "rxjs";
 import {getDoc, getDocs, query, where} from "@angular/fire/firestore";
 import {collection, doc, setDoc} from "firebase/firestore";
 import {db} from "../../environments/test";
 import {Miahoot} from "../service/interfaces";
 import {User} from "@angular/fire/auth";
+import { Chart} from "chart.js/auto";
 
 interface answer {
+  index: number;
   idQuestion: number;
   labelQuestion: string;
   idReponse: number;
   labelReponse: string;
   nbVotes: number;
 }
+interface saveAnswer {
+
+  idQuestion: number;
+  labelQuestion: string;
+  listeReponse: answer[];
+}
+
+
 @Component({
   selector: 'app-resultat',
   templateUrl: './resultat.component.html',
@@ -51,17 +61,53 @@ export class ResultatComponent implements OnInit {
     }).then(() => {
 
       this.getAnswer();
+      console.log('liste reponse ', this.liste_reponses)
+
+
+
       console.log('x')
     });
-
+    this.createCanva();
 
 
     //for each question and foreach reponse of these questions, ask firebase the number of participants who answered this question with this answer
 
   }
 
+  createCanva() {
+    let valise = 'acquisitions';
 
-   getAnswer(){
+    const data = [
+      { year: 'a', count: 10 },
+      { year: 'b', count: 20 },
+      { year: 'c', count: 15 },
+      { year: 'd', count: 25 },
+    ];
+
+    //this.miahootPartie.questions.forEach((question, index) => {
+      valise = 'acquisitions0' //+ index;
+      let myElem = document.getElementById('xxx');
+      console.log('ici ', valise);
+      console.log('myelem ' , myElem)
+      if (myElem) {
+        new Chart(myElem as HTMLCanvasElement, {
+          type: 'bar',
+          data: {
+            labels: data.map(row => row.year),
+            datasets: [
+              {
+                label: 'question.label',
+                data: data.map(row => row.count)
+              }
+            ]
+          }
+        });
+      }
+   // });
+  }
+
+
+    getAnswer(){
     this.miahootPartie.questions.forEach((question, index) => {
       this.miahootPartie.questions[index].reponses.forEach((reponse) => {
         const partieRef = doc(db, "parties", this.codePartie);
@@ -73,7 +119,7 @@ export class ResultatComponent implements OnInit {
             if (docSnapshot.exists()) {
               const reponseData:string[] = docSnapshot.get('nbVotes');
               if (reponseData != undefined) {
-                this.reponses.push({idQuestion: question.id!, labelQuestion: question.label, idReponse: reponse.id!, labelReponse:reponse.label ,  nbVotes: reponseData.length});
+                this.reponses.push({index: index, idQuestion: question.id!, labelQuestion: question.label, idReponse: reponse.id!, labelReponse:reponse.label ,  nbVotes: reponseData.length});
                 this.savereponses = this.reponses;
                 const nombreParticipantsVote= reponseData.length;
                 console.log(`La réponse ${reponse.id} de la question ${question.id} a été votée par ${nombreParticipantsVote} participants.`);

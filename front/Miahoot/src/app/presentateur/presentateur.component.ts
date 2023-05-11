@@ -12,6 +12,8 @@ import {addDoc, getDocs} from "@angular/fire/firestore";
 import {db} from "../../environments/test";
 import {increment} from "@angular/fire/database";
 //import Chart from 'chart.js/auto';
+import Chart from 'chart.js/auto';
+
 
 
 
@@ -175,4 +177,7 @@ export class PresentateurComponent implements OnInit{
     });
     return estPresent;
   }
+
+
+
 }

@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Graphique à barres</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+
+
+<canvas height="400" id="xxx" width="600"></canvas>
+
+
+
 <p>resultat works!</p>
 zefzee
 
@@ -5,10 +19,24 @@ EN DUR BELEK : 0000000012567899
 
 <p>code partie selon le param du lien : {{codePartie}}</p>
 
+
 <div *ngIf="liste_reponses | async as lr">
-  <div *ngFor="let reponse of lr ; index as i">
-    <p>Graphique de la question  {{ reponse.idQuestion }} : {{ reponse.labelQuestion }} </p>
-    <p>La réponse : {{ reponse.labelReponse }} a obtenue  {{ reponse.nbVotes }} votes !</p>
+  <div *ngFor="let m of miahootPartie.questions ; index as indeeex">
+    <div *ngFor="let l of lr"  >
+      <ng-template [ngIf]="indeeex == l.index"><div>
+        a la question {{l.idQuestion}}, {{l.nbVotes}} personnes ont répondu {{l.labelReponse}}
+      </div></ng-template>
+
+    </div>
+
+
+      <canvas height="400" id="acquisitions{{indeeex}}" width="600"></canvas>
 
   </div>
+
+
 </div>
+o
+</body>
+
+</html>
