@@ -77,8 +77,8 @@ il faut les elements suivants :
 
 
       <div  class="reponses" id="lesReponses">
-        <div *ngFor="let reponse of miahootPartie.questions[currentIndex].reponses" class="test">
-          <button (click)="onButtonClick(reponse)" [ngClass]="{'selected': selectedReponse === reponse }" class="box" id="{{reponse.id}}" mat-raised-button>{{ reponse.label }}</button>
+        <div *ngFor="let reponse of miahootPartie.questions[currentIndex].reponses; index as i" class="test">
+          <button (click)="onButtonClick(reponse)" [ngClass]="{'selected': selectedReponse === reponse }" class="box" id="box-{{i+1}}" mat-raised-button>{{ reponse.label }}</button>
         </div>
       </div>
       <button (click)="confirmerChoix()" id="buttonConfirm" mat-raised-button> Confirmer mes choix </button>
