@@ -5,27 +5,34 @@
 </head>
 <body>
 
-<button (click)="signInAnonymously()" *ngIf="! islogged"> anonyme</button>
+<div class="center">
+  <button class="anonyme" (click)="signInAnonymously()" *ngIf="! islogged"> Connexion anonyme</button>
+</div>
 
 <div *ngIf="islogged" class="entrerCodePartie" >
-  <form (ngSubmit)="onSubmit()" [formGroup]="reactiveForm">
-    <!--renseignement du code de la partie et du pseudo-->
-    <div class="inline">
-      <input formControlName="codePartie" name="codePartie" placeholder="Entrez le code de la partie" type="text">
-    </div><br>
-    <div class="inline">
-      <input formControlName="pseudoParticipant" id="pseudoParticipant" name="pseudoParticipant" placeholder="Entrez votre pseudo" type="text">
-    </div><br>
+<form (ngSubmit)="onSubmit()" [formGroup]="reactiveForm">
+  <!--renseignement du code de la partie et du pseudo-->
+  <div class="inline">
+    <input formControlName="codePartie" name="codePartie" placeholder="Entrez le code de la partie" type="text">
 
-    <button class="submit" type="submit">Commencer la partie ! </button>
-  </form>
+  </div><br>
+  <div class="inline">
+    <input formControlName="pseudoParticipant" id="pseudoParticipant" name="pseudoParticipant" placeholder="Entrez votre pseudo" type="text">
+  </div><br>
 
-  <p class ="messageSubmit" >
-    {{ message }}
-  </p>
+  <button class="submit" type="submit">Commencer la partie ! </button>
+</form>
+
+<p class="messageErreur">{{messageErreur}}</p>
+
+<p class ="messageSubmit" >
+  {{ message }}
+</p>
 
 
 </div>
-
+<footer class="footer">
+  <a href=""> <img src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" height="70px" width="70px"> </a>
+</footer>
 </body>
 </html>

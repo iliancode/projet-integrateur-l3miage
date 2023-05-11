@@ -1,43 +1,35 @@
-<p>presentateur works!</p>
-<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
-
-<!-- Background & animion & navbar & title -->
-  <div class="container-fluid">
-<!-- Background animtion-->
-    <div class="background">
-       <div class="cube"></div>
-       <div class="cube"></div>
-       <div class="cube"></div>
-       <div class="cube"></div>
-      <div class="cube"></div>
-    </div>
-<!-- header -->
-   <header>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+</head>
+   <body>
 
 <!-- title & content -->
-      <section class="header-content">
-         <h1>Welcome</h1>
-        <p> choose which one you want to present ? <br>
-            </p>
-        <div *ngIf="liste_miahoots | async as M"
 
-        >
+         <div class="center">
+           <h1>Prêt à lancer une partie de quiz captivante ? </h1>
+           <h3> Renseignez les informations de la partie que vous souhaitez lancer </h3><br>
+           <div class="test">
+           <div *ngIf="liste_miahoots | async as M" >
 
-          <div id="listemiahoot" *ngFor="let miahoot of M; index as indice ">
+             <div *ngFor="let miahoot of M; index as indice " id="listemiahoot">
 
-            <button (click)="onButtonClick(miahoot)"  id="{{miahoot.id}}" [ngClass]="{'selected': selectedMiahoot === miahoot }">{{miahoot.nom}}</button>
-          </div>
-
-
-
-        </div>
-        <div class="box">
-          <label for="nompartie"><input type="text" id="nompartie" placeholder="nom de la partie : L3 Miage Quizz"></label>
-          <label for="codePartie"> <input type="text" name="codePartie" id="codePartie" placeholder="exemple: 3546"></label>
-          <button (click)="createGame()">create game</button>
-        </div>
-
-      </section>
+               <button (click)="onButtonClick(miahoot)"  [ngClass]="{'selected': selectedMiahoot === miahoot }" id="{{miahoot.id}}">{{miahoot.nom}}</button>
+             </div>
+           </div>
+           <div class="box">
+             <label for="nompartie"> </label> <input id="nompartie" placeholder="Nom de la partie, ex : L3 Miage Quizz" type="text">
+             <label for="codePartie"> </label> <input id="codePartie" name="codePartie" placeholder="Code de la partie, ex : 3546" type="text">
+           </div>
+             <button (click)="createGame()">Commencer la partie ! </button>
+         </div>
+         </div>
+<footer class="footer">
+  <a href="/enseignant"> <img src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" height="70px" width="70px"> </a>
+</footer>
+   </body>
 
 <!--
      <div *ngIf="question_courante | async as Q;">
@@ -48,7 +40,6 @@
        <button (click)="questionSuivante()">Question suivante</button>
      </div>
 -->
-   </header>
-  </div>
+
 
 

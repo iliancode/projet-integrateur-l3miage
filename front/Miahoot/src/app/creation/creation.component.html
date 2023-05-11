@@ -1,53 +1,15 @@
-<p>
-  <mat-label>Nom du Miahoot</mat-label>
-  <br/>
-  <span class="input">
-    <input [(ngModel)]="nameMiahoot" #input (keyup)="submitName(input.value)"  type="text" placeholder="Entrez un nom">
-  </span>
-</p>
+<div class="creation">
+  <div id="inputmiahoot" >
+    <form action="">
+      <textarea type="jsoninput" id="miahoot" #miahoot class="input"></textarea><br/>
+      <input  type="file" id="input" size="700"> <br/>
+      <button class="button"type="submit" (click)="postMiahoot(uid, miahoot.value)">
+        <span>Submit</span>
+      </button>
+    </form>
 
-<button class="open-button" (click)="openForm()"> Ajouter une question</button>
+  </div>
 
-<div class="form-popup" id="myForm" (submit)="onSubmit()">
-  <span class="close" (click)="closeForm()">×</span>
-  <form [formGroup]="reactiveForm" action="/action_page.php" class="form-container" >
 
-    <div *ngIf="!formIsValid" class="error-message">Le formulaire est invalide.</div>
-    <h1>Miahoot</h1>
-    <i> Cochez la ou les réponses justes</i><br><br>
-    <label ><b>Question *</b></label>
-    <input type="text" placeholder="Entrez l'intitulé de la question" id="question"  formControlName="question" required/>
 
-    <input type="checkbox" id="isValidReponse1" formControlName="isValidReponse1" >
-    <label ><b>Reponse A *</b></label>
-    <input type="text" placeholder="reponse A" id="reponse1" formControlName="reponse1" required>
-
-    <input type="checkbox" id="isValidReponse2" formControlName="isValidReponse2" >
-    <label ><b>Reponse B *</b></label>
-    <input type="text" placeholder="reponse B" id="reponse2" formControlName="reponse2" required>
-
-    <input type="checkbox" id="isValidReponse3" formControlName="isValidReponse3" >
-    <label ><b>Reponse C</b></label>
-    <input type="text" placeholder="reponse C" id="reponse3" formControlName="reponse3">
-
-    <input type="checkbox" id="isValidReponse4" formControlName="isValidReponse4" >
-    <label><b>Reponse D</b></label>
-    <input type="text" placeholder="reponse D" id="reponse4" formControlName="reponse4">
-
-    <button type="submit" class="btn">valider</button>
-
-  </form>
 </div>
-
-<div *ngFor="let question of questions">
-  <p>Question : {{ question.question }}</p>
-  <p>Réponse A : <span [ngClass]="{'valid-response': question.isValidReponse1}">{{ question.reponse1 }}</span></p>
-  <p>Réponse B : <span [ngClass]="{'valid-response': question.isValidReponse2}">{{ question.reponse2 }}</span></p>
-  <p>Réponse C : <span [ngClass]="{'valid-response': question.isValidReponse3}">{{ question.reponse3 }}</span></p>
-  <p>Réponse D : <span [ngClass]="{'valid-response': question.isValidReponse4}">{{ question.reponse4 }}</span></p>
-</div>
-
-<form action="">
-  <input type="jsoninput" id="miahoot" #miahoot>
-  <button type="submit" (click)="postMiahoot(miahoot.value)">Submit</button>
-</form>

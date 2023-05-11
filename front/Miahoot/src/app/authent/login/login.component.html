@@ -1,44 +1,44 @@
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+</head>
+<div class="center">
+  <div class="connexion">
+    <form>
 
-<div class="container-fluid">
-    <div class="row mt-5">
-        <div class="col"></div>
-        <div class="col-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <form>
-                        <div class="mb-3">
-                            <h4 class="text-dark text-muted">Login</h4>
-                        </div>
-                        <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Email</label>
-                          <input type="email" class="form-control" name="email" [(ngModel)]="email">
-                        </div>
-                        <div class="mb-3">
-                          <label for="exampleInputPassword1" class="form-label">Password</label>
-                          <input type="password" class="form-control" name="password" [(ngModel)]="password">
-                        </div>
-                        <button type="button" class="btn btn-info" (click)="login()">Login</button>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <a href="/register" style="text-decoration: none;">Need Account ? <span class="text-danger">Register</span></a>
-                            </div>
-                            <div class="col-md-6">
-                                <a href="/forgot-password" class="text-dark" style="text-decoration: none;"> Forgot Password ? </a>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <a (click)="loginG()" style="text-decoration: none;cursor: pointer;">
-                                <div class="card shadow text-center">
-                                    <div class="card-body">
-                                        <img src="../../../assets/icons8-google-48.png" alt="" height="24px" width="24px"> Sign In with Google
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col"></div>
+      <h2>Connexion</h2>
+      <label for="exampleInputEmail1" class="form-label">Email</label>
+      <input type="email" class="form-control" name="email" [(ngModel)]="email">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" name="password" [(ngModel)]="password">
+      <button type="button" class="btn btn-info" (click)="login()">Se connecter</button> <br/>
+
+      <div class="centerInscription">
+      <a href="/register"  class="inscription1">Besoin d'un compte ? <span class="inscription2">S'inscrire</span></a>
+      </div>
+        <!--<a href="/forgot-password" class="text-dark" style="text-decoration: none;"> Forgot Password ? </a>-->
+    </form>
+  </div>
+  <div class="textBienvenue">
+    <h1>Boostez la participation en classe <br>avec miahoot !
+    </h1> <br>
+    <p class="description">Créez, modifiez et supprimez des quiz pour vos étudiants afin de rendre l'apprentissage en classe plus ludique et interactif.</p>
+
+  </div>
+</div>
+<footer class="footer">
+  <a href=""> <img src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" height="70px" width="70px"> </a>
+</footer>
+<!--
+<div class="row mt-2">
+<a (click)="loginG()" style="text-decoration: none;cursor: pointer;">
+<div class="card shadow text-center">
+    <div class="card-body">
+        <img src="../../../assets/icons8-google-48.png" alt="" height="24px" width="24px"> Sign In with Google
     </div>
 </div>
+</a>
+</div>
+-->
+

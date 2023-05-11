@@ -1,31 +1,129 @@
 
 .card-container{
   width: 100%;
+  padding: 4%;
+  @media only screen and (max-width: 600px) {
+    padding: 1%;
+    display: inline;
+  }
+}
+button{
+
+  border-style: none;
+  padding: 3%;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 100%;
+  border-radius: 10px;
+  color: white;
+  @media only screen and (max-width: 600px) {
+    padding: 1%;
+    font-size: 14px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
+
+}
+.titreEnseignant{
+  color: #f72585;
+  font-size: 25px;
+  @media only screen and (max-width: 600px) {
+    font-size: 17px;
+  }
+}
+.titreParticipant{
+  color: #aacc00;
+  font-size: 25px;
+  @media only screen and (max-width: 600px) {
+    font-size: 17px;
+  }
+}
+.enseignantBtn{
+  background-color: #f72585;
+}
+.participantBtn{
+  background-color: #aacc00;
+}
+a{
+  text-decoration: none;
 }
 
 .leftCard{
-  background-color: azure;
+  background-color: white;
   float: left;
-  width: 45%;
-  margin: 0 40px;
+  width: 40%;
+  margin: 0px 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media only screen and (max-width: 600px) {
+    width: 80%;
+    margin: 0px 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 }
-.EnsButton{
-  background-color: lightblue;
-}
+
 
 .rightCard{
-  background-color: azure;
-  width: 45%;
-  margin: 0 10px;
+  background-color: white;
+  width: 40%;
+  margin: 0px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media only screen and (max-width: 600px) {
+    width: 80%;
+    margin-left:  35px;
+    margin-top: 15px;
+  }
+
+}
+.rightCard img{
+  margin-bottom: 3%;
+  margin-top: 3%;
+  border-radius: 20px;
+  @media only screen and (max-width: 600px) {
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
+
+}
+.leftCard img{
+  margin-bottom: 3%;
+  margin-top: 3%;
+  border-radius: 20px;
+  @media only screen and (max-width: 600px) {
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
 }
 
-.partButton{
-  background-color: lightblue;
+.imageCardEnseignant{
+  width: 450px;
+  height: 350px;
+  text-align: center;
+  padding: 2%;
+  @media only screen and (max-width: 600px) {
+    width: 180px;
+    height: 95px;
+    padding: 1%;
+  }
 }
-
-.imageCard{
-  width: 500px;
-  height: 400px;
+.imageCardParticipant{
+  width: 450px;
+  height: 350px;
+  text-align: center;
+  padding: 2%;
+  @media only screen and (max-width: 600px) {
+    width: 180px;
+    height: 95px;
+    padding: 1%;
+  }
 }
 
 // animated background
@@ -39,7 +137,7 @@ body {
 
 .bg {
   animation:slide 3s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+  background-image: linear-gradient(-60deg, #001f54 50%, #00a6fb 50%);
   bottom:0;
   left:-50%;
   opacity:.5;
@@ -71,9 +169,6 @@ body {
   transform:translate(-50%, -50%);
 }
 
-h1 {
-  font-family:monospace;
-}
 
 @keyframes slide {
   0% {

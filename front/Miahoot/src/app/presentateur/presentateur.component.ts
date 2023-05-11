@@ -8,7 +8,7 @@ import {Enseignant, Miahoot, Partie, Question} from "../service/interfaces";
 import {collection, doc, setDoc} from "firebase/firestore";
 import {UserService} from "../service/user.service";
 import {DsService} from "../service/ds.service";
-import {addDoc} from "@angular/fire/firestore";
+import {addDoc, getDocs} from "@angular/fire/firestore";
 
 
 
@@ -75,36 +75,75 @@ export class PresentateurComponent implements OnInit{
     let code = document.getElementById("codePartie") as HTMLInputElement;
     let uid = '';
 
-    const u =  firstValueFrom(this.auth.currentUser).then(user=>{
-      uid =user?.uid??'';
-      let x = this.ds.getMiahootById(uid, parseInt(miahootSelected));
+    const w =  this.verificationCodePartie(parseInt(code.value)).then(estPresent => {
+      console.log(estPresent);
+      if (estPresent == false) {
 
-      const docRef = doc(this.us.getFirestore(), `parties/${code.value}/` );
+        //si le code partie n'existe pas encore
+        const u =  firstValueFrom(this.auth.currentUser).then(user=>{
+          uid =user?.uid??'';
+          let x = this.ds.getMiahootById(uid, parseInt(miahootSelected));
+
+          const docRef = doc(this.us.getFirestore(), `parties/${code.value}/` );
+
+          //const newCollectionMiahoots = doc(this.us.getFirestore(), `parties/${code.value}/miahoots/miahoot` );
+          let nomMiahoot = x.then(miahoot =>{
+
+            setDoc(docRef, {
+              indexQuestionCourante: 0,
+              //code partie
+              codePartie: code.value,
+              //nom partie
+              nomPartie: nomPartie.value,
+              //miahoot nom
+              miahoot: miahoot
+            }).then(
+              () => {
+                let nompartie= document.getElementById("nompartie") as HTMLInputElement;
+                let tempval   = {codePartie: parseFloat(code.value), nom:nompartie.value}
+
+                this.ds.createPartie(uid, parseInt(miahootSelected), tempval);
 
 
-      //const newCollectionMiahoots = doc(this.us.getFirestore(), `parties/${code.value}/miahoots/miahoot` );
-      let nomMiahoot = x.then(miahoot =>{
 
-        setDoc(docRef, {
-          questionCourante: 0,
-          //code partie
-          codePartie: code.value,
-          //nom partie
-          nomPartie: nomPartie.value,
-          //miahoot nom
-          miahoot: miahoot
+                window.location.href = '/presentation/'+code.value;
+
+
+
+              }
+            );
+            /* setDoc(newCollectionMiahoots, {
+               //miahoot nom
+               miahoot: miahoot
+             });*/
+
+
+          });
         });
-       /* setDoc(newCollectionMiahoots, {
-          //miahoot nom
-          miahoot: miahoot
-        });*/
 
-        let nompartie= document.getElementById("nompartie") as HTMLInputElement;
-        let tempval   = {codePartie: parseFloat(code.value), nom:nompartie.value}
+      } else {
 
-        this.ds.createPartie(uid, parseInt(miahootSelected), tempval);
 
-      });
+        //si le code partie existe deja
+        alert("le code partie existe deja , veuillez en choisir un autre");
+        console.log("Le code partie existe deja :p ");
+      }
+    })
+
+  }
+  async verificationCodePartie(codeP : number): Promise<boolean>{
+
+
+    console.log("CODE P :"+codeP.toString())
+    let estPresent : boolean = false;
+    const querySnapshot = await getDocs(collection(this.us.getFirestore(), "parties"));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ");
+      if(doc.id == codeP.toString()){
+        estPresent = true;
+      }
     });
+    return estPresent;
   }
 }

@@ -1,32 +1,52 @@
-<p>register works!</p>
-<div class="container-fluid">
-    <div class="row mt-5">
-        <div class="col"></div>
-        <div class="col-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <form>
-                        <div class="mb-3">
-                            <h4 class="text-dark text-muted">Register</h4>
-                        </div>
-                        <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Email</label>
-                          <input type="email" class="form-control" name="email" [(ngModel)]="email">
-                        </div>
-                        <div class="mb-3">
-                          <label for="exampleInputPassword1" class="form-label">Password</label>
-                          <input type="password" class="form-control" name="password" [(ngModel)]="password">
-                        </div>
-                       <button type="button" class="btn btn-info" (click)="register()">Register</button>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <a href="/login" style="text-decoration: none;">Have an account ? <span class="text-danger">Login</span></a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col"></div>
-    </div>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+</head>
+<div class="center">
+  <div class="connexion">
+    <form>
+
+
+      <h2>Inscription</h2>
+
+      <label for="exampleInputEmail1" class="form-label">Email</label>
+      <input type="email" class="form-control" name="email" [(ngModel)]="email">
+
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" name="password" [(ngModel)]="password">
+
+      <button type="button" class="btn btn-info" (click)="register()">S'inscrire</button><br/>
+
+      <div class="centerInscription">
+        <a href="/login" class="inscription1">Have an account ? <span class="inscription2">Login</span></a>
+      </div>
+      <!--<a href="/forgot-password" class="text-dark" style="text-decoration: none;"> Forgot Password ? </a>-->
+    </form>
+  </div>
+  <div class="textBienvenue">
+    <h1>Boostez la participation en classe <br>avec miahoot !
+    </h1> <br>
+    <p class="description">Créez, modifiez et supprimez des quiz pour vos étudiants afin de rendre l'apprentissage en classe plus ludique et interactif.</p>
+
+  </div>
 </div>
+<footer class="footer">
+  <a href=""> <img src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" height="70px" width="70px"> </a>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

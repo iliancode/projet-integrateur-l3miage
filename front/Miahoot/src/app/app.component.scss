@@ -5,8 +5,20 @@
   border-radius: 50%;
   width: 50px;
 }
-.logoMiahoot{
-  width: 50px;
-  padding: 10px;
+.miahoot{
+  font-family: 'Sigmar', cursive;
+  color: #fdc860;
+  font-size: 35px;
+  @media only screen and (max-width: 600px) {
+    font-size: 17px;
+  }
 }
+mat-toolbar {
+    background-color: transparent;
+}
+a{
+  text-decoration: none;
+}
+
+
 

@@ -164,7 +164,8 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   }
 
   async createPartie(uidEnseignant: string, idMiahoot: number, body :any): Promise<void> {
-    let url = "http://localhost:8080/api/enseignants/"
+    let url = "http://" +
+      ":8080/api/enseignants/"
     url += uidEnseignant + "/miahoots/" + idMiahoot + "/parties"
     let reponse = await lastValueFrom(this.http.post(url, body));
   }

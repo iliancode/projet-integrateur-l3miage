@@ -1,0 +1,141 @@
+
+.box.selected {
+  background-color: #b1cf5f;
+  color: white;
+}
+
+body {
+  //https://static.vecteezy.com/system/resources/previews/003/106/462/original/abstract-colorful-background-free-vector.jpg
+  background: url("https://i.pinimg.com/736x/3d/ec/1e/3dec1eaa2d6c317ce54099c92bda5b8b.jpg") no-repeat;
+  /* Définir le mode de positionnement */
+  background-position: center;
+  /* Définir le mode de redimensionnement */
+  background-size: cover;
+  /* Définir la couleur de fond en cas d'échec de chargement de l'image */
+  background-color: #000e28;
+
+  @media only screen and (max-width: 600px) {
+    background-size: cover;
+  }
+}
+.container {
+  padding: 50px;
+}
+button,
+button::after {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+button {
+  background: none;
+  border: 4px solid #fff;
+  border-radius: 10px;
+  color: #fff;
+  display: block;
+  font-size: 1.6em;
+  font-weight: bold;
+  margin: 10px auto;
+  padding: 2em 6em;
+  position: relative;
+  text-transform: uppercase;
+}
+button::before,
+button::after {
+  background: #fff;
+  content: "";
+  position: absolute;
+  z-index: -1;
+}
+button:hover {
+  color: white;
+  background-color: #b1cf5f;
+}
+
+.myDiv {
+
+  //background-color: lightblue;
+  text-align: center;
+  width: 100%;
+  height: 50%;
+  margin: 0 auto;
+}
+
+.box{
+  color: black;
+  background: blanchedalmond;
+  font-weight: bold;
+  width: 80%;
+  height:120px;
+  border-radius: .4em;
+  text-align: center;
+  margin: 0 auto;
+  display: flex; /* use flexbox */
+  justify-content: center; /* center horizontally */
+  align-items: center;
+  font-size: 20px;
+  padding: 1%;
+}
+.reponses{
+  display: flex;
+  padding: 5%;
+}
+.test{
+  width: 100%;
+}
+
+//title du MIAhoot
+
+h1{
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 25px;
+  font-weight:700;
+  letter-spacing:1px;
+  position: relative;
+  padding: 4%;
+  font-family: "Raleway", sans-serif;
+  color: white;
+
+}
+
+
+#box-1 {
+  background-color: #f72585ff;;
+}
+
+#box-2 {
+  background-color: #7209b7ff;
+}
+#box-3 {
+  background-color: #4361eeff;
+}
+
+#box-4 {
+  background-color: #ffd60aff;
+}
+
+h2{
+  text-align: center;
+  color: white;
+  font-size: 50px;
+}
+.popup {
+  width: 20px;
+  height: 20px;
+}
+.container {
+
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+}
+
+
+
