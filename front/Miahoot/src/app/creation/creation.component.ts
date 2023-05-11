@@ -55,7 +55,10 @@ export class CreationComponent implements OnInit{
     }
 
 
-    this.ds.postM(uid, miahootObj);
+    this.ds.postM(uid, miahootObj).then(( ) => {
+      this.router.navigateByUrl("/concepteur")
+    });
+
   }
 
 

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Miahoot} from "../service/interfaces";
@@ -15,18 +15,21 @@ import {SelectedMiahootService} from "../service/selected-miahoot.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConcepteurComponent implements OnInit{
-private email : string | null | undefined ;
-
   uid = '';
   miahoots: Miahoot[] = [];
   miahoot : Miahoot;
   idMiahootCourant! : number
-  constructor(public router : Router, public ds:DsService, public auth :AuthService, public ps:PresentationService, private sms: SelectedMiahootService) {
-    this.miahoot = this.miahoots[0];
+private email : string | null | undefined ;
 
+  constructor(public router : Router, public ds:DsService, public auth :AuthService, public ps:PresentationService, private sms: SelectedMiahootService, public  cdr : ChangeDetectorRef) {
+    this.miahoot = this.miahoots[0];
     const u =  firstValueFrom(this.auth.currentUser).then(user=>{
      this.uid = user?.uid ?? '';
+
     }) ;
+
+
+    this.cdr.markForCheck();
   }
 
   selectMiahoot(id: number){
@@ -46,7 +49,6 @@ private email : string | null | undefined ;
           this.miahoot = this.miahoots[0];
           console.log(this.miahoots);
           console.log(this.miahoot);
-
         })
         .catch(()=>console.warn("probleme avec le get des miahoots"))
 
@@ -60,6 +62,8 @@ private email : string | null | undefined ;
     const vraiId = this.gestionIdMiahoot(id)?? 0
     this.ds.deleteMiahoot(vraiId)
       .then(()=>{
+
+        window.location.reload();
         console.log("supprimé de la bd api")
         /*const del = document.getElementById("" + id)
         if(del !== null){
