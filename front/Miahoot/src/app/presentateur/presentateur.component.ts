@@ -9,6 +9,11 @@ import {collection, doc, setDoc} from "firebase/firestore";
 import {UserService} from "../service/user.service";
 import {DsService} from "../service/ds.service";
 import {addDoc, getDocs} from "@angular/fire/firestore";
+import {db} from "../../environments/test";
+import {increment} from "@angular/fire/database";
+//import Chart from 'chart.js/auto';
+import Chart from 'chart.js/auto';
+
 
 
 
@@ -75,9 +80,21 @@ export class PresentateurComponent implements OnInit{
     let code = document.getElementById("codePartie") as HTMLInputElement;
     let uid = '';
 
-    const w =  this.verificationCodePartie(parseInt(code.value)).then(estPresent => {
+
+     const w =  this.verificationCodePartie(parseInt(code.value)).then(estPresent => {
       console.log(estPresent);
       if (estPresent == false) {
+
+        this.miahoot.questions.forEach((question,index) => {
+          this.miahoot.questions[index].reponses.forEach((reponse) => {
+            const partieRef = doc(db, "parties", code.value);
+            const questionRef= doc(partieRef,'questions', question.id!.toString());
+            const reponseRef = doc(questionRef, 'reponses', reponse.id!.toString());
+            setDoc(reponseRef, {participantVote: []}, {merge: true});
+
+          });
+
+        });
 
         //si le code partie n'existe pas encore
         const u =  firstValueFrom(this.auth.currentUser).then(user=>{
@@ -85,12 +102,25 @@ export class PresentateurComponent implements OnInit{
           let x = this.ds.getMiahootById(uid, parseInt(miahootSelected));
 
           const docRef = doc(this.us.getFirestore(), `parties/${code.value}/` );
-
+          const collQuestion = collection(this.us.getFirestore(), `parties/${code.value}/questions` );
           //const newCollectionMiahoots = doc(this.us.getFirestore(), `parties/${code.value}/miahoots/miahoot` );
           let nomMiahoot = x.then(miahoot =>{
 
+            /*addDoc(collQuestion, {
+              question: miahoot.questions
+            });*/
+           /* miahoot.questions.forEach(question => {
+              const collReponse = collection(this.us.getFirestore(), `parties/${code.value}/${question.id }`);
+              addDoc(collReponse, {
+                reponse: question.reponses
+              });
+            });*/
+
+
+
             setDoc(docRef, {
-              indexQuestionCourante: 0,
+
+              indexQuestionCourante: -1,
               //code partie
               codePartie: code.value,
               //nom partie
@@ -99,6 +129,7 @@ export class PresentateurComponent implements OnInit{
               miahoot: miahoot
             }).then(
               () => {
+
                 let nompartie= document.getElementById("nompartie") as HTMLInputElement;
                 let tempval   = {codePartie: parseFloat(code.value), nom:nompartie.value}
 
@@ -146,4 +177,7 @@ export class PresentateurComponent implements OnInit{
     });
     return estPresent;
   }
+
+
+
 }

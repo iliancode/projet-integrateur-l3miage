@@ -16,11 +16,20 @@
 </div>
 <br/>
 <br/>
-<div *ngIf="! commencePartie">
-  <button (click)="partieEnCours()" [ngModel]="commencePartie"> Commencer la partie</button>
+<div *ngIf="(!commencePartie)">
+  <div *ngIf="estPresentateur">
+  <button (click)="questionSuivante()"
+          [ngModel]="commencePartie"
+          mat-raised-button> commencer la partie
+  </button>
+  </div>
+</div>
+<div *ngIf="(!estPresentateur) && (!commencePartie)">
+  <h2>La partie va bientot commencer ...</h2>
 </div>
 
-<!--*********************   PRESENTATEUR *****************************-->
+
+
 
 
 <div *ngIf="commencePartie">
@@ -30,7 +39,7 @@
       <div class="myDiv">
         <h2  >{{  miahootPartie.questions[indexRecup].label }}</h2>
       </div>
-      <div  class="reponses">
+      <div  class="reponses" id="repprof">
         <div *ngFor="let reponse of Q.reponses; index as i" class="test" > <br/>
           <div class="box" id="box-{{i+1}}"><p>{{ reponse.label }}</p></div>
           <br/>
@@ -50,7 +59,7 @@
     </div>
   </div>
 
-<!--*********************   PARTICIPANT *****************************-->
+
   <!-- ici on fait la vue du participant
 (avec des boutons correspondants aux reponses possibles)
 il faut les elements suivants :
@@ -83,3 +92,4 @@ il faut les elements suivants :
 
 </div>
 </body>
+

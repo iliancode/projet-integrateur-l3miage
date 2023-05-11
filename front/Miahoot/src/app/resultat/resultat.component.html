@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Graphique à barres</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container">
+  <p>Code le partie: {{codePartie}}</p>
+
+  <div *ngIf="liste_reponses | async as lr">
+    <div *ngFor="let m of miahootPartie.questions; let indeeex = index;">
+      <div *ngFor="let l of lr">
+        <ng-template [ngIf]="indeeex == l.index">
+          <div class="question">
+            <div class="question-title">
+              À la question {{ l.idQuestion }}, {{ l.nbVotes }} personnes ont répondu {{ l.labelReponse }}
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+      <button class="results-button" (click)="onButtonClick(indeeex)">Afficher les résultats pour la question {{ indeeex }}</button>
+      <canvas class="chart" height="100" hidden="true" id="acquisitions{{ indeeex }}"></canvas>
+    </div>
+  </div>
+</div>
+</body>
+</html>

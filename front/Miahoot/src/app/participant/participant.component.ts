@@ -107,6 +107,7 @@ export class ParticipantComponent implements OnInit{
           uid: p.uid,
 
         }).then(() => {
+
           window.location.href = '/presentation/'+codeP;
           console.log("Participant enregistré avec succès sur Firestore !");
           this.messageErreur="";
