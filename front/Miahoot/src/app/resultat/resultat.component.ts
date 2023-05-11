@@ -5,7 +5,7 @@ import {BehaviorSubject, EMPTY, Observable, Subscription, timeout} from "rxjs";
 import {getDoc, getDocs, query, where} from "@angular/fire/firestore";
 import {collection, doc, setDoc} from "firebase/firestore";
 import {db} from "../../environments/test";
-import {Miahoot} from "../service/interfaces";
+import {Miahoot, Reponse} from "../service/interfaces";
 import {User} from "@angular/fire/auth";
 import { Chart} from "chart.js/auto";
 
@@ -37,6 +37,8 @@ export class ResultatComponent implements OnInit {
   miahootPartie!: Miahoot;
   savereponses : any;
 
+  selectedResultat: any = null;
+
   reponses: answer[] = [];
   public readonly liste_reponses: BehaviorSubject<answer[] | null>;
 
@@ -67,33 +69,50 @@ export class ResultatComponent implements OnInit {
 
       console.log('x')
     });
-    this.createCanva();
+    //this.createCanva();
 
 
     //for each question and foreach reponse of these questions, ask firebase the number of participants who answered this question with this answer
 
   }
 
-  createCanva() {
+  onButtonClick(index: number){
+    this.selectedResultat = index;
+    console.log('index ', index)
+    document.getElementById('acquisitions'+index)!.attributes.removeNamedItem('hidden');
+    this.createCanva(index);
+  }
+  createCanva(index:number) {
+    console.log('index ' , index)
+    let x = this.reponses;
+    let tabrep:string[] = [];
+    let tabvote:number[] = [];
+     x.forEach((question) => {
+      if(question.index == index){
+        tabrep.push(question.labelReponse);
+        tabvote.push(question.nbVotes);
+      }
+    });
     let valise = 'acquisitions';
-
+    let w = tabrep[0];
     const data = [
-      { year: 'a', count: 10 },
-      { year: 'b', count: 20 },
-      { year: 'c', count: 15 },
-      { year: 'd', count: 25 },
-    ];
+      { label: tabrep[0], count: tabvote[0] },
+      { label: tabrep[1], count: tabvote[1]},
+      { label: tabrep[2], count: tabvote[2]},
+      { label: tabrep[3], count: tabvote[3]},
 
-    //this.miahootPartie.questions.forEach((question, index) => {
-      valise = 'acquisitions0' //+ index;
-      let myElem = document.getElementById('xxx');
+    ];
+    data
+
+      valise = 'acquisitions' + index;
+      let myElem = document.getElementById(valise);
       console.log('ici ', valise);
       console.log('myelem ' , myElem)
       if (myElem) {
         new Chart(myElem as HTMLCanvasElement, {
           type: 'bar',
           data: {
-            labels: data.map(row => row.year),
+            labels: data.map(row => row.label),
             datasets: [
               {
                 label: 'question.label',
