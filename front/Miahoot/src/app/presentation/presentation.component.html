@@ -12,7 +12,7 @@
 
 
 <div class="twelve">
-  <h1>{{miahootPartie.nom}}</h1>
+
 </div>
 <br/>
 <br/>
@@ -46,14 +46,14 @@
           <div [ngClass]="{ valid :reponse.estValide}">
             <div *ngIf="showCorrectAnswer && reponse.estValide ">   </div>
             <dialog id="popup">
-              <h2>La bonne réponse est : {{ reponse.label }} </h2>
+              <h3>La bonne réponse est : {{ reponse.label }} </h3>
             </dialog>
           </div>
         </div>
       </div>
 
       <!-- <button mat-raised-button (click)="showCorrectAnswer = !showCorrectAnswer">Bonne réponse</button> -->
-      <button mat-raised-button onclick="document.getElementById('popup').show()">Bonne réponse</button>
+      <button  class="test"mat-raised-button onclick="document.getElementById('popup').show()">Bonne réponse</button>
 
       <button (click)="questionSuivante()" mat-raised-button>Question suivante</button>
     </div>

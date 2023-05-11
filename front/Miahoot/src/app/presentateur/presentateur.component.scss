@@ -48,13 +48,18 @@ button{
   cursor: pointer;
   transition: .6s;
 }
-
+.btnJaune{
+  background-color: #0496ff;
+}
 .footer {
   position: absolute;
   bottom: 0;
   left: 0;
   height: 80px;
   width: 100%;
+}
+.flex{
+  display: flex;
 }
 
 button:hover{
