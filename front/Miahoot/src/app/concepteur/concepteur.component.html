@@ -29,17 +29,21 @@
        <p hidden="true"> {{miahoots[0].nom}}</p>
         <div *ngFor="let miahoot of miahoots; index as i ">
 
+
           <button [matMenuTriggerFor]="menu" id="Miahoot-{{i+1}}" mat-button>{{miahoot.nom}}</button>
           <mat-menu #menu="matMenu">
             <button (click)="supprimeMiahoot(i)" mat-menu-item> Supprimer </button>
             <button (click)="selectMiahoot(i)" mat-menu-item> Modifier </button>
           </mat-menu>
         </div>
+
       </div>
 
       <a href="/creation"><button id="addMiahoot" mat-raised-button > + </button></a>
-    </section>
-  </header>
+
+     <button (click)="goBackToMenu()">Retour a l'accueil</button>
+     </section>
+   </header>
 </div>
 
 <!--
