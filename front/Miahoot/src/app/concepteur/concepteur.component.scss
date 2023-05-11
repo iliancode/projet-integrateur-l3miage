@@ -71,7 +71,11 @@ body {
   }
   /* ================= Header ============ */
 .header{
-  padding: 1%}
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}
 
   .nomMiahoot{
     font-size: 20px;
@@ -136,17 +140,8 @@ h1{
   }
 
   #addMiahoot{
-    padding: 5%;
-    width: 90px;
-    border-radius: 100%;
-    font-size: 55px;
-    font-weight: bold;
-    margin-right: 3%;
-    color: white;
-    background-color: #4cc9f0;
-    border-style: none;
-    cursor: pointer;
-    transition: .6s;
+    padding: 2%;
+
   }
   #addMiahoot:hover{
     background-color: #4895ef;
