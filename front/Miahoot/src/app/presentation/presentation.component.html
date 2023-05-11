@@ -7,6 +7,9 @@
  - les reponses
  - un element de completion type image, video, son ...
  - un timer ou un bouton pour passer à la question suivante -->
+<body>
+<div class="container">
+
 
 <div class="twelve">
   <h1>{{miahootPartie.nom}}</h1>
@@ -14,13 +17,10 @@
 <br/>
 <br/>
 <div *ngIf="! commencePartie">
-  <button (click)="partieEnCours()"
-          [ngModel]="commencePartie"
-          mat-raised-button> commencer la partie
-  </button>
+  <button (click)="partieEnCours()" [ngModel]="commencePartie"> Commencer la partie</button>
 </div>
 
-
+<!--*********************   PRESENTATEUR *****************************-->
 
 
 <div *ngIf="commencePartie">
@@ -50,7 +50,7 @@
     </div>
   </div>
 
-
+<!--*********************   PARTICIPANT *****************************-->
   <!-- ici on fait la vue du participant
 (avec des boutons correspondants aux reponses possibles)
 il faut les elements suivants :
@@ -61,7 +61,6 @@ il faut les elements suivants :
     <!--ici la liste de boutons choix -->
     <div *ngIf="miahootPartie.questions[currentIndex] ">
       <div class="myDiv">
-        <h3> VUE PARTICIPANT</h3>
         <h2 >{{ miahootPartie.questions[currentIndex].label }}</h2>
       </div>
       <br/>
@@ -77,6 +76,10 @@ il faut les elements suivants :
   </div>
 </div>
 
+<footer class="footer">
+  <a href="/participant" *ngIf="!estPresentateur" > <img src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" height="70px" width="70px"> </a>
+  <a href="/presentateur" *ngIf="estPresentateur" > <img src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" height="70px" width="70px"> </a>
+</footer>
 
-
-
+</div>
+</body>

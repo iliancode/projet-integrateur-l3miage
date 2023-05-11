@@ -1,12 +1,22 @@
 
 .box.selected {
-  background-color: blue;
+  background-color: #b1cf5f;
   color: white;
 }
 
 body {
-  font-size: 60%;
-  background: #00abb7;
+  //https://static.vecteezy.com/system/resources/previews/003/106/462/original/abstract-colorful-background-free-vector.jpg
+  background: url("https://i.pinimg.com/736x/3d/ec/1e/3dec1eaa2d6c317ce54099c92bda5b8b.jpg") no-repeat;
+  /* Définir le mode de positionnement */
+  background-position: center;
+  /* Définir le mode de redimensionnement */
+  background-size: cover;
+  /* Définir la couleur de fond en cas d'échec de chargement de l'image */
+  background-color: #000e28;
+
+  @media only screen and (max-width: 600px) {
+    background-size: cover;
+  }
 }
 .container {
   padding: 50px;
@@ -18,6 +28,7 @@ button::after {
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
+
 button {
   background: none;
   border: 4px solid #fff;
@@ -39,15 +50,15 @@ button::after {
   z-index: -1;
 }
 button:hover {
-  color: #29f2e4;
-  background-color: #007bff;
+  color: white;
+  background-color: #b1cf5f;
 }
 
 .myDiv {
-  border: 2px outset rgb(34, 30, 30);
+
   //background-color: lightblue;
   text-align: center;
-  width: 50%;
+  width: 100%;
   height: 50%;
   margin: 0 auto;
 }
@@ -69,7 +80,7 @@ button:hover {
 }
 .reponses{
   display: flex;
-  padding: 10%;
+  padding: 5%;
 }
 .test{
   width: 100%;
@@ -77,48 +88,19 @@ button:hover {
 
 //title du MIAhoot
 
-h1 {
+h1{
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 25px;
+  font-weight:700;
+  letter-spacing:1px;
   position: relative;
-  padding: 0;
-  margin: 0;
+  padding: 4%;
   font-family: "Raleway", sans-serif;
-  font-weight: 300;
-  font-size: 40px;
-  color: #080808;
-  -webkit-transition: all 0.4s ease 0s;
-  -o-transition: all 0.4s ease 0s;
-  transition: all 0.4s ease 0s;
+  color: white;
+
 }
 
-h1 span {
-  display: block;
-  font-size: 0.5em;
-  line-height: 1.3;
-}
-h1 em {
-  font-style: normal;
-  font-weight: 600;
-}
-.twelve h1 {
-  font-size:26px; font-weight:700;  letter-spacing:1px; text-transform:uppercase; width:160px; text-align:center; margin:auto; white-space:nowrap; padding-bottom:13px;
-}
-.twelve h1:before {
-  background-color: #c50000;
-  content: '';
-  display: block;
-  height: 3px;
-  width: 75px;
-  margin-bottom: 5px;
-}
-.twelve h1:after {
-  background-color: #c50000;
-  content: '';
-  display: block;
-  position:absolute; right:0; bottom:0;
-  height: 3px;
-  width: 75px;
-  margin-bottom: 0.25em;
-}
 
 #box-1 {
   background-color: #f72585ff;;
@@ -135,11 +117,25 @@ h1 em {
   background-color: #ffd60aff;
 }
 
-.h2{
+h2{
   text-align: center;
+  color: white;
+  font-size: 50px;
 }
 .popup {
   width: 20px;
   height: 20px;
 }
+.container {
+
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+}
+
+
 

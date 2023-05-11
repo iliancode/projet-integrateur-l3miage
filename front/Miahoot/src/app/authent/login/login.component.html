@@ -7,15 +7,17 @@
   <div class="connexion">
     <form>
 
-      <h4 class="text-dark text-muted">Login</h4>
+      <h2>Connexion</h2>
       <label for="exampleInputEmail1" class="form-label">Email</label>
       <input type="email" class="form-control" name="email" [(ngModel)]="email">
       <label for="exampleInputPassword1" class="form-label">Password</label>
       <input type="password" class="form-control" name="password" [(ngModel)]="password">
-      <button type="button" class="btn btn-info" (click)="login()">Login</button>
+      <button type="button" class="btn btn-info" (click)="login()">Se connecter</button> <br/>
 
-      <a href="/register" style="text-decoration: none;">Need Account ? <span class="text-danger">Register</span></a>
-      <a href="/forgot-password" class="text-dark" style="text-decoration: none;"> Forgot Password ? </a>
+      <div class="centerInscription">
+      <a href="/register"  class="inscription1">Besoin d'un compte ? <span class="inscription2">S'inscrire</span></a>
+      </div>
+        <!--<a href="/forgot-password" class="text-dark" style="text-decoration: none;"> Forgot Password ? </a>-->
     </form>
   </div>
   <div class="textBienvenue">
@@ -25,6 +27,9 @@
 
   </div>
 </div>
+<footer class="footer">
+  <a href=""> <img src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" height="70px" width="70px"> </a>
+</footer>
 <!--
 <div class="row mt-2">
 <a (click)="loginG()" style="text-decoration: none;cursor: pointer;">
