@@ -120,7 +120,7 @@ export class PresentateurComponent implements OnInit{
 
             setDoc(docRef, {
 
-              indexQuestionCourante: 0,
+              indexQuestionCourante: -1,
               //code partie
               codePartie: code.value,
               //nom partie

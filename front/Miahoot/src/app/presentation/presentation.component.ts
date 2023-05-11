@@ -25,7 +25,7 @@ export class PresentationComponent implements OnInit {
 
   commencePartie : boolean = false
   estPresentateur : boolean = false
-  indexQuestionCourante = 0;
+  indexQuestionCourante = -1;
   reponsesUtilisateur: number[] = [];
   public readonly question_courante: BehaviorSubject<Question | null>;
   selectedReponse: any = null;
@@ -40,14 +40,13 @@ export class PresentationComponent implements OnInit {
   //dbb:any;
   constructor(private auth :  AuthService, private ds :DsService, private us:UserService, private route: ActivatedRoute,
               private indexQuestionService:IndexQuestionService , private cdr: ChangeDetectorRef){
+
     this.question_courante = new BehaviorSubject<Question | null>(null,);
     this.indexQuestionService.currentQuestion$.subscribe((index) => {
       this.currentIndex = index;
       console.log("index courant: ", this.currentIndex)
       this.cdr.markForCheck();
     });
-    //this.dbb = firestore;
-
 
   }
 
@@ -67,13 +66,20 @@ export class PresentationComponent implements OnInit {
     });
 
     await this.isEnseignant();
-
+  if(this.indexQuestionCourante >= 0){
     this.question_courante.next(this.miahootPartie.questions[this.indexQuestionCourante]);
+  }
 
     const unsub = onSnapshot(doc(db, "parties", this.codePartie), (doc) => {
       console.log("Miahoot modifié: ", doc.get('indexQuestionCourante'));
       this.indexRecup = doc.get('indexQuestionCourante');
-      this.indexQuestionService.setCurrentQuestion(this.indexRecup);
+      console.log("index recuperer = " + this.indexRecup)
+      if(this.indexRecup >=0){
+        this.indexQuestionService.setCurrentQuestion(this.indexRecup);
+      }
+      if(this.indexRecup  != -1){
+        this.commencePartie = true
+      }
     });
   }
 
@@ -85,57 +91,42 @@ export class PresentationComponent implements OnInit {
         }else {
           this.estPresentateur = true
         }
+        this.cdr.markForCheck();
+
       }
     )
   }
 
   partieEnCours(){
-    this.commencePartie = true
+
+
   }
 
   async questionSuivante() {
 
-    console.log("this.miahootPartie.questions.length " + this.miahootPartie.questions.length);
+    //console.log("this.miahootPartie.questions.length " + this.miahootPartie.questions.length);
     console.log("indexQuestionCourante " + this.indexQuestionCourante)
     this.indexQuestionCourante++;
     console.log("indexQuestionCourante++ " + this.indexQuestionCourante)
-    console.log('question courante : ' + this.question_courante.getValue()?.label);
+   // console.log('question courante : ' + this.question_courante.getValue()?.label);
+
+    if(this.indexQuestionCourante >= 0){
+      if(this.miahootPartie.questions.length <= this.indexQuestionCourante){
+        window.location.href = '/resultats/' + this.codePartie;
+        console.log("ya plus de question bozo");
+
+      }else {
 
 
-    if(this.miahootPartie.questions.length <= this.indexQuestionCourante){
-      window.location.href = '/resultats/' + this.codePartie;
-      console.log("ya plus de question bozo");
-
-    }else {
-
-
-    updateDoc(doc(db, "parties", this.codePartie), {
-      indexQuestionCourante: this.indexQuestionCourante
-    }).then(() => {
-      console.log("Document successfully updated!");
-      if (this.indexQuestionCourante < this.miahootPartie.questions.length) {
-        this.question_courante.next(this.miahootPartie.questions[this.indexRecup]);
+        updateDoc(doc(db, "parties", this.codePartie), {
+          indexQuestionCourante: this.indexQuestionCourante
+        }).then(() => {
+          console.log("Document successfully updated!");
+          if (this.indexQuestionCourante < this.miahootPartie.questions.length) {
+            this.question_courante.next(this.miahootPartie.questions[this.indexRecup]);
+          }
+        });
       }
-    });
-    }
-
-
-  }
-
-  afficherReponse(reponse: string) {
-    console.log("Réponse sélectionnée : ", reponse);
-  }
-
-  toggleReponse(reponse: Reponse) {
-    if(reponse.id == undefined){
-      reponse.id = 0;
-    }
-    const reponseId = reponse.id;
-    const index = this.reponsesUtilisateur.indexOf(reponseId);
-    if (index === -1) {
-      this.reponsesUtilisateur.push(reponseId);
-    } else {
-      this.reponsesUtilisateur.splice(index, 1);
     }
   }
 
