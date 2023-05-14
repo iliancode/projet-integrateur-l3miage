@@ -10,20 +10,22 @@
 
          <div class="center">
            <h1>Prêt à lancer une partie de quiz captivante ? </h1>
-           <h3> Renseignez les informations de la partie que vous souhaitez lancer </h3><br>
+           <h3> Séléctionnez le Miahoot que vous souhaitez présenter puis renseignez les informations de la partie que vous souhaitez lancer </h3><br>
            <div class="test">
            <div *ngIf="liste_miahoots | async as M" >
 
+           <div class="flex">
              <div *ngFor="let miahoot of M; index as indice " id="listemiahoot">
 
                <button (click)="onButtonClick(miahoot)"  [ngClass]="{'selected': selectedMiahoot === miahoot }" id="{{miahoot.id}}">{{miahoot.nom}}</button>
              </div>
            </div>
+           </div>
            <div class="box">
              <label for="nompartie"> </label> <input id="nompartie" placeholder="Nom de la partie, ex : L3 Miage Quizz" type="text">
              <label for="codePartie"> </label> <input id="codePartie" name="codePartie" placeholder="Code de la partie, ex : 3546" type="text">
            </div>
-             <button (click)="createGame()">Commencer la partie ! </button>
+             <button  class="btnJaune"(click)="createGame()">Commencer la partie ! </button>
          </div>
          </div>
 <footer class="footer">

@@ -46,7 +46,7 @@
             <div [ngClass]="{ valid :reponse.estValide}">
               <div *ngIf="showCorrectAnswer && reponse.estValide ">   </div>
               <dialog id="popup">
-                <h2>La bonne réponse est : {{ reponse.label }} </h2>
+                <p>La bonne réponse est : {{ reponse.label }} </p>
               </dialog>
             </div>
           </div>

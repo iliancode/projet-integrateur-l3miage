@@ -65,7 +65,7 @@ readonly obsMiahoots: Observable<Miahoot[]>;
 
   getMiahootById(uid: String, id: number):Promise<Miahoot>{
 
-    let url = "http://localhost:8080/api/enseignants/";
+    let url = "/api/enseignants/";
     url += uid + "/miahoots/" + id
     return  lastValueFrom(this.http.get<any>(url));
   }
@@ -90,7 +90,7 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   }
 
   async get(endpoint: string, recherche: string) {
-    let url = "http://localhost:8080/api/";
+    let url = "/api/";
 
     let reponse = await lastValueFrom(this.http.get<any>(url + endpoint +"/"  +recherche));
     console.log(reponse)
@@ -98,7 +98,7 @@ readonly obsMiahoots: Observable<Miahoot[]>;
 
   //post
    post(endpoint: string, body: Enseignant) {
-    let url = "http://localhost:8080/api/";
+    let url = "/api/";
      return firstValueFrom(this.http.post<any>(url + endpoint, body));
    }
 
@@ -120,7 +120,7 @@ readonly obsMiahoots: Observable<Miahoot[]>;
 
 
   async getGeneral(endpoint: string, recherche: string) {
-    let url = "http://localhost:8080/api/";
+    let url = "/api/";
 
     let reponse = await lastValueFrom(this.http.get<any>(url + endpoint +"/"  +recherche));
     console.log(reponse)
@@ -128,19 +128,19 @@ readonly obsMiahoots: Observable<Miahoot[]>;
 
   //post
   postGeneral(endpoint: string, body: Enseignant) {
-    let url = "http://localhost:8080/api/";
+    let url = "/api/";
 
     return firstValueFrom(this.http.post<any>(url + endpoint, body));
   }
 
   async postE( enseignant: Enseignant){
-    let url = "http://localhost:8080/api/enseignants/"
+    let url = "/api/enseignants/"
     let reponse =  await lastValueFrom(this.http.post(url, enseignant));
     console.log(reponse)
   }
 
   async postM( uid:String,  miahoot: Miahoot){
-    let url = "http://localhost:8080/api/enseignants/"
+    let url = "/api/enseignants/"
     url += uid + "/miahootjson"
     let reponse =  await lastValueFrom(this.http.post(url, miahoot));
     console.log(reponse)
@@ -164,8 +164,7 @@ readonly obsMiahoots: Observable<Miahoot[]>;
   }
 
   async createPartie(uidEnseignant: string, idMiahoot: number, body :any): Promise<void> {
-    let url = "http://" +
-      ":8080/api/enseignants/"
+    let url = "/api/enseignants/"
     url += uidEnseignant + "/miahoots/" + idMiahoot + "/parties"
     let reponse = await lastValueFrom(this.http.post(url, body));
   }

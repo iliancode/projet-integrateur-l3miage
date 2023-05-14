@@ -1,13 +1,15 @@
+html,
+body {
+  height: 100%;
+}
 body {
     font-family: 'Josefin Sans', sans-serif;
-    box-sizing: border-box;
   }
 .carte-miahoot{
   border: 2px solid black;
   width: 25%;
   margin: 2%;
   height: auto;
-
 }
   .container-fluid{
     height: 100%;
@@ -68,94 +70,40 @@ body {
     top: 10vh;
   }
   /* ================= Header ============ */
-  header{
-    position: absolute;
-    top:0%;
-    left: 0%;
-    width:100%;
-    margin: 0;
-    padding: 0;
-  }
-  /* navbar */
-  nav{
-    color: #FFF;
-    float: right;
-    margin:30px 90px;
-  }
-  nav ul{
-    list-style: none;
-  }
-  nav ul li {
-    float: left;
-    transition: .3s;
-  }
-  nav ul li a{
-    text-decoration: none;
-    color: #EFEEF5;
-    transition: .5ms;
-    font-size: 15px;
-    margin-left:16px;
-  }
-  nav ul li:hover a{
-    text-decoration: none;
-    color: #591BC5;;
-  }
-  nav ul li:hover{
-    height: 45px;
-    padding-top: 30px;
-    margin-top: -30px;
-   background: #EFEEF5;
-    text-decoration: none;
-    transform: skew(15deg);
-  }
-  /* Logo */
-  .logo{
-    width: 35px;
-    height: 35px;
-    background: #EFEEF5;
-    margin: 40px 63px;
-    float: left;
-    transform: rotate(-30deg);
-  }
-  .logo span{
-    color: #591BC5;
-    font-size: 2em;
-    line-height: 1.4;
-    padding-left: 5px;
-    font-weight: bold;
-  }
-  /* Header content & title & button*/
-  .header-content{
-    margin-top:25%;
-    text-align: center;
-    color:  #EFEEF5;
-  }
-  .header-content h1{
-    text-transform: uppercase;
-    font-size: 3em;
-    letter-spacing: 1px;
-  }
-  .header-content p {
+.header{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}
+
+  .nomMiahoot{
     font-size: 20px;
-    line-height: 1.5;
-    margin: 20px auto;
+    padding: 50px 60px 50px 60px;
+    margin:5%;
+    border-radius: 6px;
+    background-color: #c2a7f3;
+    border-style: none;
   }
-  .header-content button{
-    width: 140px;
-    margin:20px 10px;
-    color: #591BC5;
-    font-size: 17px;
-    border:1px solid #EFEEF5;
-    font-weight: 500;
-    background: #EFEEF5;
-    border-radius: 20px;
+  .nomMiahoot:hover{
+    color: white;
+    background-color: #7209b7;
+  }
+  .contenantMiahoot{
+    width: 90%;
+    display: flex;
+    margin: auto;
     padding: 10px;
-    cursor:pointer;
-    transition: .3s;
+    margin-top: 6%;
   }
-  .header-content button:hover{
-    border-radius: 0;
-  }
+h1{
+  font-family: 'Bree Serif', serif;
+  font-weight: bolder;
+  font-size: 47px;
+  color : #f72585;
+  text-align: center;
+  margin-top: 5%;
+}
   /* Animate Background*/
   @keyframes Gradient {
     0% {
@@ -180,29 +128,24 @@ body {
   }
 }
 
-.example-ripple-container {
-    cursor: pointer;
-    text-align: center;
-
-    width: 300px;
-    height: 300px;
-    line-height: 300px;
-
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-
-    -webkit-user-drag: none;
-    -webkit-tap-highlight-color: transparent;
+  .right{
+    float: right;
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 80px;
+    width: 100%;
   }
 
-  /** Styles to make the demo look better. */
-  .example-ripple-checkbox {
-    margin: 6px 12px 6px 0;
-  }
+  #addMiahoot{
+    padding: 2%;
 
-  .example-ripple-form-field {
-    margin: 0 12px 0 0;
+  }
+  #addMiahoot:hover{
+    background-color: #4895ef;
+    transform:scale(1.05);
   }
 
 

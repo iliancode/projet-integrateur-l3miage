@@ -32,6 +32,9 @@ private email : string | null | undefined ;
     this.cdr.markForCheck();
   }
 
+  goBackToMenu(){
+    this.router.navigateByUrl("/enseignant")
+  }
   selectMiahoot(id: number){
     const vraiId = this.gestionIdMiahoot(id)?? 0
     this.sms.setSelectedMiahootId(vraiId);
@@ -90,8 +93,6 @@ private email : string | null | undefined ;
   gestionIdMiahoot(idAffichage : number){
     return this.miahoots[idAffichage].id
   }
-
-
 
 
 }

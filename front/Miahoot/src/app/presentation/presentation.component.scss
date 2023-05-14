@@ -11,6 +11,7 @@ body {
   background-position: center;
   /* Définir le mode de redimensionnement */
   background-size: cover;
+  height: 100%;
   /* Définir la couleur de fond en cas d'échec de chargement de l'image */
   background-color: #000e28;
 
@@ -68,7 +69,7 @@ button:hover {
   background: blanchedalmond;
   font-weight: bold;
   width: 80%;
-  height:120px;
+  height:100px;
   border-radius: .4em;
   text-align: center;
   margin: 0 auto;
@@ -95,7 +96,7 @@ h1{
   font-weight:700;
   letter-spacing:1px;
   position: relative;
-  padding: 4%;
+  padding: 2%;
   font-family: "Raleway", sans-serif;
   color: white;
 
@@ -120,11 +121,19 @@ h1{
 h2{
   text-align: center;
   color: white;
-  font-size: 50px;
+  font-size: 42px;
+}
+h3{
+  text-align: center;
+  color: #b1cf5f;
+  font-size: 42px;
 }
 .popup {
   width: 20px;
   height: 20px;
+  background-color: red;
+  color:green;
+
 }
 .container {
 

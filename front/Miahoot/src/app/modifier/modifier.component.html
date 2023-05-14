@@ -1,16 +1,23 @@
-<!-- animation -->
-<div class="bg"></div>
-<div class="bg bg2"></div>
-<div class="bg bg3"></div>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+</head>
 
+<body>
 
-<textarea class="tailleTxt"
-          matInput
-          #jsonMiahoot
-          placeholder="Coller votre nouvelle version de ce miahoot ici"
-          [value]="miahootEdit">
-</textarea>
-<button mat-button class="submitButton" (click)="majMiahoot(miahootId,jsonMiahoot.value)">
-  Envoyer les modifications
-</button>
-
+<h1> Modifiez votre miahoot en toute simplicité ! </h1>
+<div class="center">
+  <textarea class="tailleTxt" matInput  #jsonMiahoot
+            placeholder="Coller votre nouvelle version de ce miahoot ici"
+            [value]="miahootEdit">
+  </textarea>
+  <button mat-button class="submitButton" (click)="majMiahoot(miahootId,jsonMiahoot.value)">
+    Mettre à jour le Miahoot
+  </button>
+</div>
+<footer class="footer">
+  <a href="/concepteur"> <img src="https://cdn.icon-icons.com/icons2/1147/PNG/512/1486486321-arrow-back-player-music-multimedia-left-rewind_81210.png" height="70px" width="70px"> </a>
+</footer>
+</body>

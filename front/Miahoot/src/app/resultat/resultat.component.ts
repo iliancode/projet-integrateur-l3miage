@@ -114,7 +114,7 @@ export class ResultatComponent implements OnInit {
             labels: data.map(row => row.label),
             datasets: [
               {
-                label: 'question.label',
+                label: 'Nombre de votes',
                 data: data.map(row => row.count)
               }
             ]

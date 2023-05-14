@@ -4,6 +4,7 @@ import { DsService} from "../../service/ds.service";
 import { Enseignant } from 'src/app/service/interfaces';
 import {doc, setDoc} from "firebase/firestore";
 import {UserService} from "../../service/user.service";
+import {db} from "../../../environments/test";
 
 @Component({
   selector: 'app-register',
@@ -37,7 +38,9 @@ export class RegisterComponent implements OnInit {
     //let y: Enseignant = {uid:"zdzed", mail: this.email, pseudo: pseudo, mdp: this.password};
    // this.newEnseignant(y);
     console.log("la")
+    console.log(this.email , this.password)
     this.auth.register(this.email, this.password);
+
 
     this.email = '';
     this.password = '';
